@@ -113,16 +113,14 @@
 </head>
 <body class="bg-background dark:bg-background text-on-surface antialiased min-h-screen selection:bg-surface-container-high pb-32">
 <!-- TopAppBar -->
-<header class="w-full top-0 sticky z-50 bg-[#0A0A0A] border-b border-[#262626]">
-<div class="flex items-center justify-between px-margin-mobile h-16 max-w-7xl mx-auto md:px-margin-desktop">
-<button aria-label="Search" class="text-primary dark:text-primary hover:opacity-80 transition-opacity scale-95 duration-100 flex items-center justify-center w-10 h-10 rounded-full">
-<span class="material-symbols-outlined" data-icon="search">search</span>
-</button>
-<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-primary tracking-tight">Radar MS</h1>
-<button aria-label="Profile" class="w-8 h-8 rounded-full overflow-hidden bg-surface-variant hover:opacity-80 transition-opacity duration-100 flex items-center justify-center text-on-surface-variant font-label-sm text-label-sm">
-UP
-</button>
-</div>
+<header class="fixed top-0 left-0 w-full z-50 bg-[#0A0A0A] border-b border-[#262626] h-14 flex items-center justify-between px-4 md:px-margin-desktop">
+    <button aria-label="Search" class="text-primary hover:opacity-80 transition-opacity active:scale-95 duration-100 flex items-center justify-center w-10 h-10">
+        <span class="material-symbols-outlined">search</span>
+    </button>
+    <h1 class="font-headline-md text-headline-md font-bold text-primary tracking-tight">Radar MS</h1>
+    <button aria-label="Refresh" class="text-primary hover:opacity-80 transition-opacity active:scale-95 duration-100 flex items-center justify-center w-10 h-10">
+        <span class="material-symbols-outlined">sync</span>
+    </button>
 </header>
 <!-- Main Content -->
 <main class="w-full max-w-3xl mx-auto px-margin-mobile md:px-0 py-md md:py-lg flex flex-col gap-lg">
@@ -261,30 +259,30 @@ UP
             </button>
 </section>
 </main>
-<!-- BottomNavBar (Mobile Only) -->
-<nav class="md:hidden fixed bottom-0 w-full z-50 bg-[#0A0A0A] border-t border-[#262626]">
-<div class="flex justify-around items-center h-20 pb-safe px-4">
-<!-- Feed -->
-<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant hover:text-primary transition-colors active:scale-95 transition-transform duration-150 group w-16" href="index.html">
-<span class="material-symbols-outlined group-hover:scale-110 transition-transform mb-1" data-icon="rss_feed">rss_feed</span>
-<span class="font-label-sm text-label-sm">Feed</span>
-</a>
-<!-- Saved -->
-<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant hover:text-primary transition-colors active:scale-95 transition-transform duration-150 group w-16" href="salvos.html">
-<span class="material-symbols-outlined group-hover:scale-110 transition-transform mb-1" data-icon="bookmark">bookmark</span>
-<span class="font-label-sm text-label-sm">Saved</span>
-</a>
-<!-- Alerts (ACTIVE) -->
-<a class="flex flex-col items-center justify-center text-primary dark:text-primary font-medium hover:text-primary transition-colors active:scale-95 transition-transform duration-150 group w-16" href="alertas.html">
-<span class="material-symbols-outlined group-hover:scale-110 transition-transform mb-1" data-icon="notifications" style="font-variation-settings: 'FILL' 1;">notifications</span>
-<span class="font-label-sm text-label-sm">Alerts</span>
-</a>
-<!-- Profile -->
-<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant hover:text-primary transition-colors active:scale-95 transition-transform duration-150 group w-16" href="perfil.html">
-<span class="material-symbols-outlined group-hover:scale-110 transition-transform mb-1" data-icon="person">person</span>
-<span class="font-label-sm text-label-sm">Profile</span>
-</a>
-</div>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 bg-[#0A0A0A] border-t border-[#262626]">
+    <div class="flex justify-around items-center h-16 pb-safe px-4 max-w-md mx-auto">
+        <!-- Feed -->
+        <a href="index.html" class="flex flex-col items-center justify-center text-[#c4c7c8] hover:text-primary transition-colors active:scale-95 transition-transform duration-150 w-16">
+            <span class="material-symbols-outlined mb-1">rss_feed</span>
+            <span class="font-label-sm text-[10px]">Feed</span>
+        </a>
+        <!-- Saved -->
+        <a href="salvos.html" class="flex flex-col items-center justify-center text-[#c4c7c8] hover:text-primary transition-colors active:scale-95 transition-transform duration-150 w-16">
+            <span class="material-symbols-outlined mb-1">bookmark</span>
+            <span class="font-label-sm text-[10px]">Salvos</span>
+        </a>
+        <!-- Alerts (ACTIVE) -->
+        <a href="alertas.html" class="flex flex-col items-center justify-center text-primary font-bold active:scale-95 transition-transform duration-150 w-16">
+            <span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 1;">notifications</span>
+            <span class="font-label-sm text-[10px]">Alertas</span>
+        </a>
+        <!-- Profile -->
+        <a href="perfil.html" class="flex flex-col items-center justify-center text-[#c4c7c8] hover:text-primary transition-colors active:scale-95 transition-transform duration-150 w-16">
+            <span class="material-symbols-outlined mb-1">person</span>
+            <span class="font-label-sm text-[10px]">Perfil</span>
+        </a>
+    </div>
 </nav>
 <script>
         // Custom Toggle logic for the checkbox to animate smoothly within Tailwind constraints

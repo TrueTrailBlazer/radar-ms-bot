@@ -9,6 +9,8 @@ on:
 jobs:
   monitorar:
     runs-on: ubuntu-latest
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
     permissions:
       contents: write # Permissão fundamental para o bot salvar as alterações do JSON no repositório

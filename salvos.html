@@ -106,25 +106,15 @@
       </style>
   </head>
 <body class="bg-background dark:bg-background text-on-surface antialiased min-h-screen pb-32">
-<!-- TopAppBar (Hidden on Mobile, Visible on Web) -->
-<header class="hidden md:flex fixed top-0 w-full z-50 border-b border-[#262626] bg-[#0A0A0A]">
-<div class="flex items-center justify-between px-margin-desktop h-16 w-full max-w-7xl mx-auto">
-<div class="flex items-center gap-sm">
-<span class="material-symbols-outlined text-primary dark:text-primary cursor-pointer active:opacity-70 hover:text-primary transition-colors duration-200">search</span>
-</div>
-<div class="font-headline-md text-headline-md font-bold text-primary dark:text-primary tracking-tight">Radar MS</div>
-<div class="flex items-center gap-sm cursor-pointer active:opacity-70">
-<div class="w-8 h-8 rounded-full bg-surface-variant flex items-center justify-center text-on-surface-variant font-label-sm text-label-sm">UP</div>
-</div>
-</div>
-</header>
-<!-- Mobile Header (Simplified for Mobile) -->
-<header class="md:hidden fixed top-0 w-full z-50 border-b border-[#262626] bg-[#0A0A0A]">
-<div class="flex items-center justify-between px-margin-mobile h-16 w-full">
-<span class="material-symbols-outlined text-primary dark:text-primary cursor-pointer active:opacity-70">search</span>
-<div class="font-headline-md text-headline-md font-bold text-primary dark:text-primary tracking-tight">Radar MS</div>
-<div class="w-8 h-8 rounded-full bg-surface-variant flex items-center justify-center text-on-surface-variant font-label-sm text-label-sm">UP</div>
-</div>
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full z-50 bg-[#0A0A0A] border-b border-[#262626] h-14 flex items-center justify-between px-4 md:px-margin-desktop">
+    <button aria-label="Search" class="text-primary hover:opacity-80 transition-opacity active:scale-95 duration-100 flex items-center justify-center w-10 h-10">
+        <span class="material-symbols-outlined">search</span>
+    </button>
+    <h1 class="font-headline-md text-headline-md font-bold text-primary tracking-tight">Radar MS</h1>
+    <button aria-label="Refresh" class="text-primary hover:opacity-80 transition-opacity active:scale-95 duration-100 flex items-center justify-center w-10 h-10">
+        <span class="material-symbols-outlined">sync</span>
+    </button>
 </header>
 <!-- Main Content -->
 <main class="pt-24 px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto">
@@ -171,25 +161,29 @@
 </article>
 </section>
 </main>
-<!-- BottomNavBar (Mobile Only) -->
-<nav class="md:hidden fixed bottom-0 w-full z-50 bg-[#0A0A0A] border-t border-[#262626]">
-<div class="flex justify-around items-center h-20 pb-safe px-4">
-<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-colors" href="index.html">
-<span class="material-symbols-outlined mb-1">grid_view</span>
-<span class="font-label-sm text-label-sm">Feed</span>
-</a>
-<a class="flex flex-col items-center justify-center text-primary font-medium hover:text-primary transition-colors" href="salvos.html">
-<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 1;">bookmark</span>
-<span class="font-label-sm text-label-sm">Saved</span>
-</a>
-<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-colors" href="#">
-<span class="material-symbols-outlined mb-1">notifications</span>
-<span class="font-label-sm text-label-sm">Alerts</span>
-</a>
-<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-colors" href="perfil.html">
-<span class="material-symbols-outlined mb-1">person</span>
-<span class="font-label-sm text-label-sm">Profile</span>
-</a>
-</div>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 bg-[#0A0A0A] border-t border-[#262626]">
+    <div class="flex justify-around items-center h-16 pb-safe px-4 max-w-md mx-auto">
+        <!-- Feed -->
+        <a href="index.html" class="flex flex-col items-center justify-center text-[#c4c7c8] hover:text-primary transition-colors active:scale-95 transition-transform duration-150 w-16">
+            <span class="material-symbols-outlined mb-1">rss_feed</span>
+            <span class="font-label-sm text-[10px]">Feed</span>
+        </a>
+        <!-- Saved (ACTIVE) -->
+        <a href="salvos.html" class="flex flex-col items-center justify-center text-primary font-bold active:scale-95 transition-transform duration-150 w-16">
+            <span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 1;">bookmark</span>
+            <span class="font-label-sm text-[10px]">Salvos</span>
+        </a>
+        <!-- Alerts -->
+        <a href="alertas.html" class="flex flex-col items-center justify-center text-[#c4c7c8] hover:text-primary transition-colors active:scale-95 transition-transform duration-150 w-16">
+            <span class="material-symbols-outlined mb-1">notifications</span>
+            <span class="font-label-sm text-[10px]">Alertas</span>
+        </a>
+        <!-- Profile -->
+        <a href="perfil.html" class="flex flex-col items-center justify-center text-[#c4c7c8] hover:text-primary transition-colors active:scale-95 transition-transform duration-150 w-16">
+            <span class="material-symbols-outlined mb-1">person</span>
+            <span class="font-label-sm text-[10px]">Perfil</span>
+        </a>
+    </div>
 </nav>
 </body></html>

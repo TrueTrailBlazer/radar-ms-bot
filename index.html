@@ -1,332 +1,686 @@
 <!DOCTYPE html>
-
 <html class="dark" lang="pt-BR"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Radar MS Dashboard</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<title>Radar MS</title>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-        tailwind.config = {
-          darkMode: "class",
-          theme: {
-            extend: {
-              "colors": {
-                      "on-tertiary": "#2f3131",
-                      "surface-container-highest": "#353434",
-                      "surface": "#141313",
-                      "secondary-container": "#0267b8",
-                      "surface-tint": "#c6c6c7",
-                      "on-error-container": "#ffdad6",
-                      "outline-variant": "#444748",
-                      "primary-fixed-dim": "#c6c6c7",
-                      "on-surface-variant": "#c4c7c8",
-                      "surface-container-lowest": "#0e0e0e",
-                      "inverse-surface": "#e5e2e1",
-                      "on-tertiary-fixed": "#1a1c1c",
-                      "secondary": "#a4c9ff",
-                      "outline": "#8e9192",
-                      "primary-container": "#e2e2e2",
-                      "tertiary": "#ffffff",
-                      "primary-fixed": "#e2e2e2",
-                      "on-tertiary-fixed-variant": "#454747",
-                      "tertiary-fixed-dim": "#c6c6c7",
-                      "secondary-fixed-dim": "#a4c9ff",
-                      "on-primary-container": "#636565",
-                      "secondary-fixed": "#d4e3ff",
-                      "on-error": "#690005",
-                      "surface-bright": "#3a3939",
-                      "surface-variant": "#353434",
-                      "on-background": "#e5e2e1",
-                      "error": "#ffb4ab",
-                      "on-secondary-fixed-variant": "#004883",
-                      "surface-dim": "#141313",
-                      "on-primary": "#2f3131",
-                      "background": "#141313",
-                      "on-primary-fixed-variant": "#454747",
-                      "error-container": "#93000a",
-                      "on-surface": "#e5e2e1",
-                      "tertiary-container": "#e2e2e2",
-                      "surface-container-low": "#1c1b1b",
-                      "inverse-primary": "#5d5f5f",
-                      "on-tertiary-container": "#636565",
-                      "on-secondary-fixed": "#001c39",
-                      "on-secondary-container": "#d6e5ff",
-                      "surface-container-high": "#2a2a2a",
-                      "on-secondary": "#00315d",
-                      "inverse-on-surface": "#313030",
-                      "on-primary-fixed": "#1a1c1c",
-                      "surface-container": "#201f1f",
-                      "tertiary-fixed": "#e2e2e2",
-                      "primary": "#ffffff"
-              },
-              "borderRadius": {
-                      "DEFAULT": "0.125rem",
-                      "lg": "0.25rem",
-                      "xl": "0.5rem",
-                      "full": "0.75rem"
-              },
-              "spacing": {
-                      "xs": "8px",
-                      "md": "24px",
-                      "sm": "16px",
-                      "gutter": "24px",
-                      "margin-mobile": "16px",
-                      "lg": "48px",
-                      "xl": "80px",
-                      "margin-desktop": "64px",
-                      "base": "4px"
-              },
-              "fontFamily": {
-                      "headline-md": ["Plus Jakarta Sans"],
-                      "headline-lg-mobile": ["Plus Jakarta Sans"],
-                      "headline-lg": ["Plus Jakarta Sans"],
-                      "body-lg": ["Inter"],
-                      "label-sm": ["Inter"],
-                      "headline-xl": ["Plus Jakarta Sans"],
-                      "body-md": ["Inter"]
-              },
-              "fontSize": {
-                      "headline-md": ["20px", {"lineHeight": "1.4", "fontWeight": "600"}],
-                      "headline-lg-mobile": ["24px", {"lineHeight": "1.2", "fontWeight": "600"}],
-                      "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600"}],
-                      "body-lg": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
-                      "label-sm": ["12px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "500"}],
-                      "headline-xl": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
-                      "body-md": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}]
-              }
-            },
-          },
-        }
-    </script>
-<style>body { background-color: #0a0a0a; -webkit-font-smoothing: antialiased; } .surface-card { background-color: #171717; border: 1px solid #262626; } .custom-scrollbar::-webkit-scrollbar { width: 4px; } .custom-scrollbar::-webkit-scrollbar-track { background: #0a0a0a; } .custom-scrollbar::-webkit-scrollbar-thumb { background: #262626; border-radius: 2px; }</style>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
-    }
-  </style>
-</head>
-<body class="bg-[#0a0a0a] text-on-surface selection:bg-primary selection:text-background pb-32">
-<!-- TopAppBar -->
-<header class="fixed top-0 left-0 w-full z-50 bg-[#0A0A0A] border-b border-[#262626] h-14 flex items-center justify-between px-4 md:px-margin-desktop">
-    <button aria-label="Search" class="text-primary hover:opacity-80 transition-opacity active:scale-95 duration-100 flex items-center justify-center w-10 h-10">
-        <span class="material-symbols-outlined">search</span>
-    </button>
-    <h1 class="font-headline-md text-headline-md font-bold text-primary tracking-tight">Radar MS</h1>
-    <button aria-label="Refresh" class="text-primary hover:opacity-80 transition-opacity active:scale-95 duration-100 flex items-center justify-center w-10 h-10">
-        <span class="material-symbols-outlined">sync</span>
-    </button>
-</header>
-<main class="px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto mt-20 flex flex-col gap-md">
-<!-- Overview Section -->
-<section class="">
-<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
-<div class="surface-card p-md rounded-lg">
-<p class="font-label-sm text-label-sm text-on-surface-variant mb-xs">Total de Oportunidades</p>
-<h2 class="font-headline-lg text-headline-lg text-primary">24</h2>
-</div>
-<div class="surface-card p-md rounded-lg">
-<p class="font-label-sm text-label-sm text-on-surface-variant mb-xs">Última Atualização</p>
-<h2 class="font-headline-md text-headline-md text-primary">Hoje, 14:00</h2>
-</div>
-<div class="surface-card p-md rounded-lg">
-<p class="font-label-sm text-label-sm text-on-surface-variant mb-xs">Maior Fonte</p>
-<h2 class="font-headline-md text-headline-md text-primary">UFMS</h2>
-</div>
-</div>
-</section>
-<!-- Filter Tabs -->
-<nav class="flex overflow-x-auto gap-xs pb-base custom-scrollbar no-scrollbar">
-<button class="px-md py-xs rounded-full bg-primary text-background font-label-sm whitespace-nowrap">Todas</button>
-<button class="px-md py-xs rounded-full surface-card text-on-surface-variant hover:border-outline transition-colors font-label-sm whitespace-nowrap">UFMS / IFMS</button>
-<button class="px-md py-xs rounded-full surface-card text-on-surface-variant hover:border-outline transition-colors font-label-sm whitespace-nowrap">SAD / Governo</button>
-<button class="px-md py-xs rounded-full surface-card text-on-surface-variant hover:border-outline transition-colors font-label-sm whitespace-nowrap">PCI Concursos</button>
-</nav>
-<!-- Feed of Opportunities -->
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter" id="opportunities-feed">
-    <!-- As vagas serão injetadas aqui pelo JavaScript -->
-    <div class="text-on-surface-variant font-label-sm p-sm">Carregando oportunidades...</div>
-</div>
-</main>
-<!-- BottomNavBar -->
-<nav class="fixed bottom-0 left-0 w-full z-50 bg-[#0A0A0A] border-t border-[#262626]">
-    <div class="flex justify-around items-center h-16 pb-safe px-4 max-w-md mx-auto">
-        <!-- Feed (ACTIVE) -->
-        <a href="index.html" class="flex flex-col items-center justify-center text-primary font-bold active:scale-95 transition-transform duration-150 w-16">
-            <span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 1;">rss_feed</span>
-            <span class="font-label-sm text-[10px]">Feed</span>
-        </a>
-        <!-- Saved -->
-        <a href="salvos.html" class="flex flex-col items-center justify-center text-[#c4c7c8] hover:text-primary transition-colors active:scale-95 transition-transform duration-150 w-16">
-            <span class="material-symbols-outlined mb-1">bookmark</span>
-            <span class="font-label-sm text-[10px]">Salvos</span>
-        </a>
-        <!-- Alerts -->
-        <a href="alertas.html" class="flex flex-col items-center justify-center text-[#c4c7c8] hover:text-primary transition-colors active:scale-95 transition-transform duration-150 w-16">
-            <span class="material-symbols-outlined mb-1">notifications</span>
-            <span class="font-label-sm text-[10px]">Alertas</span>
-        </a>
-        <!-- Profile -->
-        <a href="perfil.html" class="flex flex-col items-center justify-center text-[#c4c7c8] hover:text-primary transition-colors active:scale-95 transition-transform duration-150 w-16">
-            <span class="material-symbols-outlined mb-1">person</span>
-            <span class="font-label-sm text-[10px]">Perfil</span>
-        </a>
-    </div>
-</nav>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <script>
-        // Micro-interaction for filter tabs with actual filtering
-        const filterButtons = document.querySelectorAll('nav.overflow-x-auto button');
-        const filterMap = {
-            'Todas': null,
-            'UFMS / IFMS': ['UFMS', 'IFMS', 'UFMS Pós'],
-            'SAD / Governo': ['Governo MS', 'SAD/MS'],
-            'PCI Concursos': ['PCI Concursos']
-        };
+tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      colors: {
+        "surface-container-lowest":"#0e0e0e","surface-container-low":"#1c1b1b","surface-container":"#201f1f",
+        "surface-container-high":"#2a2a2a","surface-container-highest":"#353434","surface-variant":"#353434",
+        "surface":"#141313","surface-dim":"#141313","surface-bright":"#3a3939",
+        "on-surface":"#e5e2e1","on-surface-variant":"#c4c7c8","on-background":"#e5e2e1",
+        "primary":"#ffffff","on-primary":"#2f3131","primary-container":"#e2e2e2",
+        "secondary":"#a4c9ff","secondary-container":"#0267b8","on-secondary":"#00315d",
+        "error":"#ffb4ab","error-container":"#93000a","on-error":"#690005",
+        "outline":"#8e9192","outline-variant":"#444748",
+        "background":"#141313","inverse-surface":"#e5e2e1","inverse-on-surface":"#313030"
+      },
+      spacing: { xs:"8px", sm:"16px", md:"24px", lg:"48px", xl:"80px", base:"4px", gutter:"24px", "margin-mobile":"16px", "margin-desktop":"64px" },
+      fontFamily: { "headline":["Plus Jakarta Sans"], "body":["Inter"], "label":["Inter"] },
+      fontSize: {
+        "headline-xl":["48px",{"lineHeight":"1.1","letterSpacing":"-0.02em","fontWeight":"700"}],
+        "headline-lg":["32px",{"lineHeight":"1.2","letterSpacing":"-0.02em","fontWeight":"600"}],
+        "headline-lg-mobile":["24px",{"lineHeight":"1.2","fontWeight":"600"}],
+        "headline-md":["20px",{"lineHeight":"1.4","fontWeight":"600"}],
+        "body-lg":["16px",{"lineHeight":"1.6","fontWeight":"400"}],
+        "body-md":["14px",{"lineHeight":"1.5","fontWeight":"400"}],
+        "label-sm":["12px",{"lineHeight":"1","letterSpacing":"0.05em","fontWeight":"500"}]
+      }
+    }
+  }
+}
+</script>
+<style>
+  *{box-sizing:border-box}
+  body{background:#0A0A0A;color:#e5e2e1;font-family:'Inter',sans-serif;margin:0;min-height:100dvh;-webkit-font-smoothing:antialiased}
+  h1,h2,h3,h4{font-family:'Plus Jakarta Sans',sans-serif}
+  .material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24}
+  .fill{font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24}
 
-        filterButtons.forEach(btn => {
-            btn.addEventListener('click', () => {
-                filterButtons.forEach(b => {
-                    b.classList.remove('bg-primary', 'text-background');
-                    b.classList.add('surface-card', 'text-on-surface-variant');
-                });
-                btn.classList.remove('surface-card', 'text-on-surface-variant');
-                btn.classList.add('bg-primary', 'text-background');
+  /* View transitions */
+  .view{display:none;opacity:0;transition:opacity .15s ease}
+  .view.active{display:block;opacity:1}
 
-                const label = btn.textContent.trim();
-                const allowed = filterMap[label];
-                const articles = document.querySelectorAll('#opportunities-feed article');
-                articles.forEach(art => {
-                    if (!allowed) {
-                        art.style.display = 'flex';
-                    } else {
-                        const badge = art.querySelector('span')?.textContent?.trim()?.toUpperCase() || '';
-                        const match = allowed.some(f => badge.includes(f.toUpperCase()));
-                        art.style.display = match ? 'flex' : 'none';
-                    }
-                });
-            });
-        });
+  /* Modal overlay */
+  .modal-overlay{position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;padding:16px}
+  .modal-overlay.open{display:flex}
+  .modal-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(8px)}
+  .modal-content{position:relative;z-index:1;width:100%;max-width:400px;background:#171717;border:1px solid #262626;border-radius:12px;padding:24px;box-shadow:0 25px 50px rgba(0,0,0,.5);transform:scale(1);opacity:1;transition:transform .15s ease,opacity .15s ease}
+  .modal-overlay:not(.open) .modal-content{transform:scale(.97);opacity:0}
 
-        // Hover effect for cards - subtle border brightening
-        const cards = document.querySelectorAll('.surface-card');
-        cards.forEach(card => {
-            card.addEventListener('mouseenter', () => {
-                card.style.borderColor = '#404040';
-            });
-            card.addEventListener('mouseleave', () => {
-                card.style.borderColor = '#262626';
-            });
-        });
+  /* Search dropdown */
+  #search-dropdown{position:absolute;top:100%;left:0;right:0;max-height:70vh;overflow-y:auto;background:#171717;border:1px solid #262626;border-top:none;border-radius:0 0 12px 12px;z-index:60;display:none}
+  #search-dropdown.open{display:block}
+  #search-dropdown::-webkit-scrollbar{width:4px}
+  #search-dropdown::-webkit-scrollbar-thumb{background:#444748;border-radius:4px}
 
-        // Carregar vagas do database.json
-        fetch('database.json')
-            .then(res => res.json())
-            .then(data => {
-                const vagasAtivas = data.filter(d => !d.silent);
-                
-                // Atualizar Estatísticas
-                const statTotal = document.querySelector('h2.font-headline-lg.text-headline-lg.text-primary');
-                if(statTotal) statTotal.textContent = vagasAtivas.length;
-                
-                const statData = document.querySelectorAll('h2.font-headline-md.text-headline-md.text-primary')[0];
-                if(statData && data.length > 0) statData.textContent = data[0].data.split(' ')[0]; // Só a data
-                
-                // Injetar Vagas
-                const feed = document.getElementById('opportunities-feed');
-                feed.innerHTML = '';
-                
-                if (vagasAtivas.length === 0) {
-                    feed.innerHTML = '<div class="text-on-surface-variant p-sm">Nenhuma vaga encontrada recentemente.</div>';
-                    return;
-                }
-                
-                const saved = JSON.parse(localStorage.getItem('saved_vagas') || '[]');
+  /* Category badges */
+  .badge-concurso{background:#1e3a5f;color:#93c5fd}
+  .badge-processo{background:#14532d;color:#86efac}
+  .badge-pos{background:#3b0764;color:#c4b5fd}
+  .badge-diario{background:#451a03;color:#fcd34d}
+  .badge-edital{background:#134e4a;color:#5eead4}
+  .badge-google{background:#164e63;color:#67e8f9}
+  .badge-default{background:#262626;color:#c4c7c8}
 
-                vagasAtivas.forEach(vaga => {
-                    const isSaved = saved.includes(vaga.id);
-                    feed.innerHTML += `
-                    <article class="surface-card rounded-lg flex flex-col justify-between group p-sm" style="background-color: #171717; border: 1px solid #262626;">
-                        <div>
-                            <div class="flex justify-between items-start mb-2">
-                                <span class="bg-surface-container-highest px-xs py-1 rounded-sm text-[10px] font-bold uppercase tracking-wider text-on-surface-variant">${vaga.fonte}</span>
-                                <span class="text-[11px] text-on-surface-variant">${vaga.data}</span>
-                            </div>
-                            <h3 class="font-headline-md text-headline-md text-primary mb-xs leading-tight">${vaga.titulo}</h3>
-                            <p class="font-body-md text-body-md text-on-surface-variant line-clamp-3">${vaga.detalhes}</p>
-                        </div>
-                        <div class="mt-4 pt-3 border-t border-[#262626] flex gap-2">
-                            <a href="${vaga.link}" target="_blank" class="flex-grow text-center bg-primary text-[#0a0a0a] font-bold rounded-lg hover:opacity-90 active:scale-95 transition-all py-2 text-sm">Acessar Edital</a>
-                            <button onclick="toggleSave('${vaga.id}')" id="btn-save-${vaga.id}" class="w-10 flex items-center justify-center rounded-lg border border-[#262626] hover:bg-surface-variant transition-colors text-primary">
-                                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' ${isSaved?1:0};">bookmark</span>
-                            </button>
-                        </div>
-                    </article>
-                    `;
-                });
-            })
-            .catch(e => {
-                console.error("Erro carregando vagas:", e);
-                document.getElementById('opportunities-feed').innerHTML = '<div class="text-error p-sm">Erro ao carregar os dados. Verifique se o database.json existe.</div>';
-            });
+  /* Toggle */
+  .toggle-checkbox:checked{right:0;border-color:#fff}
+  .toggle-checkbox:checked + .toggle-label{background-color:#fff}
 
-        window.toggleSave = function(id) {
-            let saved = JSON.parse(localStorage.getItem('saved_vagas') || '[]');
-            const btn = document.getElementById(`btn-save-${id}`);
-            const icon = btn.querySelector('span');
-            
-            if (saved.includes(id)) {
-                saved = saved.filter(x => x !== id);
-                icon.style.fontVariationSettings = "'FILL' 0";
-            } else {
-                saved.push(id);
-                icon.style.fontVariationSettings = "'FILL' 1";
-            }
-            localStorage.setItem('saved_vagas', JSON.stringify(saved));
-        };
+  /* Animations */
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .animate-spin{animation:spin 1s linear infinite}
 
-        // Search logic
-        const searchBtn = document.querySelector('button[aria-label="Search"]');
-        const titleEl = document.querySelector('header h1');
-        let searchInput = null;
+  /* Scrollbar hide */
+  .no-scrollbar::-webkit-scrollbar{display:none}
+  .no-scrollbar{-ms-overflow-style:none;scrollbar-width:none}
+</style>
+</head>
+<body class="pb-20">
 
-        searchBtn.addEventListener('click', () => {
-            if (!searchInput) {
-                titleEl.style.display = 'none';
-                searchInput = document.createElement('input');
-                searchInput.type = 'text';
-                searchInput.placeholder = 'Buscar...';
-                searchInput.className = 'bg-[#171717] border border-[#262626] text-primary px-3 py-1 rounded w-full max-w-[180px] text-sm focus:outline-none focus:border-[#444748] mx-2';
-                searchBtn.insertAdjacentElement('afterend', searchInput);
-                searchInput.focus();
+<!-- ========== HEADER ========== -->
+<header class="fixed top-0 left-0 w-full z-50 bg-[#0A0A0A] border-b border-[#262626]" id="app-header">
+  <div class="h-14 flex items-center justify-between px-4 max-w-5xl mx-auto relative">
+    <button id="search-toggle" class="text-white hover:opacity-80 active:scale-95 transition-all flex items-center justify-center w-10 h-10">
+      <span class="material-symbols-outlined">search</span>
+    </button>
+    <h1 id="header-title" class="font-headline text-headline-md font-bold text-white tracking-tight cursor-pointer" onclick="navigateTo('feed')">Radar MS</h1>
+    <button id="refresh-btn" class="text-white hover:opacity-80 active:scale-95 transition-all flex items-center justify-center w-10 h-10">
+      <span class="material-symbols-outlined">sync</span>
+    </button>
+  </div>
+  <!-- Search bar (hidden by default) -->
+  <div id="search-bar" class="hidden bg-[#0A0A0A] border-b border-[#262626] relative">
+    <div class="max-w-5xl mx-auto px-4 py-2 flex items-center gap-2">
+      <span class="material-symbols-outlined text-[#c4c7c8]">search</span>
+      <input id="search-input" type="text" placeholder="Buscar concursos, vagas, editais..." class="flex-grow bg-transparent text-white text-sm focus:outline-none placeholder-[#8e9192]" autocomplete="off"/>
+      <button onclick="closeSearch()" class="text-[#c4c7c8] hover:text-white transition-colors">
+        <span class="material-symbols-outlined text-[20px]">close</span>
+      </button>
+    </div>
+    <div id="search-dropdown"></div>
+  </div>
+</header>
 
-                searchInput.addEventListener('input', (e) => {
-                    const query = e.target.value.toLowerCase();
-                    const articles = document.querySelectorAll('#opportunities-feed article');
-                    articles.forEach(art => {
-                        if (art.innerText.toLowerCase().includes(query)) {
-                            art.style.display = 'flex';
-                        } else {
-                            art.style.display = 'none';
-                        }
-                    });
-                });
-            } else {
-                searchInput.remove();
-                searchInput = null;
-                titleEl.style.display = 'block';
-                const articles = document.querySelectorAll('#opportunities-feed article');
-                articles.forEach(art => art.style.display = 'flex');
-            }
-        });
+<!-- ========== VIEW: FEED ========== -->
+<div id="view-feed" class="view active">
+  <div class="px-4 max-w-5xl mx-auto mt-16 flex flex-col gap-6 pt-4 pb-4">
+    <!-- Stats -->
+    <div class="grid grid-cols-3 gap-4">
+      <div class="bg-[#171717] border border-[#262626] p-4 rounded-lg">
+        <p class="text-[12px] text-[#c4c7c8] font-medium uppercase tracking-wider mb-1">Oportunidades</p>
+        <h2 id="stat-total" class="text-2xl font-bold text-white font-headline">0</h2>
+      </div>
+      <div class="bg-[#171717] border border-[#262626] p-4 rounded-lg">
+        <p class="text-[12px] text-[#c4c7c8] font-medium uppercase tracking-wider mb-1">Atualização</p>
+        <h2 id="stat-update" class="text-base font-semibold text-white font-headline">—</h2>
+      </div>
+      <div class="bg-[#171717] border border-[#262626] p-4 rounded-lg">
+        <p class="text-[12px] text-[#c4c7c8] font-medium uppercase tracking-wider mb-1">Maior Fonte</p>
+        <h2 id="stat-source" class="text-base font-semibold text-white font-headline">—</h2>
+      </div>
+    </div>
+    <!-- Filter Tabs -->
+    <nav class="flex overflow-x-auto gap-2 no-scrollbar">
+      <button class="filter-tab px-5 py-2 rounded-full text-[12px] font-medium whitespace-nowrap bg-white text-[#0a0a0a]" data-filter="all">Todas</button>
+      <button class="filter-tab px-5 py-2 rounded-full text-[12px] font-medium whitespace-nowrap bg-[#171717] border border-[#262626] text-[#c4c7c8] hover:border-[#444748]" data-filter="ufms">UFMS / IFMS</button>
+      <button class="filter-tab px-5 py-2 rounded-full text-[12px] font-medium whitespace-nowrap bg-[#171717] border border-[#262626] text-[#c4c7c8] hover:border-[#444748]" data-filter="gov">SAD / Governo</button>
+      <button class="filter-tab px-5 py-2 rounded-full text-[12px] font-medium whitespace-nowrap bg-[#171717] border border-[#262626] text-[#c4c7c8] hover:border-[#444748]" data-filter="pci">PCI Concursos</button>
+    </nav>
+    <!-- Feed Grid -->
+    <div id="feed-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="text-[#c4c7c8] text-sm p-4">Carregando oportunidades...</div>
+    </div>
+  </div>
+</div>
 
-        // Refresh logic
-        const refreshBtn = document.querySelector('button[aria-label="Refresh"]');
-        refreshBtn.addEventListener('click', () => {
-            refreshBtn.querySelector('span').classList.add('animate-spin');
-            setTimeout(() => {
-                window.location.reload();
-            }, 500);
-        });
-    </script>
+<!-- ========== VIEW: SALVOS ========== -->
+<div id="view-salvos" class="view">
+  <div class="px-4 max-w-5xl mx-auto mt-16 flex flex-col gap-6 pt-4 pb-4">
+    <div>
+      <h2 class="text-headline-lg-mobile font-headline font-semibold text-white mb-2">Salvos</h2>
+      <p class="text-sm text-[#c4c7c8]">Suas oportunidades e editais salvos para consulta rápida.</p>
+    </div>
+    <div id="saved-feed" class="flex flex-col gap-4">
+      <div class="text-[#c4c7c8] text-sm text-center p-6">Carregando...</div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== VIEW: ALERTAS ========== -->
+<div id="view-alertas" class="view">
+  <div class="px-4 max-w-3xl mx-auto mt-16 flex flex-col gap-8 pt-4 pb-4">
+    <div>
+      <h2 class="text-headline-lg-mobile font-headline font-semibold text-white mb-2">Alertas</h2>
+      <p class="text-sm text-[#c4c7c8]">Gerencie suas preferências e veja o histórico de oportunidades.</p>
+    </div>
+    <!-- Keywords -->
+    <section>
+      <h3 class="text-lg font-semibold text-white border-b border-[#262626] pb-2 mb-4 font-headline">Configurações de Alerta</h3>
+      <div class="bg-[#171717] border border-[#262626] rounded-xl p-5">
+        <div class="mb-3">
+          <span class="text-base font-semibold text-white font-headline">Palavras-chave</span>
+          <p class="text-[12px] text-[#c4c7c8] mt-1">Filtre alertas por termos específicos em editais.</p>
+        </div>
+        <div id="keywords-container" class="flex flex-wrap gap-2 mb-4">
+          <span class="text-[#c4c7c8] text-sm">Carregando...</span>
+        </div>
+        <div class="pt-3 border-t border-[#262626] flex justify-end">
+          <button id="save-keywords-btn" class="bg-[#262626] text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-white hover:text-[#0a0a0a] transition-colors flex items-center gap-2 disabled:opacity-50">
+            <span class="material-symbols-outlined text-[16px]">cloud_upload</span> Salvar no GitHub
+          </button>
+        </div>
+      </div>
+    </section>
+    <!-- History -->
+    <section>
+      <h3 class="text-lg font-semibold text-white border-b border-[#262626] pb-2 mb-4 font-headline">Histórico de Alertas</h3>
+      <div id="history-feed" class="flex flex-col border border-[#262626] rounded-xl bg-[#171717] overflow-hidden">
+        <div class="text-[#c4c7c8] text-center p-6 text-sm">Carregando histórico...</div>
+      </div>
+      <button id="load-more-btn" class="mx-auto mt-4 px-8 py-2 rounded-lg border border-[#262626] text-white text-sm font-medium hover:bg-[#262626] transition-colors hidden block">Carregar mais</button>
+    </section>
+  </div>
+</div>
+
+<!-- ========== VIEW: PERFIL ========== -->
+<div id="view-perfil" class="view">
+  <div class="px-4 max-w-3xl mx-auto mt-16 flex flex-col gap-8 pt-4 pb-4">
+    <!-- Avatar -->
+    <section class="flex flex-col items-center text-center">
+      <div class="w-28 h-28 rounded-full overflow-hidden border border-[#262626] mb-4 bg-[#171717] flex items-center justify-center">
+        <img id="avatar-img" alt="Avatar" class="w-full h-full object-cover" src="https://ui-avatars.com/api/?name=U&background=171717&color=ffffff"/>
+      </div>
+      <h2 id="profile-name" class="text-3xl font-bold text-white font-headline mb-1">Visitante</h2>
+      <p id="profile-bio" class="text-sm text-[#c4c7c8]">Adicione seu token para personalizar</p>
+    </section>
+    <!-- Token -->
+    <section>
+      <h3 class="text-lg font-semibold text-[#c4c7c8] mb-3 font-headline">Integração GitHub</h3>
+      <div class="bg-[#171717] border border-[#262626] p-5 rounded-xl flex flex-col gap-3">
+        <p class="text-sm text-[#c4c7c8]">Para editar palavras-chave na aba Alertas, insira seu <b class="text-white">Personal Access Token (Classic)</b> com permissão <code class="text-[10px] bg-[#262626] px-1 py-0.5 rounded">repo</code>.<br><span class="text-[11px] opacity-70">O token fica salvo apenas no seu navegador.</span></p>
+        <div class="flex gap-2">
+          <input type="password" id="github-token-input" placeholder="ghp_..." class="flex-grow bg-[#0A0A0A] border border-[#262626] text-white px-3 py-2 rounded-lg text-sm focus:outline-none focus:border-white"/>
+          <button id="save-token-btn" class="bg-white text-[#0a0a0a] px-4 py-2 rounded-lg font-bold hover:opacity-90 transition-opacity text-sm">Salvar</button>
+        </div>
+      </div>
+    </section>
+    <!-- Settings -->
+    <section>
+      <h3 class="text-lg font-semibold text-[#c4c7c8] mb-3 font-headline">Conta</h3>
+      <div class="flex flex-col rounded-xl overflow-hidden border border-[#262626] bg-[#171717]">
+        <a onclick="navigateTo('alertas')" class="flex items-center justify-between p-4 border-b border-[#262626] hover:bg-[#262626]/50 transition-colors cursor-pointer group">
+          <div class="flex items-center gap-4">
+            <div class="w-10 h-10 rounded-full bg-[#201f1f] flex items-center justify-center"><span class="material-symbols-outlined text-white">notifications_active</span></div>
+            <div><p class="text-base text-white">Preferências de Alerta</p><p class="text-[12px] text-[#c4c7c8]">Gerenciar palavras-chave e notificações</p></div>
+          </div>
+          <span class="material-symbols-outlined text-[#444748] group-hover:text-white transition-colors">chevron_right</span>
+        </a>
+        <button onclick="localStorage.clear(); window.location.reload();" class="flex items-center p-4 hover:bg-[#1C0000] transition-colors w-full text-left gap-4">
+          <div class="w-10 h-10 rounded-full bg-[#201f1f] flex items-center justify-center"><span class="material-symbols-outlined text-[#ffb4ab]">logout</span></div>
+          <div><p class="text-base text-[#ffb4ab]">Sair</p><p class="text-[12px] text-[#c4c7c8]">Limpar token e dados locais</p></div>
+        </button>
+      </div>
+    </section>
+  </div>
+</div>
+
+<!-- ========== BOTTOM NAV ========== -->
+<nav class="fixed bottom-0 left-0 w-full z-50 bg-[#0A0A0A] border-t border-[#262626]">
+  <div class="flex justify-around items-center h-16 max-w-md mx-auto">
+    <button onclick="navigateTo('feed')" class="nav-btn flex flex-col items-center justify-center w-16 transition-colors" data-view="feed">
+      <span class="material-symbols-outlined mb-0.5">rss_feed</span>
+      <span class="text-[10px] font-medium">Feed</span>
+    </button>
+    <button onclick="navigateTo('salvos')" class="nav-btn flex flex-col items-center justify-center w-16 transition-colors" data-view="salvos">
+      <span class="material-symbols-outlined mb-0.5">bookmark</span>
+      <span class="text-[10px] font-medium">Salvos</span>
+    </button>
+    <button onclick="navigateTo('alertas')" class="nav-btn flex flex-col items-center justify-center w-16 transition-colors" data-view="alertas">
+      <span class="material-symbols-outlined mb-0.5">notifications</span>
+      <span class="text-[10px] font-medium">Alertas</span>
+    </button>
+    <button onclick="navigateTo('perfil')" class="nav-btn flex flex-col items-center justify-center w-16 transition-colors" data-view="perfil">
+      <span class="material-symbols-outlined mb-0.5">person</span>
+      <span class="text-[10px] font-medium">Perfil</span>
+    </button>
+  </div>
+</nav>
+
+<!-- ========== MODAL: Add Keyword ========== -->
+<div id="keyword-modal" class="modal-overlay" onclick="if(event.target===this)closeKeywordModal()">
+  <div class="modal-backdrop"></div>
+  <div class="modal-content">
+    <h4 class="text-lg font-bold text-white font-headline mb-2">Nova Palavra-chave</h4>
+    <p class="text-sm text-[#c4c7c8] mb-4">O robô só disparará alertas no Telegram para editais contendo esta palavra.</p>
+    <input type="text" id="modal-keyword-input" placeholder="Ex: AWS, Segurança, Python..." class="w-full bg-[#0A0A0A] border border-[#262626] text-white px-3 py-3 rounded-lg text-sm focus:outline-none focus:border-white mb-4"/>
+    <div class="flex gap-2 justify-end">
+      <button onclick="closeKeywordModal()" class="px-4 py-2 rounded-lg text-sm text-[#c4c7c8] hover:text-white transition-colors">Cancelar</button>
+      <button onclick="confirmAddKeyword()" class="bg-white text-[#0a0a0a] px-5 py-2 rounded-lg text-sm font-bold hover:opacity-90 transition-opacity">Adicionar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ========== MODAL: Detail ========== -->
+<div id="detail-modal" class="modal-overlay" onclick="if(event.target===this)closeDetailModal()">
+  <div class="modal-backdrop"></div>
+  <div class="modal-content flex flex-col gap-3">
+    <div class="flex justify-between items-start">
+      <h4 id="detail-title" class="text-lg font-bold text-white font-headline leading-tight flex-1 pr-4"></h4>
+      <button onclick="closeDetailModal()" class="text-[#c4c7c8] hover:text-white transition-colors flex-shrink-0"><span class="material-symbols-outlined">close</span></button>
+    </div>
+    <div class="flex items-center gap-2">
+      <span id="detail-badge" class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider"></span>
+      <span class="text-[#c4c7c8] text-[10px]">•</span>
+      <span id="detail-date" class="text-[12px] text-[#c4c7c8]"></span>
+    </div>
+    <p id="detail-text" class="text-sm text-[#c4c7c8] leading-relaxed"></p>
+    <a id="detail-link" href="#" target="_blank" class="block text-center w-full bg-white text-[#0a0a0a] font-bold rounded-lg hover:opacity-90 active:scale-[0.98] transition-all py-2.5 text-sm mt-1">Acessar Edital</a>
+  </div>
+</div>
+
+<script>
+// ===== GLOBAL STATE =====
+let DB = [];
+let currentKeywords = [];
+let fileSha = null;
+let historyShown = 0;
+const HISTORY_PAGE = 5;
+const REPO = "TrueTrailBlazer/radar-ms-bot";
+
+// ===== CATEGORY DETECTION =====
+function getCategory(vaga) {
+  const t = (vaga.titulo + ' ' + vaga.detalhes + ' ' + vaga.fonte).toLowerCase();
+  if (/pós[- ]?gradua|lato sensu|especializa|mestrado|doutorado/i.test(t)) return { label:'Pós-Graduação', cls:'badge-pos' };
+  if (/concurso/i.test(t)) return { label:'Concurso', cls:'badge-concurso' };
+  if (/processo seletivo|sele[çc][ãa]o/i.test(t)) return { label:'Processo Seletivo', cls:'badge-processo' };
+  if (/di[áa]rio oficial|diogrande/i.test(t)) return { label:'Diário Oficial', cls:'badge-diario' };
+  if (/google/i.test(vaga.fonte)) return { label:'Google Alerts', cls:'badge-google' };
+  return { label:'Edital', cls:'badge-edital' };
+}
+
+function getCategoryBadgeHTML(vaga) {
+  const cat = getCategory(vaga);
+  return `<span class="${cat.cls} px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider">${cat.label}</span>`;
+}
+
+// ===== NAVIGATION (SPA) =====
+function navigateTo(view) {
+  document.querySelectorAll('.view').forEach(v => { v.classList.remove('active'); });
+  const target = document.getElementById('view-' + view);
+  if (target) {
+    setTimeout(() => target.classList.add('active'), 10);
+  }
+  // Update nav
+  document.querySelectorAll('.nav-btn').forEach(btn => {
+    const isActive = btn.dataset.view === view;
+    btn.className = btn.className.replace(/text-white|text-\[#c4c7c8\]|font-bold/g, '').trim();
+    if (isActive) {
+      btn.classList.add('text-white', 'font-bold');
+      btn.querySelector('.material-symbols-outlined').classList.add('fill');
+    } else {
+      btn.classList.add('text-[#c4c7c8]');
+      btn.querySelector('.material-symbols-outlined').classList.remove('fill');
+    }
+  });
+  window.location.hash = view;
+  closeSearch();
+  // Lazy-load view data
+  if (view === 'salvos') renderSaved();
+  if (view === 'perfil') loadProfile();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ===== SEARCH =====
+function openSearch() {
+  document.getElementById('search-bar').classList.remove('hidden');
+  document.getElementById('search-input').focus();
+}
+function closeSearch() {
+  document.getElementById('search-bar').classList.add('hidden');
+  document.getElementById('search-input').value = '';
+  document.getElementById('search-dropdown').classList.remove('open');
+  document.getElementById('search-dropdown').innerHTML = '';
+}
+
+document.getElementById('search-toggle').addEventListener('click', () => {
+  const bar = document.getElementById('search-bar');
+  if (bar.classList.contains('hidden')) openSearch(); else closeSearch();
+});
+
+document.getElementById('search-input').addEventListener('input', (e) => {
+  const q = e.target.value.toLowerCase().trim();
+  const dropdown = document.getElementById('search-dropdown');
+  if (q.length < 2) { dropdown.classList.remove('open'); dropdown.innerHTML = ''; return; }
+
+  const results = DB.filter(v => !v.silent && (v.titulo + ' ' + v.detalhes + ' ' + v.fonte).toLowerCase().includes(q)).slice(0, 15);
+  if (results.length === 0) {
+    dropdown.innerHTML = '<div class="p-4 text-sm text-[#c4c7c8] text-center">Nenhum resultado encontrado</div>';
+    dropdown.classList.add('open');
+    return;
+  }
+
+  dropdown.innerHTML = results.map(v => {
+    const cat = getCategory(v);
+    return `<a href="${v.link}" target="_blank" class="flex items-start gap-3 p-3 hover:bg-[#262626]/50 transition-colors border-b border-[#262626] last:border-0 cursor-pointer">
+      <div class="flex-shrink-0 mt-0.5"><span class="${cat.cls} px-2 py-0.5 rounded text-[9px] font-bold uppercase tracking-wider">${cat.label}</span></div>
+      <div class="flex-1 min-w-0">
+        <p class="text-sm text-white font-medium truncate">${v.titulo}</p>
+        <p class="text-[11px] text-[#8e9192] truncate mt-0.5">${v.detalhes}</p>
+      </div>
+      <span class="text-[11px] text-[#8e9192] flex-shrink-0 whitespace-nowrap">${v.data || ''}</span>
+    </a>`;
+  }).join('');
+  dropdown.classList.add('open');
+});
+
+document.getElementById('search-input').addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeSearch();
+});
+
+// Close search on click outside
+document.addEventListener('click', (e) => {
+  if (!document.getElementById('app-header').contains(e.target)) closeSearch();
+});
+
+// ===== REFRESH =====
+document.getElementById('refresh-btn').addEventListener('click', () => {
+  const icon = document.querySelector('#refresh-btn span');
+  icon.classList.add('animate-spin');
+  loadDatabase().then(() => {
+    const currentView = window.location.hash.replace('#', '') || 'feed';
+    if (currentView === 'feed') renderFeed();
+    if (currentView === 'salvos') renderSaved();
+    if (currentView === 'alertas') { historyShown = 0; renderHistory(); }
+    setTimeout(() => icon.classList.remove('animate-spin'), 600);
+  });
+});
+
+// ===== DATABASE =====
+function loadDatabase() {
+  return fetch('database.json')
+    .then(r => { if (!r.ok) throw new Error('not found'); return r.json(); })
+    .then(data => { DB = data; })
+    .catch(() => { DB = []; });
+}
+
+// ===== FEED =====
+function renderFeed(filterKey) {
+  const grid = document.getElementById('feed-grid');
+  let vagas = DB.filter(v => !v.silent);
+  
+  // Apply filter
+  if (filterKey === 'ufms') vagas = vagas.filter(v => /ufms|ifms/i.test(v.fonte));
+  else if (filterKey === 'gov') vagas = vagas.filter(v => /governo|sad/i.test(v.fonte));
+  else if (filterKey === 'pci') vagas = vagas.filter(v => /pci/i.test(v.fonte));
+
+  // Stats
+  const allActive = DB.filter(v => !v.silent);
+  document.getElementById('stat-total').textContent = allActive.length;
+  if (allActive.length > 0) {
+    document.getElementById('stat-update').textContent = allActive[0].data || '—';
+    // Most common source
+    const sources = {};
+    allActive.forEach(v => { sources[v.fonte] = (sources[v.fonte]||0)+1; });
+    const topSource = Object.entries(sources).sort((a,b)=>b[1]-a[1])[0];
+    document.getElementById('stat-source').textContent = topSource ? topSource[0] : '—';
+  }
+
+  if (vagas.length === 0) {
+    grid.innerHTML = '<div class="text-[#c4c7c8] text-sm p-4 col-span-full text-center">Nenhuma oportunidade encontrada.</div>';
+    return;
+  }
+
+  const saved = JSON.parse(localStorage.getItem('saved_vagas') || '[]');
+  grid.innerHTML = vagas.map(v => {
+    const isSaved = saved.includes(v.id);
+    return `<article class="bg-[#171717] border border-[#262626] rounded-xl p-5 flex flex-col justify-between hover:border-[#444748] transition-colors">
+      <div>
+        <div class="flex justify-between items-start mb-2">
+          ${getCategoryBadgeHTML(v)}
+          <span class="text-[11px] text-[#8e9192]">${v.data}</span>
+        </div>
+        <h3 class="text-base font-semibold text-white font-headline mb-1.5 leading-tight">${v.titulo}</h3>
+        <p class="text-[13px] text-[#c4c7c8] leading-relaxed" style="display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden">${v.detalhes}</p>
+      </div>
+      <div class="mt-4 pt-3 border-t border-[#262626] flex gap-2">
+        <a href="${v.link}" target="_blank" class="flex-grow text-center bg-white text-[#0a0a0a] font-bold rounded-lg hover:opacity-90 active:scale-[0.98] transition-all py-2 text-sm">Acessar Edital</a>
+        <button onclick="toggleSave('${v.id}')" id="btn-save-${v.id}" class="w-10 flex items-center justify-center rounded-lg border border-[#262626] hover:bg-[#262626] transition-colors text-white">
+          <span class="material-symbols-outlined" style="font-variation-settings:'FILL' ${isSaved?1:0}">bookmark</span>
+        </button>
+      </div>
+    </article>`;
+  }).join('');
+}
+
+// Filter tabs
+document.querySelectorAll('.filter-tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-tab').forEach(b => {
+      b.className = b.className.replace(/bg-white text-\[#0a0a0a\]/g, 'bg-[#171717] border border-[#262626] text-[#c4c7c8]');
+    });
+    btn.className = btn.className.replace(/bg-\[#171717\] border border-\[#262626\] text-\[#c4c7c8\]|hover:border-\[#444748\]/g, '').trim();
+    btn.classList.add('bg-white', 'text-[#0a0a0a]');
+    renderFeed(btn.dataset.filter === 'all' ? null : btn.dataset.filter);
+  });
+});
+
+// Save toggle
+window.toggleSave = function(id) {
+  let saved = JSON.parse(localStorage.getItem('saved_vagas') || '[]');
+  const btn = document.getElementById('btn-save-' + id);
+  if (!btn) return;
+  const icon = btn.querySelector('span');
+  if (saved.includes(id)) {
+    saved = saved.filter(x => x !== id);
+    icon.style.fontVariationSettings = "'FILL' 0";
+  } else {
+    saved.push(id);
+    icon.style.fontVariationSettings = "'FILL' 1";
+  }
+  localStorage.setItem('saved_vagas', JSON.stringify(saved));
+};
+
+// ===== SAVED =====
+function renderSaved() {
+  const feed = document.getElementById('saved-feed');
+  const saved = JSON.parse(localStorage.getItem('saved_vagas') || '[]');
+  const vagas = DB.filter(v => saved.includes(v.id) && !v.silent);
+  if (vagas.length === 0) {
+    feed.innerHTML = '<div class="text-[#c4c7c8] text-sm text-center p-6">Nenhuma vaga salva. Explore o Feed para salvar oportunidades.</div>';
+    return;
+  }
+  feed.innerHTML = vagas.map(v => `
+    <article id="art-${v.id}" class="bg-[#171717] border border-[#262626] p-5 rounded-xl flex flex-col md:flex-row md:items-center justify-between gap-4 hover:border-[#444748] transition-colors">
+      <div class="flex flex-col gap-1.5 flex-1">
+        <div class="flex items-center gap-2 mb-1">${getCategoryBadgeHTML(v)}<span class="text-[11px] text-[#8e9192]">${v.data}</span></div>
+        <h2 class="text-base font-semibold text-white font-headline">${v.titulo}</h2>
+        <p class="text-[13px] text-[#c4c7c8]" style="display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">${v.detalhes}</p>
+      </div>
+      <div class="flex items-center gap-2 pt-3 md:pt-0 border-t border-[#262626] md:border-0">
+        <a href="${v.link}" target="_blank" class="bg-white text-[#0a0a0a] text-sm font-bold px-4 py-2 rounded-lg hover:opacity-90 transition-opacity">Acessar</a>
+        <button onclick="removeSaved('${v.id}')" class="w-10 h-10 flex items-center justify-center rounded-lg border border-[#262626] hover:border-white transition-colors text-white">
+          <span class="material-symbols-outlined fill">bookmark</span>
+        </button>
+      </div>
+    </article>
+  `).join('');
+}
+
+window.removeSaved = function(id) {
+  let saved = JSON.parse(localStorage.getItem('saved_vagas') || '[]');
+  saved = saved.filter(x => x !== id);
+  localStorage.setItem('saved_vagas', JSON.stringify(saved));
+  const art = document.getElementById('art-' + id);
+  if (art) { art.style.opacity = '0'; art.style.transform = 'scale(0.95)'; art.style.transition = 'all .2s'; setTimeout(() => { art.remove(); if (saved.length===0) renderSaved(); }, 200); }
+};
+
+// ===== ALERTS / HISTORY =====
+function renderHistory() {
+  const feed = document.getElementById('history-feed');
+  const btn = document.getElementById('load-more-btn');
+  const all = DB.filter(v => !v.silent);
+  if (all.length === 0) { feed.innerHTML = '<div class="text-[#c4c7c8] text-center p-6 text-sm">Nenhum alerta ainda. Aguardando próximo ciclo do robô.</div>'; btn.classList.add('hidden'); return; }
+  
+  const next = all.slice(historyShown, historyShown + HISTORY_PAGE);
+  if (historyShown === 0) feed.innerHTML = '';
+  next.forEach(v => {
+    feed.innerHTML += `<div class="p-4 flex gap-3 border-b border-[#262626] last:border-0 hover:bg-[#262626]/30 transition-colors history-item">
+      <div class="flex-shrink-0 mt-1.5"><div class="w-2 h-2 rounded-full bg-white"></div></div>
+      <div class="flex flex-col gap-1.5 flex-grow min-w-0">
+        <div class="flex justify-between items-start gap-3">
+          <span class="text-[15px] font-semibold text-white font-headline leading-tight">${v.titulo}</span>
+          <span class="text-[11px] text-[#8e9192] whitespace-nowrap flex-shrink-0">${v.data}</span>
+        </div>
+        <p class="text-[13px] text-[#c4c7c8]" style="display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">${v.detalhes}</p>
+        <div class="flex items-center gap-2 mt-0.5">
+          ${getCategoryBadgeHTML(v)}
+          <button onclick='openDetailModal(${JSON.stringify(v).replace(/'/g,"&#39;")})' class="text-[12px] text-white hover:underline flex items-center gap-1 ml-auto cursor-pointer font-medium">
+            Ver Detalhes <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+          </button>
+        </div>
+      </div>
+    </div>`;
+  });
+  historyShown += next.length;
+  btn.classList.toggle('hidden', historyShown >= all.length);
+}
+
+document.getElementById('load-more-btn').addEventListener('click', renderHistory);
+
+// ===== KEYWORDS =====
+function renderKeywords() {
+  const container = document.getElementById('keywords-container');
+  container.innerHTML = '';
+  currentKeywords.forEach((kw, idx) => {
+    const btn = document.createElement('button');
+    btn.className = 'bg-white text-[#2f3131] px-3 py-1.5 rounded-lg text-[12px] font-bold flex items-center gap-1.5 hover:opacity-80 transition-opacity';
+    btn.innerHTML = `${kw} <span class="material-symbols-outlined text-[14px]" onclick="event.stopPropagation();removeKeyword(${idx})">close</span>`;
+    container.appendChild(btn);
+  });
+  const addBtn = document.createElement('button');
+  addBtn.className = 'bg-[#262626] border border-[#262626] text-[#c4c7c8] px-3 py-1.5 rounded-lg text-[12px] font-bold flex items-center gap-1.5 hover:text-white hover:border-[#444748] transition-colors uppercase tracking-wider';
+  addBtn.innerHTML = '<span class="material-symbols-outlined text-[14px]">add</span> Adicionar';
+  addBtn.onclick = openKeywordModal;
+  container.appendChild(addBtn);
+}
+
+window.removeKeyword = function(idx) { currentKeywords.splice(idx, 1); renderKeywords(); };
+
+function loadKeywords() {
+  fetch(`https://api.github.com/repos/${REPO}/contents/config.json`)
+    .then(r => r.json())
+    .then(data => {
+      if (data.sha) {
+        fileSha = data.sha;
+        const content = JSON.parse(decodeURIComponent(escape(atob(data.content))));
+        currentKeywords = content.keywords || [];
+      }
+      renderKeywords();
+    })
+    .catch(() => {
+      fetch('config.json').then(r=>r.json()).then(d=>{ currentKeywords = d.keywords||[]; renderKeywords(); }).catch(()=>renderKeywords());
+    });
+}
+
+document.getElementById('save-keywords-btn').addEventListener('click', function() {
+  const token = localStorage.getItem('github_pat');
+  if (!token) { alert("Adicione o Token na tela de Perfil primeiro."); navigateTo('perfil'); return; }
+  const btn = this;
+  btn.innerHTML = '<span class="material-symbols-outlined text-[16px] animate-spin">sync</span> Salvando...';
+  btn.disabled = true;
+  const encoded = btoa(unescape(encodeURIComponent(JSON.stringify({ keywords: currentKeywords }, null, 2))));
+  fetch(`https://api.github.com/repos/${REPO}/contents/config.json`, {
+    method:'PUT', headers:{'Authorization':`token ${token}`,'Content-Type':'application/json'},
+    body: JSON.stringify({ message:"Update keywords via Radar MS UI", content:encoded, sha:fileSha })
+  }).then(r=>r.json()).then(data => {
+    if (data.content?.sha) {
+      fileSha = data.content.sha;
+      btn.innerHTML = '<span class="material-symbols-outlined text-[16px]">check</span> Salvo!';
+      setTimeout(()=>{ btn.innerHTML='<span class="material-symbols-outlined text-[16px]">cloud_upload</span> Salvar no GitHub'; btn.disabled=false; }, 2000);
+    } else {
+      alert("Erro. Verifique permissão 'repo' do token."); btn.innerHTML='<span class="material-symbols-outlined text-[16px]">cloud_upload</span> Salvar no GitHub'; btn.disabled=false;
+    }
+  }).catch(()=>{ alert("Erro na requisição."); btn.disabled=false; });
+});
+
+// ===== MODALS =====
+function openKeywordModal() {
+  document.getElementById('keyword-modal').classList.add('open');
+  setTimeout(() => document.getElementById('modal-keyword-input').focus(), 50);
+}
+function closeKeywordModal() {
+  document.getElementById('keyword-modal').classList.remove('open');
+  document.getElementById('modal-keyword-input').value = '';
+}
+function confirmAddKeyword() {
+  const val = document.getElementById('modal-keyword-input').value.trim();
+  if (val) { currentKeywords.push(val); renderKeywords(); }
+  closeKeywordModal();
+}
+document.getElementById('modal-keyword-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') confirmAddKeyword();
+  if (e.key === 'Escape') closeKeywordModal();
+});
+
+function openDetailModal(vaga) {
+  document.getElementById('detail-title').textContent = vaga.titulo;
+  const cat = getCategory(vaga);
+  const badge = document.getElementById('detail-badge');
+  badge.textContent = cat.label;
+  badge.className = cat.cls + ' px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider';
+  document.getElementById('detail-date').textContent = vaga.data;
+  document.getElementById('detail-text').textContent = vaga.detalhes;
+  document.getElementById('detail-link').href = vaga.link;
+  document.getElementById('detail-modal').classList.add('open');
+}
+function closeDetailModal() { document.getElementById('detail-modal').classList.remove('open'); }
+
+// ===== PROFILE =====
+function loadProfile() {
+  const token = localStorage.getItem('github_pat');
+  const input = document.getElementById('github-token-input');
+  const btn = document.getElementById('save-token-btn');
+  if (token) {
+    input.value = token;
+    btn.textContent = 'Atualizar';
+    fetch('https://api.github.com/user', { headers:{'Authorization':`token ${token}`} })
+      .then(r=>r.json()).then(data => {
+        if (data.login) {
+          document.getElementById('avatar-img').src = data.avatar_url;
+          document.getElementById('profile-name').textContent = data.name || data.login;
+          document.getElementById('profile-bio').textContent = data.bio || `@${data.login}`;
+        }
+      }).catch(()=>{});
+  }
+}
+
+document.getElementById('save-token-btn').addEventListener('click', () => {
+  const val = document.getElementById('github-token-input').value.trim();
+  if (val) { localStorage.setItem('github_pat', val); document.getElementById('save-token-btn').textContent='Salvo!'; setTimeout(loadProfile, 500); }
+  else { localStorage.removeItem('github_pat'); window.location.reload(); }
+});
+
+// ===== INIT =====
+loadDatabase().then(() => {
+  renderFeed();
+  renderHistory();
+  loadKeywords();
+  // Route from hash
+  const hash = window.location.hash.replace('#','') || 'feed';
+  navigateTo(hash);
+});
+
+window.addEventListener('hashchange', () => {
+  const hash = window.location.hash.replace('#','') || 'feed';
+  navigateTo(hash);
+});
+</script>
 </body></html>

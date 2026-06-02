@@ -11,19 +11,19 @@
     {
         "id": "mock_id_1",
         "titulo": "Analista de Tecnologia da Informação",
-        "fonte": "SAD/MS",
+        "fonte": "Governo MS",
         "detalhes": "Processo seletivo simplificado para contratação imediata e cadastro reserva em tecnologia da informação. Salário R$ 8.500.",
         "data": "02/06/2026 14:30",
-        "link": "https://concursos.ms.gov.br",
+        "link": "https://www.econcursoms.ms.gov.br/",
         "silent": false
     },
     {
         "id": "mock_id_2",
         "titulo": "Especialização Lato Sensu em Cibersegurança",
-        "fonte": "UFMS",
+        "fonte": "UFMS Pós",
         "detalhes": "Inscrições abertas para pós-graduação lato sensu em segurança cibernética.",
         "data": "01/06/2026 09:15",
-        "link": "https://posgraduacao.ufms.br",
+        "link": "https://posgraduacao.ufms.br/portal/cursos/listagem-inscricoes-abertas",
         "silent": false
     },
     {

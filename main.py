@@ -35,7 +35,7 @@ URLS_PCI = [
     "https://www.pciconcursos.com.br/concursos/ms/campo-grande",
     "https://www.pciconcursos.com.br/concursos/ms/sidrolandia"
 ]
-URL_SAD_MS = "https://concursos.ms.gov.br/"
+URL_SAD_MS = "https://www.econcursoms.ms.gov.br/"
 LINK_RSS_GOOGLE = "https://www.google.com/alerts/feeds/13337804871994635216/9517030646560371598"
 
 ALVOS_UFMS = [
@@ -171,18 +171,19 @@ def monitorar_sad(db):
         r = requests.get(URL_SAD_MS, headers=headers, timeout=15, verify=False)
         if r.status_code == 200:
             soup = BeautifulSoup(r.text, "html.parser")
-            for el in soup.find_all(['tr', 'li', 'div']):
-                lt = el.find('a')
+            for el in soup.find_all(['tr', 'li', 'div', 'a']):
+                lt = el if el.name == 'a' else el.find('a')
                 if not lt: continue
                 texto = el.get_text(separator=" ").strip()
                 if not PADRAO_TI.search(texto): continue
                 link = lt.get('href')
                 if not link: continue
-                if link.startswith('/'): link = "https://concursos.ms.gov.br" + link
+                if link.startswith('/'): link = "https://www.econcursoms.ms.gov.br" + link
+                if not link.startswith('http'): continue
                 if ja_existe(db, link): continue
                 
                 detalhes = texto[:200] + "..." if len(texto) > 200 else texto
-                msg = f"🚨 *NOVA VAGA NA SAD/MS (GOV MS)!*\n\n📝 *Detalhes:* {detalhes}\n\n🔗 *Link:* {link}"
+                msg = f"\U0001f6a8 *NOVA VAGA NA SAD/MS (GOV MS)!*\n\n\U0001f4dd *Detalhes:* {detalhes}\n\n\U0001f517 *Link:* {link}"
                 msg = destacar_termo(msg, texto)
                 if disparar_telegram(msg):
                     db = adicionar_vaga(db, link, "Processo Seletivo (SAD/MS)", "Governo MS", detalhes, link)
@@ -290,20 +291,61 @@ def monitorar_ufms_lato_sensu(db):
             r = requests.get(url, headers=headers, timeout=15)
             if r.status_code != 200: continue
             
-            texto = extrair_texto_ufms(r.text, tipo)
-            hash_atual = hashlib.md5(texto.encode('utf-8')).hexdigest()
-            id_hash = f"{url}_{hash_atual}"
+            soup = BeautifulSoup(r.text, 'html.parser')
             
-            if ja_existe(db, id_hash): continue
-            
-            encontradas = [p for p in ["especialização", "lato sensu", "segurança", "cibersegurança", "cybersecurity", "tecnologia"] if p in texto]
-            if encontradas:
-                msg = f"🚨 *Nova Atualização na UFMS Pós-Graduação!*\n\n🏢 *Alvo:* {nome}\n📝 *Palavras encontradas:* {', '.join(encontradas)}\n\n🔗 *Acesse:* {url}"
-                if disparar_telegram(msg):
-                    db = adicionar_vaga(db, id_hash, f"Pós-Graduação: {nome}", "UFMS Pós", f"Atualização de edital contendo: {', '.join(encontradas)}", url)
-                    novos += 1
+            if tipo == "lista_cursos":
+                # Extract individual course links from the listing
+                lista = soup.find('ul', id='ListagemProcessos')
+                if not lista:
+                    lista = soup  # fallback to whole page
+                for li in lista.find_all(['li', 'a', 'div']):
+                    link_tag = li if li.name == 'a' else li.find('a')
+                    if not link_tag: continue
+                    texto = li.get_text(separator=" ").strip().lower()
+                    link_curso = link_tag.get('href', '')
+                    if not link_curso: continue
+                    if link_curso.startswith('/'): link_curso = "https://posgraduacao.ufms.br" + link_curso
+                    if not link_curso.startswith('http'): continue
+                    
+                    encontradas = [p for p in KEYWORDS_CONFIG + ["especialização", "lato sensu"] if p.lower() in texto]
+                    if not encontradas: continue
+                    if ja_existe(db, link_curso): continue
+                    
+                    titulo_curso = link_tag.get_text(separator=" ").strip()
+                    if len(titulo_curso) < 5: titulo_curso = texto[:100]
+                    titulo_curso = titulo_curso[:120]
+                    
+                    msg = f"\U0001f6a8 *Pós-Graduação UFMS - Inscrição Aberta!*\n\n\U0001f3eb *Curso:* {titulo_curso}\n\U0001f4dd *Palavras:* {', '.join(encontradas[:5])}\n\n\U0001f517 *Inscreva-se:* {link_curso}"
+                    if disparar_telegram(msg):
+                        db = adicionar_vaga(db, link_curso, titulo_curso, "UFMS Pós", f"Inscrições abertas. Palavras: {', '.join(encontradas[:5])}", link_curso)
+                        novos += 1
+                        time.sleep(2)
             else:
-                db = adicionar_vaga(db, id_hash, f"Atualização Pós: {nome}", "UFMS Pós", "Página alterada (Sem palavras TI detectadas)", url, is_silent=True)
+                # General page monitoring (PROPP)
+                for tag in soup(["script", "style", "nav", "footer", "header"]): tag.extract()
+                texto = ' '.join(soup.get_text(separator=' ').split()).lower()
+                hash_atual = hashlib.md5(texto.encode('utf-8')).hexdigest()
+                id_hash = f"{url}_{hash_atual}"
+                
+                if ja_existe(db, id_hash): continue
+                
+                encontradas = [p for p in KEYWORDS_CONFIG + ["especialização", "lato sensu"] if p.lower() in texto]
+                if encontradas:
+                    # Try to find a specific link on the page
+                    best_link = url
+                    for a in soup.find_all('a', href=True):
+                        a_text = a.get_text().lower()
+                        if any(k.lower() in a_text for k in encontradas[:3]):
+                            href = a.get('href', '')
+                            if href.startswith('/'): href = 'https://propp.ufms.br' + href
+                            if href.startswith('http'): best_link = href; break
+                    
+                    msg = f"\U0001f6a8 *Nova Atualização na UFMS Pós-Graduação!*\n\n\U0001f3eb *Alvo:* {nome}\n\U0001f4dd *Palavras encontradas:* {', '.join(encontradas[:5])}\n\n\U0001f517 *Acesse:* {best_link}"
+                    if disparar_telegram(msg):
+                        db = adicionar_vaga(db, id_hash, f"Pós-Graduação: {nome}", "UFMS Pós", f"Atualização contendo: {', '.join(encontradas[:5])}", best_link)
+                        novos += 1
+                else:
+                    db = adicionar_vaga(db, id_hash, f"Atualização Pós: {nome}", "UFMS Pós", "Página alterada (Sem palavras TI detectadas)", url, is_silent=True)
         except Exception as e:
             print(f"Erro UFMS Pós {nome}: {e}")
     return db, novos

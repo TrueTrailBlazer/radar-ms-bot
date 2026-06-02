@@ -17,7 +17,17 @@ TELEGRAM_CHAT_ID = os.environ.get("TELEGRAM_CHAT_ID", "1243055118")
 
 DATABASE_FILE = "database.json"
 
-PADRAO_TI = re.compile(r'\b(ti|t\.i\.|tecnologia da informa[çc][ãa]o|suporte|analista de sistemas|tecn[óo]logo em sistemas|desenvolvedor|programador|python|java|php|web|ads|computa[çc][ãa]o|inform[áa]tica|redes|segurança|cibersegurança|cybersecurity)\b', re.IGNORECASE)
+def carregar_palavras_chave():
+    try:
+        with open("config.json", "r", encoding="utf-8") as f:
+            data = json.load(f)
+            return data.get("keywords", [])
+    except:
+        return ["TI", "Desenvolvedor", "Redes"]
+
+KEYWORDS_CONFIG = carregar_palavras_chave()
+if not KEYWORDS_CONFIG: KEYWORDS_CONFIG = ["TI"]
+PADRAO_TI = re.compile(r'(?i)\b(' + '|'.join(re.escape(k) for k in KEYWORDS_CONFIG) + r')\b')
 PADRAO_LOCAL = re.compile(r'\b(ms|mato grosso do sul|campo grande|sidrol[âa]ndia|ufms|uems|ifms|sad|agesul)\b', re.IGNORECASE)
 PADRAO_VAGA = re.compile(r'\b(processo seletivo|concurso|edital|contrata[çc][ãa]o|sele[çc][ãa]o|vaga|especialização|lato sensu)\b', re.IGNORECASE)
 

@@ -1,41 +1,5 @@
 [
     {
-        "id": "https://posgraduacao.ufms.br/portal/cursos/listagem-inscricoes-abertas_d9b26bb8bdfddbcd29259d11dca01f09",
-        "titulo": "Pós-Graduação: Inscrições Abertas Pós",
-        "fonte": "UFMS Pós",
-        "detalhes": "Atualização de edital contendo: especialização",
-        "data": "02/06/2026 20:19",
-        "link": "https://posgraduacao.ufms.br/portal/cursos/listagem-inscricoes-abertas",
-        "silent": false
-    },
-    {
-        "id": "https://propp.ufms.br/_addc12ba9f19b12f86c97fab75c6884d",
-        "titulo": "Pós-Graduação: PROPP Editais",
-        "fonte": "UFMS Pós",
-        "detalhes": "Atualização de edital contendo: especialização, segurança",
-        "data": "02/06/2026 20:19",
-        "link": "https://propp.ufms.br/",
-        "silent": false
-    },
-    {
-        "id": "https://www.google.com/url?rct=j&sa=t&url=https://al.ms.gov.br/RadioAssembleia/AudioPlay/31025&ct=ga&cd=CAIyHzUxN2JiOTE5YWI4NDk1Y2I6Y29tLmJyOnB0OkJSOlI&usg=AOvVaw1xrQN796DtBPtRJ9J9ygjr",
-        "titulo": "Assembleia Legislativa de Mato Grosso do Sul - ALEMS",
-        "fonte": "Google Alerts",
-        "detalhes": "Campo Grande - MS - Brasil - CNPJ: 03.979.390/0001-81 © Assembleia Legislativa de Mato Grosso do Sul por Easy Net Tecnologia da Informação. Fechar.",
-        "data": "02/06/2026 20:18",
-        "link": "https://www.google.com/url?rct=j&sa=t&url=https://al.ms.gov.br/RadioAssembleia/AudioPlay/31025&ct=ga&cd=CAIyHzUxN2JiOTE5YWI4NDk1Y2I6Y29tLmJyOnB0OkJSOlI&usg=AOvVaw1xrQN796DtBPtRJ9J9ygjr",
-        "silent": false
-    },
-    {
-        "id": "https://www.google.com/url?rct=j&sa=t&url=https://folha.qconcursos.com/n/concurso-conselho-regional-de-quimica-ms-2-vagas-em-campo-grande&ct=ga&cd=CAIyHzUxN2JiOTE5YWI4NDk1Y2I6Y29tLmJyOnB0OkJSOlI&usg=AOvVaw1GwMyHQww8WmI8IHFJiS06",
-        "titulo": "Concurso Conselho Regional de Química MS: 2 vagas em Campo Grande | Folha Dirigida",
-        "fonte": "Google Alerts",
-        "detalhes": "Concurso Conselho Regional de Química MS: 2 vagas em Campo Grande ... Informática. - Conhecimentos complementares (30 itens): legislação ...",
-        "data": "02/06/2026 20:18",
-        "link": "https://www.google.com/url?rct=j&sa=t&url=https://folha.qconcursos.com/n/concurso-conselho-regional-de-quimica-ms-2-vagas-em-campo-grande&ct=ga&cd=CAIyHzUxN2JiOTE5YWI4NDk1Y2I6Y29tLmJyOnB0OkJSOlI&usg=AOvVaw1GwMyHQww8WmI8IHFJiS06",
-        "silent": false
-    },
-    {
         "id": "mock_id_1",
         "titulo": "Analista de Tecnologia da Informação",
         "fonte": "SAD/MS",

@@ -221,7 +221,10 @@
                     return;
                 }
                 
+                const saved = JSON.parse(localStorage.getItem('saved_vagas') || '[]');
+
                 vagasAtivas.forEach(vaga => {
+                    const isSaved = saved.includes(vaga.id);
                     feed.innerHTML += `
                     <article class="surface-card rounded-lg flex flex-col justify-between group p-sm" style="background-color: #171717; border: 1px solid #262626;">
                         <div>
@@ -232,8 +235,11 @@
                             <h3 class="font-headline-md text-headline-md text-primary mb-xs leading-tight">${vaga.titulo}</h3>
                             <p class="font-body-md text-body-md text-on-surface-variant line-clamp-3">${vaga.detalhes}</p>
                         </div>
-                        <div class="mt-4 pt-3 border-t border-[#262626]">
-                            <a href="${vaga.link}" target="_blank" class="block text-center w-full bg-primary text-[#0a0a0a] font-bold rounded-lg hover:opacity-90 active:scale-95 transition-all py-2 text-sm">Acessar Edital</a>
+                        <div class="mt-4 pt-3 border-t border-[#262626] flex gap-2">
+                            <a href="${vaga.link}" target="_blank" class="flex-grow text-center bg-primary text-[#0a0a0a] font-bold rounded-lg hover:opacity-90 active:scale-95 transition-all py-2 text-sm">Acessar Edital</a>
+                            <button onclick="toggleSave('${vaga.id}')" id="btn-save-${vaga.id}" class="w-10 flex items-center justify-center rounded-lg border border-[#262626] hover:bg-surface-variant transition-colors text-primary">
+                                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' ${isSaved?1:0};">bookmark</span>
+                            </button>
                         </div>
                     </article>
                     `;
@@ -243,5 +249,64 @@
                 console.error("Erro carregando vagas:", e);
                 document.getElementById('opportunities-feed').innerHTML = '<div class="text-error p-sm">Erro ao carregar os dados. Verifique se o database.json existe.</div>';
             });
+
+        window.toggleSave = function(id) {
+            let saved = JSON.parse(localStorage.getItem('saved_vagas') || '[]');
+            const btn = document.getElementById(`btn-save-${id}`);
+            const icon = btn.querySelector('span');
+            
+            if (saved.includes(id)) {
+                saved = saved.filter(x => x !== id);
+                icon.style.fontVariationSettings = "'FILL' 0";
+            } else {
+                saved.push(id);
+                icon.style.fontVariationSettings = "'FILL' 1";
+            }
+            localStorage.setItem('saved_vagas', JSON.stringify(saved));
+        };
+
+        // Search logic
+        const searchBtn = document.querySelector('button[aria-label="Search"]');
+        const titleEl = document.querySelector('header h1');
+        let searchInput = null;
+
+        searchBtn.addEventListener('click', () => {
+            if (!searchInput) {
+                titleEl.style.display = 'none';
+                searchInput = document.createElement('input');
+                searchInput.type = 'text';
+                searchInput.placeholder = 'Buscar...';
+                searchInput.className = 'bg-[#171717] border border-[#262626] text-primary px-3 py-1 rounded w-full max-w-[180px] text-sm focus:outline-none focus:border-[#444748] mx-2';
+                searchBtn.insertAdjacentElement('afterend', searchInput);
+                searchInput.focus();
+
+                searchInput.addEventListener('input', (e) => {
+                    const query = e.target.value.toLowerCase();
+                    const articles = document.querySelectorAll('#opportunities-feed article');
+                    articles.forEach(art => {
+                        if (art.innerText.toLowerCase().includes(query)) {
+                            art.style.display = 'flex';
+                        } else {
+                            art.style.display = 'none';
+                        }
+                    });
+                });
+            } else {
+                searchInput.remove();
+                searchInput = null;
+                titleEl.style.display = 'block';
+                const articles = document.querySelectorAll('#opportunities-feed article');
+                articles.forEach(art => art.style.display = 'flex');
+            }
+        });
+
+        // Refresh logic
+        const refreshBtn = document.querySelector('button[aria-label="Refresh"]');
+        refreshBtn.addEventListener('click', () => {
+            refreshBtn.querySelector('span').classList.add('animate-spin');
+            setTimeout(() => {
+                window.location.reload();
+            }, 500);
+        });
     </script>
 </body></html>

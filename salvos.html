@@ -122,43 +122,8 @@
 <h1 class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-primary mb-sm">Salvos</h1>
 <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">Suas oportunidades e editais salvos para consulta rápida.</p>
 </section>
-<section class="flex flex-col gap-sm md:gap-md">
-<!-- Card 1 -->
-<article class="bg-[#171717] border border-[#262626] p-md rounded-DEFAULT flex flex-col md:flex-row md:items-center justify-between gap-md group hover:border-[#444748] transition-colors duration-300">
-<div class="flex flex-col gap-xs flex-1">
-<div class="flex items-center gap-xs mb-xs">
-<span class="px-xs py-base bg-[#262626] text-[#c4c7c8] font-label-sm text-label-sm rounded-DEFAULT uppercase tracking-wider">UFMS</span>
-<span class="font-label-sm text-label-sm text-on-surface-variant">•</span>
-<span class="font-label-sm text-label-sm text-on-surface-variant">Salvo em 12 Out</span>
-</div>
-<h2 class="font-headline-md text-headline-md text-primary">Analista de Redes</h2>
-<p class="font-body-md text-body-md text-on-surface-variant line-clamp-2">Atuação no suporte e manutenção da infraestrutura de redes do campus principal. Requer certificação Cisco CCNA e experiência com firewalls.</p>
-</div>
-<div class="flex items-center gap-sm mt-sm md:mt-0 pt-sm md:pt-0 border-t border-[#262626] md:border-t-0 justify-between md:justify-end w-full md:w-auto">
-<button class="bg-primary text-[#141313] font-label-sm text-label-sm px-sm py-xs rounded-DEFAULT hover:opacity-90 transition-opacity">Acessar Edital</button>
-<button aria-label="Remove from saved" class="w-10 h-10 flex items-center justify-center rounded-DEFAULT border border-[#262626] hover:border-primary transition-colors text-primary group">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">bookmark</span>
-</button>
-</div>
-</article>
-<!-- Card 2 -->
-<article class="bg-[#171717] border border-[#262626] p-md rounded-DEFAULT flex flex-col md:flex-row md:items-center justify-between gap-md group hover:border-[#444748] transition-colors duration-300">
-<div class="flex flex-col gap-xs flex-1">
-<div class="flex items-center gap-xs mb-xs">
-<span class="px-xs py-base bg-[#262626] text-[#c4c7c8] font-label-sm text-label-sm rounded-DEFAULT uppercase tracking-wider">SAD/MS</span>
-<span class="font-label-sm text-label-sm text-on-surface-variant">•</span>
-<span class="font-label-sm text-label-sm text-on-surface-variant">Salvo em 05 Out</span>
-</div>
-<h2 class="font-headline-md text-headline-md text-primary">Desenvolvedor Full Stack</h2>
-<p class="font-body-md text-body-md text-on-surface-variant line-clamp-2">Desenvolvimento de sistemas de gestão pública estadual. Foco em tecnologias web modernas (React, Node.js) e banco de dados PostgreSQL.</p>
-</div>
-<div class="flex items-center gap-sm mt-sm md:mt-0 pt-sm md:pt-0 border-t border-[#262626] md:border-t-0 justify-between md:justify-end w-full md:w-auto">
-<button class="bg-primary text-[#141313] font-label-sm text-label-sm px-sm py-xs rounded-DEFAULT hover:opacity-90 transition-opacity">Acessar Edital</button>
-<button aria-label="Remove from saved" class="w-10 h-10 flex items-center justify-center rounded-DEFAULT border border-[#262626] hover:border-primary transition-colors text-primary group">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">bookmark</span>
-</button>
-</div>
-</article>
+<section id="saved-feed" class="flex flex-col gap-sm md:gap-md">
+    <div class="text-on-surface-variant text-center p-md">Carregando itens salvos...</div>
 </section>
 </main>
 <!-- BottomNavBar -->
@@ -186,4 +151,64 @@
         </a>
     </div>
 </nav>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const feed = document.getElementById('saved-feed');
+        
+        fetch('database.json')
+            .then(r => {
+                if (!r.ok) throw new Error("Database não encontrado");
+                return r.json();
+            })
+            .then(data => {
+                const saved = JSON.parse(localStorage.getItem('saved_vagas') || '[]');
+                const vagasSalvas = data.filter(vaga => saved.includes(vaga.id) && !vaga.silent);
+                
+                if (vagasSalvas.length === 0) {
+                    feed.innerHTML = '<div class="text-on-surface-variant text-center p-md">Nenhuma vaga salva. Explore o Feed para salvar oportunidades.</div>';
+                    return;
+                }
+
+                feed.innerHTML = '';
+                vagasSalvas.forEach(vaga => {
+                    feed.innerHTML += `
+                    <article id="art-${vaga.id}" class="bg-[#171717] border border-[#262626] p-md rounded-DEFAULT flex flex-col md:flex-row md:items-center justify-between gap-md group hover:border-[#444748] transition-colors duration-300">
+                        <div class="flex flex-col gap-xs flex-1">
+                            <div class="flex items-center gap-xs mb-xs">
+                                <span class="px-xs py-base bg-[#262626] text-[#c4c7c8] font-label-sm text-label-sm rounded-DEFAULT uppercase tracking-wider">${vaga.fonte}</span>
+                                <span class="font-label-sm text-label-sm text-on-surface-variant">•</span>
+                                <span class="font-label-sm text-label-sm text-on-surface-variant">${vaga.data}</span>
+                            </div>
+                            <h2 class="font-headline-md text-headline-md text-primary">${vaga.titulo}</h2>
+                            <p class="font-body-md text-body-md text-on-surface-variant line-clamp-2">${vaga.detalhes}</p>
+                        </div>
+                        <div class="flex items-center gap-sm mt-sm md:mt-0 pt-sm md:pt-0 border-t border-[#262626] md:border-t-0 justify-between md:justify-end w-full md:w-auto">
+                            <a href="${vaga.link}" target="_blank" class="bg-primary text-[#141313] font-label-sm text-label-sm px-sm py-xs rounded-DEFAULT hover:opacity-90 transition-opacity">Acessar Edital</a>
+                            <button onclick="removeSave('${vaga.id}')" aria-label="Remove from saved" class="w-10 h-10 flex items-center justify-center rounded-DEFAULT border border-[#262626] hover:border-primary transition-colors text-primary group">
+                                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">bookmark</span>
+                            </button>
+                        </div>
+                    </article>
+                    `;
+                });
+            })
+            .catch(e => {
+                console.error(e);
+                feed.innerHTML = '<div class="text-error p-sm text-center">Erro ao carregar os dados. Verifique se o database.json existe.</div>';
+            });
+
+        window.removeSave = function(id) {
+            let saved = JSON.parse(localStorage.getItem('saved_vagas') || '[]');
+            saved = saved.filter(x => x !== id);
+            localStorage.setItem('saved_vagas', JSON.stringify(saved));
+            
+            const art = document.getElementById(`art-${id}`);
+            if(art) art.remove();
+
+            if (saved.length === 0) {
+                feed.innerHTML = '<div class="text-on-surface-variant text-center p-md">Nenhuma vaga salva. Explore o Feed para salvar oportunidades.</div>';
+            }
+        };
+    });
+</script>
 </body></html>

@@ -139,19 +139,13 @@
 <span class="font-headline-md text-headline-md text-primary text-[16px]">Palavras-chave</span>
 <span class="font-label-sm text-label-sm text-on-surface-variant">Filtre alertas por termos específicos em editais.</span>
 </div>
-<div class="flex flex-wrap gap-xs">
-<button class="bg-primary text-on-primary px-sm py-xs rounded-DEFAULT font-label-sm text-label-sm transition-opacity hover:opacity-80 flex items-center gap-xs">
-                            TI <span class="material-symbols-outlined text-[14px]">close</span>
-</button>
-<button class="bg-primary text-on-primary px-sm py-xs rounded-DEFAULT font-label-sm text-label-sm transition-opacity hover:opacity-80 flex items-center gap-xs">
-                            Desenvolvedor <span class="material-symbols-outlined text-[14px]">close</span>
-</button>
-<button class="bg-primary text-on-primary px-sm py-xs rounded-DEFAULT font-label-sm text-label-sm transition-opacity hover:opacity-80 flex items-center gap-xs">
-                            Redes <span class="material-symbols-outlined text-[14px]">close</span>
-</button>
-<button class="bg-[#262626] border border-[#262626] text-[#c4c7c8] px-sm py-xs rounded-DEFAULT font-label-sm text-label-sm transition-colors hover:text-primary hover:border-[#444748] flex items-center gap-xs uppercase tracking-wider">
-<span class="material-symbols-outlined text-[14px]">add</span> Adicionar
-                        </button>
+<div id="keywords-container" class="flex flex-wrap gap-xs">
+    <span class="text-on-surface-variant text-sm">Carregando...</span>
+</div>
+<div class="mt-4 pt-3 border-t border-[#262626] flex justify-end">
+    <button id="save-keywords-btn" class="bg-[#262626] text-primary px-4 py-2 rounded text-sm font-bold hover:bg-primary hover:text-[#0a0a0a] transition-colors flex items-center gap-2 disabled:opacity-50">
+        <span class="material-symbols-outlined text-[16px]">cloud_upload</span> Salvar no GitHub
+    </button>
 </div>
 </div>
 <!-- Region & Frequency Config -->
@@ -284,6 +278,112 @@
         </a>
     </div>
 </nav>
+<script>
+    let currentKeywords = [];
+    let fileSha = null;
+    const REPO = "TrueTrailBlazer/radar-ms-bot";
+
+    const container = document.getElementById('keywords-container');
+    const saveBtn = document.getElementById('save-keywords-btn');
+
+    function renderKeywords() {
+        container.innerHTML = '';
+        currentKeywords.forEach((kw, idx) => {
+            const btn = document.createElement('button');
+            btn.className = 'bg-primary text-on-primary px-sm py-xs rounded-DEFAULT font-label-sm text-label-sm transition-opacity hover:opacity-80 flex items-center gap-xs';
+            btn.innerHTML = `${kw} <span class="material-symbols-outlined text-[14px]" onclick="removeKeyword(${idx})">close</span>`;
+            container.appendChild(btn);
+        });
+
+        const addBtn = document.createElement('button');
+        addBtn.className = 'bg-[#262626] border border-[#262626] text-[#c4c7c8] px-sm py-xs rounded-DEFAULT font-label-sm text-label-sm transition-colors hover:text-primary hover:border-[#444748] flex items-center gap-xs uppercase tracking-wider';
+        addBtn.innerHTML = `<span class="material-symbols-outlined text-[14px]">add</span> Adicionar`;
+        addBtn.onclick = () => {
+            const nova = prompt("Digite a nova palavra-chave:");
+            if (nova && nova.trim() !== '') {
+                currentKeywords.push(nova.trim());
+                renderKeywords();
+            }
+        };
+        container.appendChild(addBtn);
+    }
+
+    window.removeKeyword = function(idx) {
+        currentKeywords.splice(idx, 1);
+        renderKeywords();
+    };
+
+    fetch(`https://api.github.com/repos/${REPO}/contents/config.json`)
+        .then(res => res.json())
+        .then(data => {
+            if(data.sha) {
+                fileSha = data.sha;
+                const content = JSON.parse(decodeURIComponent(escape(atob(data.content))));
+                currentKeywords = content.keywords || [];
+                renderKeywords();
+            } else {
+                fetch('config.json').then(r=>r.json()).then(d=>{
+                    currentKeywords = d.keywords || [];
+                    renderKeywords();
+                });
+            }
+        })
+        .catch(err => {
+            console.error("Erro carregando config", err);
+            fetch('config.json').then(r=>r.json()).then(d=>{
+                currentKeywords = d.keywords || [];
+                renderKeywords();
+            });
+        });
+
+    saveBtn.addEventListener('click', () => {
+        const token = localStorage.getItem('github_pat');
+        if (!token) {
+            alert("Você precisa adicionar o Token do GitHub na tela de Perfil para salvar no repositório.");
+            window.location.href = "perfil.html";
+            return;
+        }
+
+        saveBtn.innerHTML = `<span class="material-symbols-outlined text-[16px] animate-spin">sync</span> Salvando...`;
+        saveBtn.disabled = true;
+
+        const newContent = JSON.stringify({ keywords: currentKeywords }, null, 2);
+        const encodedContent = btoa(unescape(encodeURIComponent(newContent)));
+
+        fetch(`https://api.github.com/repos/${REPO}/contents/config.json`, {
+            method: 'PUT',
+            headers: {
+                'Authorization': `token ${token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                message: "Update keywords via Radar MS UI",
+                content: encodedContent,
+                sha: fileSha
+            })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.content && data.content.sha) {
+                fileSha = data.content.sha;
+                saveBtn.innerHTML = `<span class="material-symbols-outlined text-[16px]">check</span> Salvo com Sucesso!`;
+                setTimeout(() => {
+                    saveBtn.innerHTML = `<span class="material-symbols-outlined text-[16px]">cloud_upload</span> Salvar no GitHub`;
+                    saveBtn.disabled = false;
+                }, 2000);
+            } else {
+                alert("Erro ao salvar. Verifique se o token tem permissão 'repo' no Perfil.");
+                saveBtn.innerHTML = `<span class="material-symbols-outlined text-[16px]">cloud_upload</span> Salvar no GitHub`;
+                saveBtn.disabled = false;
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            alert("Erro na requisição.");
+            saveBtn.disabled = false;
+        });
+    });
+</script>
 <script>
         // Custom Toggle logic for the checkbox to animate smoothly within Tailwind constraints
         const checkbox = document.getElementById('toggle1');

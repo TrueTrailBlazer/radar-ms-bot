@@ -121,13 +121,21 @@
 <main class="w-full max-w-3xl mx-auto px-margin-mobile md:px-0 py-md md:py-lg flex flex-col gap-lg mt-16">
 <section class="flex flex-col items-center justify-center text-center mb-xl">
 <div class="relative w-32 h-32 rounded-full overflow-hidden border border-neutral-800 mb-md bg-surface-variant flex items-center justify-center">
-<img alt="Profile Avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDcRrTYWeywbUEVvAVxZPSGJU89UEeKYsvNgd38g5xl2D_uMlOmxyZo8ur_7XYfi-ym_DKzsy7tTfaNhEQhoyFlSZOVF-7kLcbuDuklgI2SX3JIkwrXagiD9Yv5t4NolDOGgIC754MKQ4yGKQ1w0s3mI4BMXDES5K0hCqdofB4_Zhx0Aw53pxA8nJn9X3gPXew1qoLI-68axwBRJYI9cowST4NJj-SvUKoo7tjXyydv6jA5bJ5BUnOMPfdtVp13BeNs3OSUYNDcOel2"/>
+<img id="avatar-img" alt="Profile Avatar" class="w-full h-full object-cover" src="https://ui-avatars.com/api/?name=U&background=171717&color=ffffff"/>
 </div>
-<h2 class="font-headline-xl text-headline-xl text-primary mb-base">Alexandre Silva</h2>
-<p class="font-body-lg text-body-lg text-on-surface-variant">alexandre.silva@radarms.com.br</p>
-<button class="mt-sm px-sm py-xs border border-outline-variant rounded-full font-label-sm text-label-sm text-primary hover:bg-surface-variant transition-colors flex items-center gap-base">
-<span class="material-symbols-outlined" style="font-size: 16px;">edit</span> Edit Profile
-</button>
+<h2 id="profile-name" class="font-headline-xl text-headline-xl text-primary mb-base">Visitante</h2>
+<p id="profile-bio" class="font-body-lg text-body-lg text-on-surface-variant">Adicione seu token para habilitar personalização</p>
+</section>
+
+<section class="max-w-2xl mx-auto mb-lg">
+<h3 class="font-headline-md text-headline-md text-on-surface-variant mb-md px-xs">Integração GitHub</h3>
+<div class="bg-[#171717] border border-[#262626] p-md rounded-xl flex flex-col gap-sm">
+    <p class="font-body-md text-body-md text-on-surface-variant">Para editar as palavras-chave na aba Alertas, o app precisa salvar um arquivo no seu repositório. Insira seu <b>Personal Access Token (Classic)</b> com permissão de `repo` abaixo. <br><span class="text-[12px] opacity-70">O token fica salvo apenas localmente no seu navegador.</span></p>
+    <div class="flex gap-2 mt-2">
+        <input type="password" id="github-token-input" placeholder="ghp_..." class="flex-grow bg-[#0A0A0A] border border-[#262626] text-primary px-3 py-2 rounded text-sm focus:outline-none focus:border-primary">
+        <button id="save-token-btn" class="bg-primary text-[#0a0a0a] px-4 py-2 rounded font-bold hover:opacity-90 transition-opacity">Salvar Token</button>
+    </div>
+</div>
 </section>
 <section class="max-w-2xl mx-auto">
 <h3 class="font-headline-md text-headline-md text-on-surface-variant mb-md px-xs">Conta e Configurações</h3>
@@ -207,4 +215,46 @@
         </a>
     </div>
 </nav>
+<script>
+    const tokenInput = document.getElementById('github-token-input');
+    const saveBtn = document.getElementById('save-token-btn');
+    const avatarImg = document.getElementById('avatar-img');
+    const profileName = document.getElementById('profile-name');
+    const profileBio = document.getElementById('profile-bio');
+
+    function loadProfile() {
+        const token = localStorage.getItem('github_pat');
+        if (token) {
+            tokenInput.value = token;
+            saveBtn.textContent = "Atualizar";
+            
+            fetch('https://api.github.com/user', {
+                headers: { 'Authorization': `token ${token}` }
+            })
+            .then(res => res.json())
+            .then(data => {
+                if(data.login) {
+                    avatarImg.src = data.avatar_url;
+                    profileName.textContent = data.name || data.login;
+                    profileBio.textContent = data.bio || `@${data.login}`;
+                }
+            })
+            .catch(err => console.error(err));
+        }
+    }
+
+    saveBtn.addEventListener('click', () => {
+        const val = tokenInput.value.trim();
+        if (val) {
+            localStorage.setItem('github_pat', val);
+            saveBtn.textContent = "Salvo!";
+            setTimeout(() => loadProfile(), 500);
+        } else {
+            localStorage.removeItem('github_pat');
+            window.location.reload();
+        }
+    });
+
+    loadProfile();
+</script>
 </body></html>

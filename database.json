@@ -1,5 +1,23 @@
 [
     {
+        "id": "https://posgraduacao.ufms.br/portal/cursos/verificar-inscricao/405",
+        "titulo": "Especialização em Conexões Interdisciplinares entre Metodologias Ativas, Educação Especial e Neurociência",
+        "fonte": "UFMS Pós",
+        "detalhes": "Inscrições abertas. Palavras: TI, especialização",
+        "data": "02/06/2026 23:01",
+        "link": "https://posgraduacao.ufms.br/portal/cursos/verificar-inscricao/405",
+        "silent": false
+    },
+    {
+        "id": "https://propp.ufms.br/_addc12ba9f19b12f86c97fab75c6884d",
+        "titulo": "Pós-Graduação: PROPP Editais",
+        "fonte": "UFMS Pós",
+        "detalhes": "Atualização contendo: TI, Pós-graduação, especialização",
+        "data": "02/06/2026 23:01",
+        "link": "https://propp.ufms.br/diretorias/edital-no-53-2026-propp-ufms-auxilio-para-publicacao-e-revisao-de-artigos-cientificos-em-2026/",
+        "silent": false
+    },
+    {
         "id": "https://www.google.com/url?rct=j&sa=t&url=https://folha.qconcursos.com/n/concurso-conselho-regional-de-quimica-ms-2-vagas-em-campo-grande&ct=ga&cd=CAIyHzUxN2JiOTE5YWI4NDk1Y2I6Y29tLmJyOnB0OkJSOlI&usg=AOvVaw1GwMyHQww8WmI8IHFJiS06",
         "titulo": "Concurso Conselho Regional de Química MS: 2 vagas em Campo Grande | Folha Dirigida",
         "fonte": "Google Alerts",

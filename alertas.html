@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Radar MS - Alertas</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container-lowest": "#0e0e0e",
+                    "on-secondary": "#00315d",
+                    "surface-container-low": "#1c1b1b",
+                    "on-secondary-container": "#d6e5ff",
+                    "error": "#ffb4ab",
+                    "secondary-fixed-dim": "#a4c9ff",
+                    "primary": "#ffffff",
+                    "on-primary-fixed-variant": "#454747",
+                    "surface-container-highest": "#353434",
+                    "inverse-surface": "#e5e2e1",
+                    "tertiary": "#ffffff",
+                    "inverse-primary": "#5d5f5f",
+                    "surface-container": "#201f1f",
+                    "on-primary": "#2f3131",
+                    "secondary-fixed": "#d4e3ff",
+                    "on-tertiary-fixed-variant": "#454747",
+                    "tertiary-fixed": "#e2e2e2",
+                    "primary-fixed-dim": "#c6c6c7",
+                    "on-surface-variant": "#c4c7c8",
+                    "secondary": "#a4c9ff",
+                    "surface-variant": "#353434",
+                    "on-tertiary-container": "#636565",
+                    "on-error-container": "#ffdad6",
+                    "secondary-container": "#0267b8",
+                    "on-surface": "#e5e2e1",
+                    "surface-tint": "#c6c6c7",
+                    "surface-container-high": "#2a2a2a",
+                    "surface-bright": "#3a3939",
+                    "outline": "#8e9192",
+                    "primary-fixed": "#e2e2e2",
+                    "outline-variant": "#444748",
+                    "tertiary-fixed-dim": "#c6c6c7",
+                    "tertiary-container": "#e2e2e2",
+                    "surface": "#141313",
+                    "surface-dim": "#141313",
+                    "on-tertiary-fixed": "#1a1c1c",
+                    "on-secondary-fixed-variant": "#004883",
+                    "on-secondary-fixed": "#001c39",
+                    "error-container": "#93000a",
+                    "inverse-on-surface": "#313030",
+                    "background": "#141313",
+                    "on-background": "#e5e2e1",
+                    "on-primary-container": "#636565",
+                    "on-primary-fixed": "#1a1c1c",
+                    "on-error": "#690005",
+                    "on-tertiary": "#2f3131",
+                    "primary-container": "#e2e2e2"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "xs": "8px",
+                    "margin-mobile": "16px",
+                    "margin-desktop": "64px",
+                    "md": "24px",
+                    "lg": "48px",
+                    "gutter": "24px",
+                    "sm": "16px",
+                    "xl": "80px",
+                    "base": "4px"
+            },
+            "fontFamily": {
+                    "headline-lg": ["Plus Jakarta Sans"],
+                    "headline-lg-mobile": ["Plus Jakarta Sans"],
+                    "body-lg": ["Plus Jakarta Sans"],
+                    "body-md": ["Plus Jakarta Sans"],
+                    "headline-xl": ["Plus Jakarta Sans"],
+                    "headline-md": ["Plus Jakarta Sans"],
+                    "label-sm": ["Plus Jakarta Sans"]
+            },
+            "fontSize": {
+                    "headline-lg": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                    "headline-lg-mobile": ["24px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                    "body-lg": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                    "body-md": ["14px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                    "headline-xl": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                    "headline-md": ["20px", { "lineHeight": "1.4", "fontWeight": "600" }],
+                    "label-sm": ["12px", { "lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "500" }]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+        .toggle-checkbox:checked { right: 0; border-color: #ffffff; }
+        .toggle-checkbox:checked + .toggle-label { background-color: #ffffff; }
+        .toggle-checkbox:checked + .toggle-label:after { transform: translateX(100%); border-color: white; }
+        body { min-height: max(884px, 100dvh); background-color: #0A0A0A; }
+    </style>
+</head>
+<body class="bg-background dark:bg-background text-on-surface antialiased min-h-screen selection:bg-surface-container-high pb-32">
+<!-- TopAppBar -->
+<header class="w-full top-0 sticky z-50 bg-[#0A0A0A] border-b border-[#262626]">
+<div class="flex items-center justify-between px-margin-mobile h-16 max-w-7xl mx-auto md:px-margin-desktop">
+<button aria-label="Search" class="text-primary dark:text-primary hover:opacity-80 transition-opacity scale-95 duration-100 flex items-center justify-center w-10 h-10 rounded-full">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+</button>
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-primary tracking-tight">Radar MS</h1>
+<button aria-label="Profile" class="w-8 h-8 rounded-full overflow-hidden bg-surface-variant hover:opacity-80 transition-opacity duration-100 flex items-center justify-center text-on-surface-variant font-label-sm text-label-sm">
+UP
+</button>
+</div>
+</header>
+<!-- Main Content -->
+<main class="w-full max-w-3xl mx-auto px-margin-mobile md:px-0 py-md md:py-lg flex flex-col gap-lg">
+<!-- Page Header -->
+<div class="flex flex-col gap-xs">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-primary">Alertas</h2>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-2xl">Gerencie suas preferências de notificação e veja o histórico de oportunidades.</p>
+</div>
+<!-- Section 1: Configurações de Alerta -->
+<section class="flex flex-col gap-sm md:gap-md">
+<h3 class="font-headline-md text-headline-md text-primary border-b border-[#262626] pb-xs">Configurações de Alerta</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-sm md:gap-md">
+<!-- Keywords Card -->
+<div class="bg-[#171717] border border-[#262626] rounded-DEFAULT p-md flex flex-col gap-md hover:border-[#444748] transition-colors">
+<div class="flex flex-col gap-base">
+<span class="font-headline-md text-headline-md text-primary text-[16px]">Palavras-chave</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Filtre alertas por termos específicos em editais.</span>
+</div>
+<div class="flex flex-wrap gap-xs">
+<button class="bg-primary text-on-primary px-sm py-xs rounded-DEFAULT font-label-sm text-label-sm transition-opacity hover:opacity-80 flex items-center gap-xs">
+                            TI <span class="material-symbols-outlined text-[14px]">close</span>
+</button>
+<button class="bg-primary text-on-primary px-sm py-xs rounded-DEFAULT font-label-sm text-label-sm transition-opacity hover:opacity-80 flex items-center gap-xs">
+                            Desenvolvedor <span class="material-symbols-outlined text-[14px]">close</span>
+</button>
+<button class="bg-primary text-on-primary px-sm py-xs rounded-DEFAULT font-label-sm text-label-sm transition-opacity hover:opacity-80 flex items-center gap-xs">
+                            Redes <span class="material-symbols-outlined text-[14px]">close</span>
+</button>
+<button class="bg-[#262626] border border-[#262626] text-[#c4c7c8] px-sm py-xs rounded-DEFAULT font-label-sm text-label-sm transition-colors hover:text-primary hover:border-[#444748] flex items-center gap-xs uppercase tracking-wider">
+<span class="material-symbols-outlined text-[14px]">add</span> Adicionar
+                        </button>
+</div>
+</div>
+<!-- Region & Frequency Config -->
+<div class="flex flex-col gap-sm md:gap-md">
+<!-- Region Card -->
+<div class="bg-[#171717] border border-[#262626] rounded-DEFAULT p-md flex flex-col gap-md hover:border-[#444748] transition-colors">
+<div class="flex flex-col gap-base">
+<span class="font-headline-md text-headline-md text-primary text-[16px]">Região de Interesse</span>
+</div>
+<select class="w-full bg-[#0A0A0A] border border-[#262626] text-primary font-body-md text-body-md rounded p-xs focus:ring-0 focus:border-primary appearance-none">
+<option value="all">Todo o Estado (MS)</option>
+<option selected="" value="cg">Campo Grande</option>
+<option value="do">Dourados</option>
+<option value="tr">Três Lagoas</option>
+</select>
+</div>
+<!-- Frequency Card -->
+<div class="bg-[#171717] border border-[#262626] rounded-DEFAULT p-md flex flex-row items-center justify-between hover:border-[#444748] transition-colors">
+<div class="flex flex-col gap-base">
+<span class="font-headline-md text-headline-md text-primary text-[16px]">Alertas Diários</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Receber resumo por e-mail</span>
+</div>
+<!-- Toggle Switch -->
+<div class="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
+<input checked="" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-surface-container-high border-2 border-outline-variant appearance-none cursor-pointer z-10 top-0 left-0 transition-transform duration-200 ease-in-out peer" id="toggle1" name="toggle" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-surface-container cursor-pointer transition-colors duration-200 peer-checked:bg-primary" for="toggle1"></label>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 2: Histórico de Alertas -->
+<section class="flex flex-col gap-sm md:gap-md">
+<div class="flex items-center justify-between border-b border-[#262626] pb-xs">
+<h3 class="font-headline-md text-headline-md text-primary">Histórico de Alertas</h3>
+<button class="text-primary font-label-sm text-label-sm hover:underline">Marcar todos como lidos</button>
+</div>
+<div class="flex flex-col gap-0 border border-[#262626] rounded-DEFAULT bg-[#171717] overflow-hidden">
+<!-- History Item 1 (Unread) -->
+<div class="p-md flex flex-col md:flex-row gap-md border-b border-[#262626] bg-[#262626]/20 hover:bg-[#262626]/40 transition-colors">
+<div class="flex-shrink-0 pt-1">
+<div class="w-2 h-2 rounded-full bg-primary"></div>
+</div>
+<div class="flex flex-col gap-xs flex-grow">
+<div class="flex justify-between items-start gap-md">
+<span class="font-headline-md text-headline-md text-primary text-[16px] leading-tight">Novo Edital: Prefeitura de Campo Grande</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant whitespace-nowrap">Há 2 horas</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant">Abertura de licitação para contratação de serviços de desenvolvimento de software. Valor estimado: R$ 150.000.</p>
+<div class="mt-xs flex items-center gap-sm">
+<span class="inline-flex items-center gap-1 font-label-sm text-label-sm text-[#c4c7c8] bg-[#262626] px-xs py-base rounded-DEFAULT uppercase tracking-wider">
+<span class="material-symbols-outlined text-[14px]">sell</span> TI
+                            </span>
+<a class="font-label-sm text-label-sm text-primary hover:underline flex items-center gap-1 ml-auto" href="#">
+                                Ver Detalhes <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+<!-- History Item 2 (Read) -->
+<div class="p-md flex flex-col md:flex-row gap-md border-b border-[#262626] hover:bg-[#262626]/40 transition-colors opacity-80">
+<div class="flex-shrink-0 pt-1">
+<div class="w-2 h-2 rounded-full bg-transparent"></div>
+</div>
+<div class="flex flex-col gap-xs flex-grow">
+<div class="flex justify-between items-start gap-md">
+<span class="font-headline-md text-headline-md text-primary text-[16px] leading-tight">Atualização de Prazo: Pregão Eletrônico 045/2023</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant whitespace-nowrap">Ontem</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant">O prazo para envio de propostas foi prorrogado para o dia 15/11. Tribunal de Justiça MS.</p>
+<div class="mt-xs flex items-center gap-sm">
+<span class="inline-flex items-center gap-1 font-label-sm text-label-sm text-[#c4c7c8] bg-[#262626] px-xs py-base rounded-DEFAULT uppercase tracking-wider">
+<span class="material-symbols-outlined text-[14px]">sell</span> Desenvolvedor
+                            </span>
+<a class="font-label-sm text-label-sm text-primary hover:underline flex items-center gap-1 ml-auto" href="#">
+                                Ver Detalhes <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+<!-- History Item 3 (Read) -->
+<div class="p-md flex flex-col md:flex-row gap-md hover:bg-[#262626]/40 transition-colors opacity-80">
+<div class="flex-shrink-0 pt-1">
+<div class="w-2 h-2 rounded-full bg-transparent"></div>
+</div>
+<div class="flex flex-col gap-xs flex-grow">
+<div class="flex justify-between items-start gap-md">
+<span class="font-headline-md text-headline-md text-primary text-[16px] leading-tight">Homologação de Resultado: Sanesul</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant whitespace-nowrap">12 Nov</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant">O resultado final da licitação para infraestrutura de redes foi publicado no Diário Oficial.</p>
+<div class="mt-xs flex items-center gap-sm">
+<span class="inline-flex items-center gap-1 font-label-sm text-label-sm text-[#c4c7c8] bg-[#262626] px-xs py-base rounded-DEFAULT uppercase tracking-wider">
+<span class="material-symbols-outlined text-[14px]">sell</span> Redes
+                            </span>
+<a class="font-label-sm text-label-sm text-primary hover:underline flex items-center gap-1 ml-auto" href="#">
+                                Ver Detalhes <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+<button class="self-center mt-sm px-lg py-sm rounded-DEFAULT border border-[#262626] text-primary font-label-sm text-label-sm hover:bg-[#262626] transition-colors">
+                Carregar mais
+            </button>
+</section>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 w-full z-50 bg-[#0A0A0A] border-t border-[#262626]">
+<div class="flex justify-around items-center h-20 pb-safe px-4">
+<!-- Feed -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant hover:text-primary transition-colors active:scale-95 transition-transform duration-150 group w-16" href="index.html">
+<span class="material-symbols-outlined group-hover:scale-110 transition-transform mb-1" data-icon="rss_feed">rss_feed</span>
+<span class="font-label-sm text-label-sm">Feed</span>
+</a>
+<!-- Saved -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant hover:text-primary transition-colors active:scale-95 transition-transform duration-150 group w-16" href="salvos.html">
+<span class="material-symbols-outlined group-hover:scale-110 transition-transform mb-1" data-icon="bookmark">bookmark</span>
+<span class="font-label-sm text-label-sm">Saved</span>
+</a>
+<!-- Alerts (ACTIVE) -->
+<a class="flex flex-col items-center justify-center text-primary dark:text-primary font-medium hover:text-primary transition-colors active:scale-95 transition-transform duration-150 group w-16" href="alertas.html">
+<span class="material-symbols-outlined group-hover:scale-110 transition-transform mb-1" data-icon="notifications" style="font-variation-settings: 'FILL' 1;">notifications</span>
+<span class="font-label-sm text-label-sm">Alerts</span>
+</a>
+<!-- Profile -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant hover:text-primary transition-colors active:scale-95 transition-transform duration-150 group w-16" href="perfil.html">
+<span class="material-symbols-outlined group-hover:scale-110 transition-transform mb-1" data-icon="person">person</span>
+<span class="font-label-sm text-label-sm">Profile</span>
+</a>
+</div>
+</nav>
+<script>
+        // Custom Toggle logic for the checkbox to animate smoothly within Tailwind constraints
+        const checkbox = document.getElementById('toggle1');
+        const label = document.querySelector('.toggle-label');
+        
+        checkbox.addEventListener('change', function() {
+            if(this.checked) {
+                this.classList.replace('translate-x-0', 'translate-x-full');
+            } else {
+                this.classList.replace('translate-x-full', 'translate-x-0');
+            }
+        });
+        
+        // Initial setup for the toggle transform class
+        if(checkbox.checked) {
+            checkbox.classList.add('translate-x-full', 'border-primary');
+            checkbox.classList.remove('border-outline-variant');
+        } else {
+            checkbox.classList.add('translate-x-0');
+        }
+    </script>
+</body></html>

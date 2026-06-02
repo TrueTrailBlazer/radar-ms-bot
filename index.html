@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Radar MS Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-tertiary": "#2f3131",
+                      "surface-container-highest": "#353434",
+                      "surface": "#141313",
+                      "secondary-container": "#0267b8",
+                      "surface-tint": "#c6c6c7",
+                      "on-error-container": "#ffdad6",
+                      "outline-variant": "#444748",
+                      "primary-fixed-dim": "#c6c6c7",
+                      "on-surface-variant": "#c4c7c8",
+                      "surface-container-lowest": "#0e0e0e",
+                      "inverse-surface": "#e5e2e1",
+                      "on-tertiary-fixed": "#1a1c1c",
+                      "secondary": "#a4c9ff",
+                      "outline": "#8e9192",
+                      "primary-container": "#e2e2e2",
+                      "tertiary": "#ffffff",
+                      "primary-fixed": "#e2e2e2",
+                      "on-tertiary-fixed-variant": "#454747",
+                      "tertiary-fixed-dim": "#c6c6c7",
+                      "secondary-fixed-dim": "#a4c9ff",
+                      "on-primary-container": "#636565",
+                      "secondary-fixed": "#d4e3ff",
+                      "on-error": "#690005",
+                      "surface-bright": "#3a3939",
+                      "surface-variant": "#353434",
+                      "on-background": "#e5e2e1",
+                      "error": "#ffb4ab",
+                      "on-secondary-fixed-variant": "#004883",
+                      "surface-dim": "#141313",
+                      "on-primary": "#2f3131",
+                      "background": "#141313",
+                      "on-primary-fixed-variant": "#454747",
+                      "error-container": "#93000a",
+                      "on-surface": "#e5e2e1",
+                      "tertiary-container": "#e2e2e2",
+                      "surface-container-low": "#1c1b1b",
+                      "inverse-primary": "#5d5f5f",
+                      "on-tertiary-container": "#636565",
+                      "on-secondary-fixed": "#001c39",
+                      "on-secondary-container": "#d6e5ff",
+                      "surface-container-high": "#2a2a2a",
+                      "on-secondary": "#00315d",
+                      "inverse-on-surface": "#313030",
+                      "on-primary-fixed": "#1a1c1c",
+                      "surface-container": "#201f1f",
+                      "tertiary-fixed": "#e2e2e2",
+                      "primary": "#ffffff"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "xs": "8px",
+                      "md": "24px",
+                      "sm": "16px",
+                      "gutter": "24px",
+                      "margin-mobile": "16px",
+                      "lg": "48px",
+                      "xl": "80px",
+                      "margin-desktop": "64px",
+                      "base": "4px"
+              },
+              "fontFamily": {
+                      "headline-md": ["Plus Jakarta Sans"],
+                      "headline-lg-mobile": ["Plus Jakarta Sans"],
+                      "headline-lg": ["Plus Jakarta Sans"],
+                      "body-lg": ["Inter"],
+                      "label-sm": ["Inter"],
+                      "headline-xl": ["Plus Jakarta Sans"],
+                      "body-md": ["Inter"]
+              },
+              "fontSize": {
+                      "headline-md": ["20px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                      "headline-lg-mobile": ["24px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                      "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                      "body-lg": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                      "label-sm": ["12px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                      "headline-xl": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "body-md": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}]
+              }
+            },
+          },
+        }
+    </script>
+<style>body { background-color: #0a0a0a; -webkit-font-smoothing: antialiased; } .surface-card { background-color: #171717; border: 1px solid #262626; } .custom-scrollbar::-webkit-scrollbar { width: 4px; } .custom-scrollbar::-webkit-scrollbar-track { background: #0a0a0a; } .custom-scrollbar::-webkit-scrollbar-thumb { background: #262626; border-radius: 2px; }</style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-[#0a0a0a] text-on-surface selection:bg-primary selection:text-background pb-32">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-background flex justify-between items-center px-margin-mobile md:px-margin-desktop border-b border-outline-variant h-12"><div class="flex items-center gap-xs"><span class="material-symbols-outlined text-primary text-xl" style="font-variation-settings: 'FILL' 1;">radar</span><h1 class="font-headline-md text-headline-md font-bold text-primary">Radar MS</h1></div><button class="hover:opacity-80 transition-opacity active:scale-95 transition-transform duration-200"><span class="material-symbols-outlined text-primary">sync</span></button></header>
+<main class="px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto mt-20 flex flex-col gap-md">
+<!-- Overview Section -->
+<section class="">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<div class="surface-card p-md rounded-lg">
+<p class="font-label-sm text-label-sm text-on-surface-variant mb-xs">Total de Oportunidades</p>
+<h2 class="font-headline-lg text-headline-lg text-primary">24</h2>
+</div>
+<div class="surface-card p-md rounded-lg">
+<p class="font-label-sm text-label-sm text-on-surface-variant mb-xs">Última Atualização</p>
+<h2 class="font-headline-md text-headline-md text-primary">Hoje, 14:00</h2>
+</div>
+<div class="surface-card p-md rounded-lg">
+<p class="font-label-sm text-label-sm text-on-surface-variant mb-xs">Maior Fonte</p>
+<h2 class="font-headline-md text-headline-md text-primary">UFMS</h2>
+</div>
+</div>
+</section>
+<!-- Filter Tabs -->
+<nav class="flex overflow-x-auto gap-xs pb-base custom-scrollbar no-scrollbar">
+<button class="px-md py-xs rounded-full bg-primary text-background font-label-sm whitespace-nowrap">Todas</button>
+<button class="px-md py-xs rounded-full surface-card text-on-surface-variant hover:border-outline transition-colors font-label-sm whitespace-nowrap">UFMS / IFMS</button>
+<button class="px-md py-xs rounded-full surface-card text-on-surface-variant hover:border-outline transition-colors font-label-sm whitespace-nowrap">SAD / Governo</button>
+<button class="px-md py-xs rounded-full surface-card text-on-surface-variant hover:border-outline transition-colors font-label-sm whitespace-nowrap">PCI Concursos</button>
+</nav>
+<!-- Feed of Opportunities -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter" id="opportunities-feed">
+    <!-- As vagas serão injetadas aqui pelo JavaScript -->
+    <div class="text-on-surface-variant font-label-sm p-sm">Carregando oportunidades...</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-20 px-margin-mobile pb-safe bg-background border-t border-outline-variant">
+<button class="flex flex-col items-center justify-center text-primary font-bold active:scale-90 transition-transform duration-150">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">rss_feed</span>
+<span class="font-label-sm text-label-sm mt-1">Feed</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-colors active:scale-90 transition-transform duration-150">
+<span class="material-symbols-outlined">bookmark</span>
+<span class="font-label-sm text-label-sm mt-1">Saved</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-colors active:scale-90 transition-transform duration-150">
+<span class="material-symbols-outlined">notifications</span>
+<span class="font-label-sm text-label-sm mt-1">Alerts</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-colors active:scale-90 transition-transform duration-150">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-sm text-label-sm mt-1">Profile</span>
+</button>
+</nav>
+<script>
+        // Micro-interaction for filter tabs
+        const filterButtons = document.querySelectorAll('nav.overflow-x-auto button');
+        filterButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterButtons.forEach(b => {
+                    b.classList.remove('bg-primary', 'text-background');
+                    b.classList.add('surface-card', 'text-on-surface-variant');
+                });
+                btn.classList.remove('surface-card', 'text-on-surface-variant');
+                btn.classList.add('bg-primary', 'text-background');
+            });
+        });
+
+        // Hover effect for cards - subtle border brightening
+        const cards = document.querySelectorAll('.surface-card');
+        cards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.borderColor = '#404040';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.borderColor = '#262626';
+            });
+        });
+
+        // Carregar vagas do database.json
+        fetch('database.json')
+            .then(res => res.json())
+            .then(data => {
+                const vagasAtivas = data.filter(d => !d.silent);
+                
+                // Atualizar Estatísticas
+                const statTotal = document.querySelector('h2.font-headline-lg.text-headline-lg.text-primary');
+                if(statTotal) statTotal.textContent = vagasAtivas.length;
+                
+                const statData = document.querySelectorAll('h2.font-headline-md.text-headline-md.text-primary')[0];
+                if(statData && data.length > 0) statData.textContent = data[0].data.split(' ')[0]; // Só a data
+                
+                // Injetar Vagas
+                const feed = document.getElementById('opportunities-feed');
+                feed.innerHTML = '';
+                
+                if (vagasAtivas.length === 0) {
+                    feed.innerHTML = '<div class="text-on-surface-variant p-sm">Nenhuma vaga encontrada recentemente.</div>';
+                    return;
+                }
+                
+                vagasAtivas.forEach(vaga => {
+                    feed.innerHTML += `
+                    <article class="surface-card rounded-lg flex flex-col justify-between group p-sm" style="background-color: #171717; border: 1px solid #262626;">
+                        <div>
+                            <div class="flex justify-between items-start mb-2">
+                                <span class="bg-surface-container-highest px-xs py-1 rounded-sm text-[10px] font-bold uppercase tracking-wider text-on-surface-variant">${vaga.fonte}</span>
+                                <span class="text-[11px] text-on-surface-variant">${vaga.data}</span>
+                            </div>
+                            <h3 class="font-headline-md text-headline-md text-primary mb-xs leading-tight">${vaga.titulo}</h3>
+                            <p class="font-body-md text-body-md text-on-surface-variant line-clamp-3">${vaga.detalhes}</p>
+                        </div>
+                        <div class="mt-4 pt-3 border-t border-[#262626]">
+                            <a href="${vaga.link}" target="_blank" class="block text-center w-full bg-primary text-[#0a0a0a] font-bold rounded-lg hover:opacity-90 active:scale-95 transition-all py-2 text-sm">Acessar Edital</a>
+                        </div>
+                    </article>
+                    `;
+                });
+            })
+            .catch(e => {
+                console.error("Erro carregando vagas:", e);
+                document.getElementById('opportunities-feed').innerHTML = '<div class="text-error p-sm">Erro ao carregar os dados. Verifique se o database.json existe.</div>';
+            });
+    </script>
+</body></html>

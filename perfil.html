@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Profile - Radar MS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Plus+Jakarta+Sans:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-tint": "#c6c6c7",
+                        "on-primary-fixed-variant": "#454747",
+                        "on-error": "#690005",
+                        "on-secondary-fixed": "#001c39",
+                        "tertiary": "#ffffff",
+                        "on-secondary-container": "#d6e5ff",
+                        "on-error-container": "#ffdad6",
+                        "tertiary-container": "#e2e2e2",
+                        "secondary-fixed": "#d4e3ff",
+                        "primary-fixed-dim": "#c6c6c7",
+                        "on-secondary": "#00315d",
+                        "on-tertiary": "#2f3131",
+                        "surface-container-lowest": "#0e0e0e",
+                        "inverse-primary": "#5d5f5f",
+                        "inverse-surface": "#e5e2e1",
+                        "tertiary-fixed": "#e2e2e2",
+                        "surface-variant": "#353434",
+                        "surface": "#141313",
+                        "on-primary": "#2f3131",
+                        "on-secondary-fixed-variant": "#004883",
+                        "outline": "#8e9192",
+                        "on-primary-container": "#636565",
+                        "surface-container-high": "#2a2a2a",
+                        "primary-container": "#e2e2e2",
+                        "on-tertiary-fixed-variant": "#454747",
+                        "on-tertiary-container": "#636565",
+                        "surface-container-highest": "#353434",
+                        "on-surface-variant": "#c4c7c8",
+                        "background": "#141313",
+                        "on-primary-fixed": "#1a1c1c",
+                        "surface-bright": "#3a3939",
+                        "surface-dim": "#141313",
+                        "on-surface": "#e5e2e1",
+                        "tertiary-fixed-dim": "#c6c6c7",
+                        "on-tertiary-fixed": "#1a1c1c",
+                        "secondary-container": "#0267b8",
+                        "error-container": "#93000a",
+                        "primary-fixed": "#e2e2e2",
+                        "inverse-on-surface": "#313030",
+                        "outline-variant": "#444748",
+                        "error": "#ffb4ab",
+                        "surface-container": "#201f1f",
+                        "primary": "#ffffff",
+                        "on-background": "#e5e2e1",
+                        "secondary-fixed-dim": "#a4c9ff",
+                        "secondary": "#a4c9ff",
+                        "surface-container-low": "#1c1b1b"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "margin-mobile": "16px",
+                        "lg": "48px",
+                        "base": "4px",
+                        "xs": "8px",
+                        "sm": "16px",
+                        "gutter": "24px",
+                        "xl": "80px",
+                        "md": "24px",
+                        "margin-desktop": "64px"
+                    },
+                    "fontFamily": {
+                        "label-sm": ["Inter"],
+                        "headline-xl": ["Plus Jakarta Sans"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "headline-lg-mobile": ["Plus Jakarta Sans"],
+                        "headline-lg": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "label-sm": ["12px", { "lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "headline-xl": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-md": ["14px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "body-lg": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "headline-md": ["20px", { "lineHeight": "1.4", "fontWeight": "600" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                        "headline-lg": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { background-color: #0A0A0A; color: #e5e2e1; min-height: max(884px, 100dvh); }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .material-symbols-outlined.fill { font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .border-neutral-800 { border-color: #262626; }
+    </style>
+  </head>
+<body class="bg-background min-h-screen flex flex-col font-body-md antialiased md:flex-row pb-24 md:pb-0">
+<header class="fixed top-0 w-full flex justify-between items-center h-16 px-margin-mobile z-50 bg-background dark:bg-background border-b border-[#262626] md:hidden">
+<button class="text-primary dark:text-primary hover:opacity-80 transition-opacity active:scale-95 transition-transform duration-200">
+<span class="material-symbols-outlined">search</span>
+</button>
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile font-bold text-primary dark:text-primary">Radar MS</h1>
+<button class="text-primary dark:text-primary hover:opacity-80 transition-opacity active:scale-95 transition-transform duration-200">
+<span class="material-symbols-outlined">sync</span>
+</button>
+</header>
+<nav class="hidden md:flex flex-col w-64 h-screen fixed left-0 top-0 bg-surface-container-low border-r border-neutral-800 p-margin-desktop z-40">
+<div class="flex items-center gap-xs mb-xl">
+<span class="material-symbols-outlined text-primary text-headline-lg">radar</span>
+<h1 class="font-headline-lg text-headline-lg font-bold text-primary">Radar MS</h1>
+</div>
+<div class="flex flex-col gap-sm flex-grow">
+<a class="flex items-center gap-xs p-xs text-on-surface-variant hover:text-primary transition-colors group" href="index.html">
+<span class="material-symbols-outlined group-hover:scale-110 transition-transform">rss_feed</span>
+<span class="font-body-lg text-body-lg">Feed</span>
+</a>
+<a class="flex items-center gap-xs p-xs text-on-surface-variant hover:text-primary transition-colors group" href="salvos.html">
+<span class="material-symbols-outlined group-hover:scale-110 transition-transform">bookmark</span>
+<span class="font-body-lg text-body-lg">Saved</span>
+</a>
+<a class="flex items-center gap-xs p-xs text-on-surface-variant hover:text-primary transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:scale-110 transition-transform">notifications</span>
+<span class="font-body-lg text-body-lg">Alerts</span>
+</a>
+<a class="flex items-center gap-xs p-xs text-primary font-bold bg-surface-variant rounded-lg group" href="perfil.html">
+<span class="material-symbols-outlined fill group-hover:scale-110 transition-transform">person</span>
+<span class="font-body-lg text-body-lg">Profile</span>
+</a>
+</div>
+</nav>
+<main class="flex-grow pt-24 px-margin-mobile md:ml-64 md:px-margin-desktop md:pt-margin-desktop max-w-5xl mx-auto w-full">
+<section class="flex flex-col items-center justify-center text-center mb-xl">
+<div class="relative w-32 h-32 rounded-full overflow-hidden border border-neutral-800 mb-md bg-surface-variant flex items-center justify-center">
+<img alt="Profile Avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDcRrTYWeywbUEVvAVxZPSGJU89UEeKYsvNgd38g5xl2D_uMlOmxyZo8ur_7XYfi-ym_DKzsy7tTfaNhEQhoyFlSZOVF-7kLcbuDuklgI2SX3JIkwrXagiD9Yv5t4NolDOGgIC754MKQ4yGKQ1w0s3mI4BMXDES5K0hCqdofB4_Zhx0Aw53pxA8nJn9X3gPXew1qoLI-68axwBRJYI9cowST4NJj-SvUKoo7tjXyydv6jA5bJ5BUnOMPfdtVp13BeNs3OSUYNDcOel2"/>
+</div>
+<h2 class="font-headline-xl text-headline-xl text-primary mb-base">Alexandre Silva</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">alexandre.silva@radarms.com.br</p>
+<button class="mt-sm px-sm py-xs border border-outline-variant rounded-full font-label-sm text-label-sm text-primary hover:bg-surface-variant transition-colors flex items-center gap-base">
+<span class="material-symbols-outlined" style="font-size: 16px;">edit</span> Edit Profile
+</button>
+</section>
+<section class="max-w-2xl mx-auto">
+<h3 class="font-headline-md text-headline-md text-on-surface-variant mb-md px-xs">Conta e Configurações</h3>
+<div class="flex flex-col rounded-xl overflow-hidden border border-neutral-800 bg-[#171717]">
+<a class="flex items-center justify-between p-sm border-b border-neutral-800 hover:bg-surface-variant transition-colors group" href="#">
+<div class="flex items-center gap-sm">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center group-hover:bg-[#0A0A0A] border border-transparent group-hover:border-neutral-800 transition-all">
+<span class="material-symbols-outlined text-primary">notifications_active</span>
+</div>
+<div>
+<p class="font-body-lg text-body-lg text-primary">Preferências de Alerta</p>
+<p class="font-body-md text-body-md text-on-surface-variant">Gerenciar notificações e prioridades</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline-variant group-hover:text-primary transition-colors">chevron_right</span>
+</a>
+<a class="flex items-center justify-between p-sm border-b border-neutral-800 hover:bg-surface-variant transition-colors group" href="#">
+<div class="flex items-center gap-sm">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center group-hover:bg-[#0A0A0A] border border-transparent group-hover:border-neutral-800 transition-all">
+<span class="material-symbols-outlined text-primary">history</span>
+</div>
+<div>
+<p class="font-body-lg text-body-lg text-primary">Histórico de Acessos</p>
+<p class="font-body-md text-body-md text-on-surface-variant">Registro de logins e atividades</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline-variant group-hover:text-primary transition-colors">chevron_right</span>
+</a>
+<a class="flex items-center justify-between p-sm border-b border-neutral-800 hover:bg-surface-variant transition-colors group" href="#">
+<div class="flex items-center gap-sm">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center group-hover:bg-[#0A0A0A] border border-transparent group-hover:border-neutral-800 transition-all">
+<span class="material-symbols-outlined text-primary">settings</span>
+</div>
+<div>
+<p class="font-body-lg text-body-lg text-primary">Configurações</p>
+<p class="font-body-md text-body-md text-on-surface-variant">Ajustes gerais do aplicativo</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline-variant group-hover:text-primary transition-colors">chevron_right</span>
+</a>
+<a class="flex items-center justify-between p-sm hover:bg-[#1C0000] transition-colors group" href="#">
+<div class="flex items-center gap-sm">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center group-hover:bg-transparent border border-transparent group-hover:border-error transition-all">
+<span class="material-symbols-outlined text-error">logout</span>
+</div>
+<div>
+<p class="font-body-lg text-body-lg text-error">Sair</p>
+</div>
+</div>
+</a>
+</div>
+</section>
+<div class="h-xl"></div>
+</main>
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-20 px-margin-mobile pb-safe bg-background border-t border-[#262626] md:hidden">
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary active:scale-90 transition-transform duration-150" href="index.html">
+<span class="material-symbols-outlined">rss_feed</span>
+<span class="font-label-sm text-label-sm mt-1">Feed</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary active:scale-90 transition-transform duration-150" href="salvos.html">
+<span class="material-symbols-outlined">bookmark</span>
+<span class="font-label-sm text-label-sm mt-1">Saved</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary active:scale-90 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined">notifications</span>
+<span class="font-label-sm text-label-sm mt-1">Alerts</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary font-bold active:scale-90 transition-transform duration-150" href="perfil.html">
+<span class="material-symbols-outlined fill">person</span>
+<span class="font-label-sm text-label-sm mt-1">Profile</span>
+</a>
+</nav>
+</body></html>

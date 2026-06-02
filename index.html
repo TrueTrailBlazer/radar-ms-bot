@@ -175,8 +175,15 @@
     </div>
 </nav>
 <script>
-        // Micro-interaction for filter tabs
+        // Micro-interaction for filter tabs with actual filtering
         const filterButtons = document.querySelectorAll('nav.overflow-x-auto button');
+        const filterMap = {
+            'Todas': null,
+            'UFMS / IFMS': ['UFMS', 'IFMS', 'UFMS Pós'],
+            'SAD / Governo': ['Governo MS', 'SAD/MS'],
+            'PCI Concursos': ['PCI Concursos']
+        };
+
         filterButtons.forEach(btn => {
             btn.addEventListener('click', () => {
                 filterButtons.forEach(b => {
@@ -185,6 +192,19 @@
                 });
                 btn.classList.remove('surface-card', 'text-on-surface-variant');
                 btn.classList.add('bg-primary', 'text-background');
+
+                const label = btn.textContent.trim();
+                const allowed = filterMap[label];
+                const articles = document.querySelectorAll('#opportunities-feed article');
+                articles.forEach(art => {
+                    if (!allowed) {
+                        art.style.display = 'flex';
+                    } else {
+                        const badge = art.querySelector('span')?.textContent?.trim()?.toUpperCase() || '';
+                        const match = allowed.some(f => badge.includes(f.toUpperCase()));
+                        art.style.display = match ? 'flex' : 'none';
+                    }
+                });
             });
         });
 

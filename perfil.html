@@ -110,11 +110,11 @@
 <body class="bg-background min-h-screen flex flex-col font-body-md antialiased md:flex-row pb-24 md:pb-0">
 <!-- TopAppBar -->
 <header class="fixed top-0 left-0 w-full z-50 bg-[#0A0A0A] border-b border-[#262626] h-14 flex items-center justify-between px-4 md:px-margin-desktop">
-    <button aria-label="Search" class="text-primary hover:opacity-80 transition-opacity active:scale-95 duration-100 flex items-center justify-center w-10 h-10">
+    <button aria-label="Search" id="search-btn" class="text-primary hover:opacity-80 transition-opacity active:scale-95 duration-100 flex items-center justify-center w-10 h-10">
         <span class="material-symbols-outlined">search</span>
     </button>
-    <h1 class="font-headline-md text-headline-md font-bold text-primary tracking-tight">Radar MS</h1>
-    <button aria-label="Refresh" class="text-primary hover:opacity-80 transition-opacity active:scale-95 duration-100 flex items-center justify-center w-10 h-10">
+    <h1 id="header-title" class="font-headline-md text-headline-md font-bold text-primary tracking-tight">Radar MS</h1>
+    <button aria-label="Refresh" id="refresh-btn" class="text-primary hover:opacity-80 transition-opacity active:scale-95 duration-100 flex items-center justify-center w-10 h-10">
         <span class="material-symbols-outlined">sync</span>
     </button>
 </header>
@@ -138,54 +138,31 @@
 </div>
 </section>
 <section class="max-w-2xl mx-auto">
-<h3 class="font-headline-md text-headline-md text-on-surface-variant mb-md px-xs">Conta e Configurações</h3>
+<h3 class="font-headline-md text-headline-md text-on-surface-variant mb-md px-xs">Conta</h3>
 <div class="flex flex-col rounded-xl overflow-hidden border border-neutral-800 bg-[#171717]">
-<a class="flex items-center justify-between p-sm border-b border-neutral-800 hover:bg-surface-variant transition-colors group" href="#">
+<a class="flex items-center justify-between p-sm border-b border-neutral-800 hover:bg-surface-variant transition-colors group" href="alertas.html">
 <div class="flex items-center gap-sm">
 <div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center group-hover:bg-[#0A0A0A] border border-transparent group-hover:border-neutral-800 transition-all">
 <span class="material-symbols-outlined text-primary">notifications_active</span>
 </div>
 <div>
 <p class="font-body-lg text-body-lg text-primary">Preferências de Alerta</p>
-<p class="font-body-md text-body-md text-on-surface-variant">Gerenciar notificações e prioridades</p>
+<p class="font-body-md text-body-md text-on-surface-variant">Gerenciar palavras-chave e notificações</p>
 </div>
 </div>
 <span class="material-symbols-outlined text-outline-variant group-hover:text-primary transition-colors">chevron_right</span>
 </a>
-<a class="flex items-center justify-between p-sm border-b border-neutral-800 hover:bg-surface-variant transition-colors group" href="#">
-<div class="flex items-center gap-sm">
-<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center group-hover:bg-[#0A0A0A] border border-transparent group-hover:border-neutral-800 transition-all">
-<span class="material-symbols-outlined text-primary">history</span>
-</div>
-<div>
-<p class="font-body-lg text-body-lg text-primary">Histórico de Acessos</p>
-<p class="font-body-md text-body-md text-on-surface-variant">Registro de logins e atividades</p>
-</div>
-</div>
-<span class="material-symbols-outlined text-outline-variant group-hover:text-primary transition-colors">chevron_right</span>
-</a>
-<a class="flex items-center justify-between p-sm border-b border-neutral-800 hover:bg-surface-variant transition-colors group" href="#">
-<div class="flex items-center gap-sm">
-<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center group-hover:bg-[#0A0A0A] border border-transparent group-hover:border-neutral-800 transition-all">
-<span class="material-symbols-outlined text-primary">settings</span>
-</div>
-<div>
-<p class="font-body-lg text-body-lg text-primary">Configurações</p>
-<p class="font-body-md text-body-md text-on-surface-variant">Ajustes gerais do aplicativo</p>
-</div>
-</div>
-<span class="material-symbols-outlined text-outline-variant group-hover:text-primary transition-colors">chevron_right</span>
-</a>
-<a class="flex items-center justify-between p-sm hover:bg-[#1C0000] transition-colors group" href="#">
+<button onclick="localStorage.clear(); window.location.reload();" class="flex items-center justify-between p-sm hover:bg-[#1C0000] transition-colors group w-full text-left">
 <div class="flex items-center gap-sm">
 <div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center group-hover:bg-transparent border border-transparent group-hover:border-error transition-all">
 <span class="material-symbols-outlined text-error">logout</span>
 </div>
 <div>
 <p class="font-body-lg text-body-lg text-error">Sair</p>
+<p class="font-body-md text-body-md text-on-surface-variant">Limpar token e dados locais</p>
 </div>
 </div>
-</a>
+</button>
 </div>
 </section>
 <div class="h-xl"></div>
@@ -256,5 +233,16 @@
     });
 
     loadProfile();
+
+    // Search redirects to feed
+    document.getElementById('search-btn').addEventListener('click', () => {
+        window.location.href = 'index.html';
+    });
+
+    // Refresh
+    document.getElementById('refresh-btn').addEventListener('click', () => {
+        document.querySelector('#refresh-btn span').classList.add('animate-spin');
+        setTimeout(() => window.location.reload(), 500);
+    });
 </script>
 </body></html>

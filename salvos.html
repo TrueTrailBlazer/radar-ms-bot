@@ -108,11 +108,11 @@
 <body class="bg-background dark:bg-background text-on-surface antialiased min-h-screen pb-32">
 <!-- TopAppBar -->
 <header class="fixed top-0 left-0 w-full z-50 bg-[#0A0A0A] border-b border-[#262626] h-14 flex items-center justify-between px-4 md:px-margin-desktop">
-    <button aria-label="Search" class="text-primary hover:opacity-80 transition-opacity active:scale-95 duration-100 flex items-center justify-center w-10 h-10">
+    <button aria-label="Search" id="search-btn" class="text-primary hover:opacity-80 transition-opacity active:scale-95 duration-100 flex items-center justify-center w-10 h-10">
         <span class="material-symbols-outlined">search</span>
     </button>
-    <h1 class="font-headline-md text-headline-md font-bold text-primary tracking-tight">Radar MS</h1>
-    <button aria-label="Refresh" class="text-primary hover:opacity-80 transition-opacity active:scale-95 duration-100 flex items-center justify-center w-10 h-10">
+    <h1 id="header-title" class="font-headline-md text-headline-md font-bold text-primary tracking-tight">Radar MS</h1>
+    <button aria-label="Refresh" id="refresh-btn" class="text-primary hover:opacity-80 transition-opacity active:scale-95 duration-100 flex items-center justify-center w-10 h-10">
         <span class="material-symbols-outlined">sync</span>
     </button>
 </header>
@@ -209,6 +209,39 @@
                 feed.innerHTML = '<div class="text-on-surface-variant text-center p-md">Nenhuma vaga salva. Explore o Feed para salvar oportunidades.</div>';
             }
         };
+    });
+
+    // Search
+    const searchBtn = document.getElementById('search-btn');
+    const titleEl = document.getElementById('header-title');
+    let searchInput = null;
+    searchBtn.addEventListener('click', () => {
+        if (!searchInput) {
+            titleEl.style.display = 'none';
+            searchInput = document.createElement('input');
+            searchInput.type = 'text';
+            searchInput.placeholder = 'Buscar salvos...';
+            searchInput.className = 'bg-[#171717] border border-[#262626] text-primary px-3 py-1 rounded w-full max-w-[180px] text-sm focus:outline-none focus:border-[#444748] mx-2';
+            searchBtn.insertAdjacentElement('afterend', searchInput);
+            searchInput.focus();
+            searchInput.addEventListener('input', (e) => {
+                const query = e.target.value.toLowerCase();
+                document.querySelectorAll('#saved-feed article').forEach(art => {
+                    art.style.display = art.innerText.toLowerCase().includes(query) ? 'flex' : 'none';
+                });
+            });
+        } else {
+            searchInput.remove();
+            searchInput = null;
+            titleEl.style.display = 'block';
+            document.querySelectorAll('#saved-feed article').forEach(art => art.style.display = 'flex');
+        }
+    });
+
+    // Refresh
+    document.getElementById('refresh-btn').addEventListener('click', () => {
+        document.querySelector('#refresh-btn span').classList.add('animate-spin');
+        setTimeout(() => window.location.reload(), 500);
     });
 </script>
 </body></html>

@@ -519,15 +519,10 @@ function renderFeed(filterKey) {
         </div>
         <h3 class="text-base font-semibold text-white font-headline mb-1.5 leading-tight">${v.titulo}</h3>
         <p class="text-[13px] text-[#c4c7c8] leading-relaxed mb-3" style="display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden">${v.detalhes}</p>
-        <div class="flex flex-wrap gap-x-4 gap-y-2 mt-auto pt-2 border-t border-[#262626]/50">
-          <div class="flex items-center gap-1.5 text-[11px] text-[#8e9192]">
-            <span class="material-symbols-outlined text-[13px]">calendar_today</span>
-            <div class="flex flex-col">
-               ${v.data_captura ? `<span><span class="font-medium text-[#c4c7c8]">Capturado:</span> ${formatDate(v.data_captura)}</span>` : `<span><span class="font-medium text-[#c4c7c8]">${v.data_tipo || 'Capturado'}:</span> ${formatDate(v.data)}</span>`}
-               ${v.data_publicacao ? `<span><span class="font-medium text-[#c4c7c8]">Publicado:</span> ${formatDate(v.data_publicacao)}</span>` : ''}
-            </div>
-          </div>
-          ${v.local ? `<div class="flex items-center gap-1.5 text-[11px] text-[#8e9192]"><span class="material-symbols-outlined text-[13px]">location_on</span><span>${v.local}</span></div>` : ''}
+        <div class="mt-auto pt-3 border-t border-[#262626]/50 flex flex-wrap gap-2">
+           ${v.data_captura ? `<div class="bg-[#1f1f1f] text-[#a1a1aa] px-2 py-1 rounded text-[10px] flex items-center gap-1 border border-[#333]"><span class="material-symbols-outlined text-[12px]">download</span>Capturado: <span class="text-[#e4e4e7]">${formatDate(v.data_captura)}</span></div>` : `<div class="bg-[#1f1f1f] text-[#a1a1aa] px-2 py-1 rounded text-[10px] flex items-center gap-1 border border-[#333]"><span class="material-symbols-outlined text-[12px]">download</span>${v.data_tipo || 'Capturado'}: <span class="text-[#e4e4e7]">${formatDate(v.data)}</span></div>`}
+           ${v.data_publicacao ? `<div class="bg-[#1f1f1f] text-[#a1a1aa] px-2 py-1 rounded text-[10px] flex items-center gap-1 border border-[#333]"><span class="material-symbols-outlined text-[12px]">publish</span>Publicado: <span class="text-[#e4e4e7]">${formatDate(v.data_publicacao)}</span></div>` : ''}
+           ${v.local ? `<div class="bg-[#1f1f1f] text-[#a1a1aa] px-2 py-1 rounded text-[10px] flex items-center gap-1 border border-[#333]"><span class="material-symbols-outlined text-[12px]">location_on</span><span class="text-[#e4e4e7] truncate max-w-[120px]">${v.local}</span></div>` : ''}
         </div>
       </div>
       <div class="mt-4 pt-3 border-t border-[#262626] flex gap-2" onclick="event.stopPropagation()">
@@ -588,15 +583,10 @@ function renderSaved() {
         </div>
         <h2 class="text-base font-semibold text-white font-headline">${v.titulo}</h2>
         <p class="text-[13px] text-[#c4c7c8] mb-1" style="display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">${v.detalhes}</p>
-        <div class="flex flex-wrap gap-x-4 gap-y-2 mt-1">
-          <div class="flex items-center gap-1.5 text-[11px] text-[#8e9192]">
-            <span class="material-symbols-outlined text-[13px]">calendar_today</span>
-            <div class="flex flex-col">
-               ${v.data_captura ? `<span><span class="font-medium text-[#c4c7c8]">Capturado:</span> ${formatDate(v.data_captura)}</span>` : `<span><span class="font-medium text-[#c4c7c8]">${v.data_tipo || 'Capturado'}:</span> ${formatDate(v.data)}</span>`}
-               ${v.data_publicacao ? `<span><span class="font-medium text-[#c4c7c8]">Publicado:</span> ${formatDate(v.data_publicacao)}</span>` : ''}
-            </div>
-          </div>
-          ${v.local ? `<div class="flex items-center gap-1.5 text-[11px] text-[#8e9192]"><span class="material-symbols-outlined text-[13px]">location_on</span><span>${v.local}</span></div>` : ''}
+        <div class="mt-1 flex flex-wrap gap-2">
+           ${v.data_captura ? `<div class="bg-[#1f1f1f] text-[#a1a1aa] px-2 py-1 rounded text-[10px] flex items-center gap-1 border border-[#333]"><span class="material-symbols-outlined text-[12px]">download</span>Capturado: <span class="text-[#e4e4e7]">${formatDate(v.data_captura)}</span></div>` : `<div class="bg-[#1f1f1f] text-[#a1a1aa] px-2 py-1 rounded text-[10px] flex items-center gap-1 border border-[#333]"><span class="material-symbols-outlined text-[12px]">download</span>${v.data_tipo || 'Capturado'}: <span class="text-[#e4e4e7]">${formatDate(v.data)}</span></div>`}
+           ${v.data_publicacao ? `<div class="bg-[#1f1f1f] text-[#a1a1aa] px-2 py-1 rounded text-[10px] flex items-center gap-1 border border-[#333]"><span class="material-symbols-outlined text-[12px]">publish</span>Publicado: <span class="text-[#e4e4e7]">${formatDate(v.data_publicacao)}</span></div>` : ''}
+           ${v.local ? `<div class="bg-[#1f1f1f] text-[#a1a1aa] px-2 py-1 rounded text-[10px] flex items-center gap-1 border border-[#333]"><span class="material-symbols-outlined text-[12px]">location_on</span><span class="text-[#e4e4e7] truncate max-w-[120px]">${v.local}</span></div>` : ''}
         </div>
       </div>
       <div class="flex items-center gap-2 pt-3 md:pt-0 border-t border-[#262626] md:border-0" onclick="event.stopPropagation()">
@@ -634,15 +624,10 @@ function renderHistory() {
           <span class="text-[14px] sm:text-[15px] font-semibold text-white font-headline leading-tight break-words">${v.titulo}</span>
         </div>
         <p class="text-[12px] sm:text-[13px] text-[#c4c7c8]" style="display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">${v.detalhes}</p>
-        <div class="flex flex-wrap gap-x-4 gap-y-2 mt-1">
-          <div class="flex items-center gap-1.5 text-[11px] text-[#8e9192]">
-            <span class="material-symbols-outlined text-[13px]">calendar_today</span>
-            <div class="flex flex-col">
-               ${v.data_captura ? `<span><span class="font-medium text-[#c4c7c8]">Capturado:</span> ${formatDate(v.data_captura)}</span>` : `<span><span class="font-medium text-[#c4c7c8]">${v.data_tipo || 'Capturado'}:</span> ${formatDate(v.data)}</span>`}
-               ${v.data_publicacao ? `<span><span class="font-medium text-[#c4c7c8]">Publicado:</span> ${formatDate(v.data_publicacao)}</span>` : ''}
-            </div>
-          </div>
-          ${v.local ? `<div class="flex items-center gap-1.5 text-[11px] text-[#8e9192]"><span class="material-symbols-outlined text-[13px]">location_on</span><span>${v.local}</span></div>` : ''}
+        <div class="mt-1 flex flex-wrap gap-2">
+           ${v.data_captura ? `<div class="bg-[#1f1f1f] text-[#a1a1aa] px-2 py-1 rounded text-[10px] flex items-center gap-1 border border-[#333]"><span class="material-symbols-outlined text-[12px]">download</span>Capturado: <span class="text-[#e4e4e7]">${formatDate(v.data_captura)}</span></div>` : `<div class="bg-[#1f1f1f] text-[#a1a1aa] px-2 py-1 rounded text-[10px] flex items-center gap-1 border border-[#333]"><span class="material-symbols-outlined text-[12px]">download</span>${v.data_tipo || 'Capturado'}: <span class="text-[#e4e4e7]">${formatDate(v.data)}</span></div>`}
+           ${v.data_publicacao ? `<div class="bg-[#1f1f1f] text-[#a1a1aa] px-2 py-1 rounded text-[10px] flex items-center gap-1 border border-[#333]"><span class="material-symbols-outlined text-[12px]">publish</span>Publicado: <span class="text-[#e4e4e7]">${formatDate(v.data_publicacao)}</span></div>` : ''}
+           ${v.local ? `<div class="bg-[#1f1f1f] text-[#a1a1aa] px-2 py-1 rounded text-[10px] flex items-center gap-1 border border-[#333]"><span class="material-symbols-outlined text-[12px]">location_on</span><span class="text-[#e4e4e7] truncate max-w-[120px]">${v.local}</span></div>` : ''}
         </div>
         <div class="flex items-center gap-2 mt-1.5 flex-wrap">
           ${getCategoryBadgeHTML(v)}

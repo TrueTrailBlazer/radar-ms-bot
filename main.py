@@ -242,28 +242,69 @@ def monitorar_universidades(db):
 
 def monitorar_diogrande(db):
     import base64
+    import json
     headers = {"User-Agent": "Mozilla/5.0", "X-Requested-With": "XMLHttpRequest"}
     novos = 0
+    
+    def registrar_sucesso():
+        try:
+            with open("health.json", "w") as f: json.dump({"diogrande_falhas": 0}, f)
+        except: pass
+
+    def registrar_falha():
+        falhas = 0
+        try:
+            if os.path.exists("health.json"):
+                with open("health.json", "r") as f: falhas = json.load(f).get("diogrande_falhas", 0)
+        except: pass
+        falhas += 1
+        if falhas >= 24: # 3 days assuming 8 runs/day
+            disparar_telegram("⚠️ *Chefe, o Diogrande parece ter mudado de site, preciso de manutenção!*")
+            falhas = 0
+        try:
+            with open("health.json", "w") as f: json.dump({"diogrande_falhas": falhas}, f)
+        except: pass
+
     try:
+        links = []
+        # Tenta a API oficial primeiro
         url_api = "https://diogrande.campogrande.ms.gov.br/wp-admin/admin-ajax.php?action=edicao2_dia_json"
         r = requests.get(url_api, headers=headers, timeout=30, verify=False)
-        if r.status_code != 200: return db, 0
-        dados = r.json()
-        if 'atual' not in dados or 'arquivos' not in dados['atual']: return db, 0
+        if r.status_code == 200:
+            try:
+                dados = r.json()
+                if 'atual' in dados and 'arquivos' in dados['atual']:
+                    for a in dados['atual']['arquivos']:
+                        cod = a.get('codigodia')
+                        if cod:
+                            b64 = base64.b64encode(f'{{"codigodia":"{cod}"}}'.encode()).decode()
+                            links.append(f"https://diogrande.campogrande.ms.gov.br/download_edicao/{b64}.pdf")
+            except: pass
         
-        links = []
-        for a in dados['atual']['arquivos']:
-            cod = a.get('codigodia')
-            if cod:
-                b64 = base64.b64encode(f'{{"codigodia":"{cod}"}}'.encode()).decode()
-                links.append(f"https://diogrande.campogrande.ms.gov.br/download_edicao/{b64}.pdf")
+        # Fallback (Plano B) se a API falhou ou não retornou links
+        if not links:
+            r_fall = requests.get("https://diogrande.campogrande.ms.gov.br/", headers={"User-Agent": "Mozilla/5.0"}, timeout=30, verify=False)
+            if r_fall.status_code == 200:
+                soup = BeautifulSoup(r_fall.text, "html.parser")
+                for a in soup.find_all("a", href=True):
+                    if ".pdf" in a["href"].lower():
+                        href = a["href"]
+                        if href.startswith("/"): href = "https://diogrande.campogrande.ms.gov.br" + href
+                        links.append(href)
+                        break # Pegar só a edição mais recente exposta na home
         
-        if not links: return db, 0
+        if not links:
+            registrar_falha()
+            return db, 0
+        
         link = links[0]
-        if ja_existe(db, link): return db, 0
+        if ja_existe(db, link): 
+            registrar_sucesso()
+            return db, 0
         
-        pdf_r = requests.get(link, headers=headers, timeout=30, verify=False)
+        pdf_r = requests.get(link, headers={"User-Agent": "Mozilla/5.0"}, timeout=30, verify=False)
         if pdf_r.status_code == 200:
+            registrar_sucesso() # Conseguiu ler o PDF com sucesso
             reader = PyPDF2.PdfReader(io.BytesIO(pdf_r.content))
             encontrou = False
             trecho = ""
@@ -283,8 +324,11 @@ def monitorar_diogrande(db):
                     novos += 1
             else:
                 db = adicionar_vaga(db, link, "Edição sem TI", "Diogrande", "Sem vagas detectadas.", link, is_silent=True, local="Campo Grande - MS")
+        else:
+            registrar_falha()
     except Exception as e:
         print(f"Erro Diogrande: {e}")
+        registrar_falha()
     return db, novos
 
 def extrair_texto_ufms(html, tipo):

@@ -239,10 +239,13 @@ def monitorar_sad(db):
     return db, novos
 
 def monitorar_universidades(db):
-    urls = [("UFMS", "https://concursos.ufms.br/"), ("IFMS", "https://selecao.ifms.edu.br/")]
+    URLS_UNIVERSIDADES = [
+    ("UFMS", "https://www.concursos.ufms.br/"),
+    ("IFMS", "https://selecao.ifms.edu.br/")
+]
     headers = {"User-Agent": "Mozilla/5.0"}
     novos = 0
-    for nome, url in urls:
+    for nome, url in URLS_UNIVERSIDADES:
         try:
             r = requests.get(url, headers=headers, timeout=45, verify=False)
             if r.status_code != 200:

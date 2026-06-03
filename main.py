@@ -48,7 +48,7 @@ ALVOS_UFMS = [
 urllib3.disable_warnings()
 # =================================================
 
-def registrar_saude(scraper_name, sucesso, msg_erro=""):
+def registrar_saude(scraper_name, sucesso, msg_erro="", info_adicional=""):
     arquivo = "health.json"
     dados = {}
     try:
@@ -64,6 +64,7 @@ def registrar_saude(scraper_name, sucesso, msg_erro=""):
     if sucesso:
         dados[chave] = 0
         dados[f"{scraper_name}_ultimo_erro"] = ""
+        dados[f"{scraper_name}_info"] = info_adicional if info_adicional else "Operando normalmente."
     else:
         falhas += 1
         if falhas >= 24: # 3 dias
@@ -355,7 +356,7 @@ def monitorar_diogrande(db):
                 registrar_saude("Diogrande", False, f"Erro ao baixar PDF {link}: HTTP {pdf_r.status_code}")
                 return db, novos # Stop if download fails to avoid loop stalling
                 
-        registrar_saude("Diogrande", True)
+        registrar_saude("Diogrande", True, info_adicional=f"Lidos {len(links)} PDFs das últimas edições.")
     except Exception as e:
         print(f"Erro Diogrande: {e}")
         registrar_saude("Diogrande", False, str(e))

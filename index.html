@@ -743,6 +743,7 @@ function fetchHealth() {
         const dataStr = data[`${s}_data`] || 'Desconhecido';
         
         const isOk = falhas === 0;
+        const infoMsg = data[`${s}_info`] || 'Operando normalmente.';
         
         const card = document.createElement('div');
         card.className = `p-3 rounded-lg border ${isOk ? 'bg-[#0A1A10] border-[#14532d]' : 'bg-[#1C0000] border-[#4a0000]'}`;
@@ -759,7 +760,7 @@ function fetchHealth() {
              <div><strong class="text-red-400">Falhas consecutivas:</strong> ${falhas}</div>
              ${erro ? `<div class="font-mono bg-black/30 p-1.5 rounded mt-1 overflow-x-auto break-all">${erro}</div>` : ''}
           </div>
-          ` : `<div class="text-[11px] text-green-300 mt-1.5">Operando normalmente.</div>`}
+          ` : `<div class="text-[11px] text-green-300 mt-1.5">${infoMsg}</div>`}
         `;
         container.appendChild(card);
       });

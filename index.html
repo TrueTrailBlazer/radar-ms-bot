@@ -311,6 +311,27 @@ function getCategoryBadgeHTML(vaga) {
   return `<span class="${cat.cls} px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider">${cat.label}</span>`;
 }
 
+// ===== DATE FORMAT =====
+function formatDate(str) {
+  if (!str) return '—';
+  // Already in Brazilian format dd/mm/yyyy HH:MM
+  if (/^\d{2}\/\d{2}\/\d{4}/.test(str)) return str;
+  // Try ISO parse
+  try {
+    const d = new Date(str);
+    if (isNaN(d)) return str;
+    // Convert to UTC-4 (MS timezone)
+    const offset = -4 * 60;
+    const local = new Date(d.getTime() + (offset - d.getTimezoneOffset()) * 60000);
+    const dd = String(local.getDate()).padStart(2,'0');
+    const mm = String(local.getMonth()+1).padStart(2,'0');
+    const yyyy = local.getFullYear();
+    const hh = String(local.getHours()).padStart(2,'0');
+    const mi = String(local.getMinutes()).padStart(2,'0');
+    return `${dd}/${mm}/${yyyy} ${hh}:${mi}`;
+  } catch { return str; }
+}
+
 // ===== NAVIGATION (SPA) =====
 function navigateTo(view) {
   document.querySelectorAll('.view').forEach(v => { v.classList.remove('active'); });
@@ -375,7 +396,7 @@ document.getElementById('search-input').addEventListener('input', (e) => {
         <p class="text-sm text-white font-medium truncate">${v.titulo}</p>
         <p class="text-[11px] text-[#8e9192] truncate mt-0.5">${v.local ? '<span class="material-symbols-outlined text-[11px] align-middle mr-0.5">location_on</span>' + v.local + ' • ' : ''}${v.detalhes}</p>
       </div>
-      <span class="text-[11px] text-[#8e9192] flex-shrink-0 whitespace-nowrap text-right flex flex-col justify-center"><span class="font-medium text-[#c4c7c8]">${v.data_tipo || 'Capturado'}</span>${v.data || ''}</span>
+      <span class="text-[11px] text-[#8e9192] flex-shrink-0 whitespace-nowrap text-right flex flex-col justify-center"><span class="font-medium text-[#c4c7c8]">${v.data_tipo || 'Capturado'}</span>${formatDate(v.data) || ''}</span>
     </a>`;
   }).join('');
   dropdown.classList.add('open');
@@ -425,7 +446,7 @@ function renderFeed(filterKey) {
   const allActive = DB.filter(v => !v.silent);
   document.getElementById('stat-total').textContent = allActive.length;
   if (allActive.length > 0) {
-    document.getElementById('stat-update').textContent = allActive[0].data || '—';
+    document.getElementById('stat-update').textContent = formatDate(allActive[0].data) || '—';
     // Most common source
     const sources = {};
     allActive.forEach(v => { sources[v.fonte] = (sources[v.fonte]||0)+1; });
@@ -445,7 +466,7 @@ function renderFeed(filterKey) {
       <div>
         <div class="flex justify-between items-start mb-2">
           ${getCategoryBadgeHTML(v)}
-          <span class="text-[11px] text-[#8e9192] text-right"><span class="font-medium text-[#c4c7c8]">${v.data_tipo || 'Capturado'}:</span> ${v.data}</span>
+          <span class="text-[11px] text-[#8e9192] text-right"><span class="font-medium text-[#c4c7c8]">${v.data_tipo || 'Capturado'}:</span> ${formatDate(v.data)}</span>
         </div>
         <h3 class="text-base font-semibold text-white font-headline mb-1.5 leading-tight">${v.titulo}</h3>
         ${v.local ? `<p class="text-[12px] text-[#c4c7c8] font-medium mb-1.5 flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">location_on</span>${v.local}</p>` : ''}
@@ -501,7 +522,7 @@ function renderSaved() {
   feed.innerHTML = vagas.map(v => `
     <article id="art-${v.id}" class="bg-[#171717] border border-[#262626] p-5 rounded-xl flex flex-col md:flex-row md:items-center justify-between gap-4 hover:border-[#444748] transition-colors cursor-pointer" onclick="openDetailModalById('${v.id}')">
       <div class="flex flex-col gap-1.5 flex-1">
-        <div class="flex items-center gap-2 mb-1">${getCategoryBadgeHTML(v)}<span class="text-[11px] text-[#8e9192]"><span class="font-medium text-[#c4c7c8]">${v.data_tipo || 'Capturado'}:</span> ${v.data}</span></div>
+        <div class="flex items-center gap-2 mb-1">${getCategoryBadgeHTML(v)}<span class="text-[11px] text-[#8e9192]"><span class="font-medium text-[#c4c7c8]">${v.data_tipo || 'Capturado'}:</span> ${formatDate(v.data)}</span></div>
         <h2 class="text-base font-semibold text-white font-headline">${v.titulo}</h2>
         ${v.local ? `<p class="text-[12px] text-[#c4c7c8] font-medium flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">location_on</span>${v.local}</p>` : ''}
         <p class="text-[13px] text-[#c4c7c8]" style="display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">${v.detalhes}</p>
@@ -539,7 +560,7 @@ function renderHistory() {
       <div class="flex flex-col gap-1.5 flex-grow min-w-0">
         <div class="flex justify-between items-start gap-3">
           <span class="text-[14px] sm:text-[15px] font-semibold text-white font-headline leading-tight break-words">${v.titulo}</span>
-          <span class="text-[10px] sm:text-[11px] text-[#8e9192] whitespace-nowrap flex-shrink-0 text-right"><span class="font-medium text-[#c4c7c8] block sm:inline">${v.data_tipo || 'Capturado'}:</span> ${v.data}</span>
+          <span class="text-[10px] sm:text-[11px] text-[#8e9192] whitespace-nowrap flex-shrink-0 text-right"><span class="font-medium text-[#c4c7c8] block sm:inline">${v.data_tipo || 'Capturado'}:</span> ${formatDate(v.data)}</span>
         </div>
         ${v.local ? `<p class="text-[12px] text-[#c4c7c8] font-medium flex items-center gap-1 mt-0.5"><span class="material-symbols-outlined text-[14px]">location_on</span>${v.local}</p>` : ''}
         <p class="text-[12px] sm:text-[13px] text-[#c4c7c8]" style="display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">${v.detalhes}</p>
@@ -642,7 +663,7 @@ function openDetailModal(v) {
   document.getElementById('detail-title').textContent = v.titulo;
   document.getElementById('detail-badge').textContent = cat.label;
   document.getElementById('detail-badge').className = `px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider flex-shrink-0 ${cat.cls}`;
-  document.getElementById('detail-date').textContent = `${v.data_tipo || 'Capturado'}: ${v.data || ''}`;
+  document.getElementById('detail-date').textContent = `${v.data_tipo || 'Capturado'}: ${formatDate(v.data) || ''}`;
   document.getElementById('detail-text').innerHTML = v.detalhes.replace(/\n/g, '<br>');
   document.getElementById('detail-link').href = v.link;
   document.getElementById('detail-modal').classList.add('open');

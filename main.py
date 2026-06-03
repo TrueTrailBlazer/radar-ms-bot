@@ -9,6 +9,7 @@ import io
 import urllib3
 import PyPDF2
 import base64
+import pytz
 from datetime import datetime, timezone, timedelta
 from bs4 import BeautifulSoup
 
@@ -300,55 +301,61 @@ def monitorar_diogrande(db):
                 if 'atual' in dados and 'arquivos' in dados['atual']:
                     for a in dados['atual']['arquivos']:
                         cod = a.get('codigodia')
+                        nome = a.get('nomearquivo', 'Edição')
                         if cod:
                             b64 = base64.b64encode(f'{{"codigodia":"{cod}"}}'.encode()).decode()
-                            links.append(f"https://diogrande.campogrande.ms.gov.br/download_edicao/{b64}.pdf")
-            except: pass
+                            links.append({"url": f"https://diogrande.campogrande.ms.gov.br/download_edicao/{b64}.pdf", "nome": f"Diário Oficial - {nome}"})
+                
+                if 'ultimasedicoes' in dados:
+                    for ed in dados['ultimasedicoes']:
+                        if 'arquivos' in ed:
+                            for a in ed['arquivos']:
+                                cod = a.get('codigodia')
+                                nome = a.get('nomearquivo', 'Edição')
+                                data_form = f"{ed.get('dia_dia', '')}/{ed.get('dia_mes', '')}"
+                                if cod:
+                                    b64 = base64.b64encode(f'{{"codigodia":"{cod}"}}'.encode()).decode()
+                                    links.append({"url": f"https://diogrande.campogrande.ms.gov.br/download_edicao/{b64}.pdf", "nome": f"Diário Oficial ({data_form}) - {nome}"})
+            except Exception as json_e:
+                print(f"Erro JSON Diogrande: {json_e}")
         
         if not links:
-            r_fall = requests.get("https://diogrande.campogrande.ms.gov.br/", headers={"User-Agent": "Mozilla/5.0"}, timeout=45, verify=False)
-            if r_fall.status_code == 200:
-                soup = BeautifulSoup(r_fall.text, "html.parser")
-                for a in soup.find_all("a", href=True):
-                    if ".pdf" in a["href"].lower():
-                        href = a["href"]
-                        if href.startswith("/"): href = "https://diogrande.campogrande.ms.gov.br" + href
-                        links.append(href)
-                        break 
-        
-        if not links:
-            registrar_saude("Diogrande", False, "Nem a API nem o Fallback retornaram links")
+            registrar_saude("Diogrande", False, "API não retornou links")
             return db, 0
         
-        link = links[0]
-        if ja_existe(db, link): 
-            registrar_saude("Diogrande", True)
-            return db, 0
-        
-        pdf_r = requests.get(link, headers={"User-Agent": "Mozilla/5.0"}, timeout=45, verify=False)
-        if pdf_r.status_code == 200:
-            registrar_saude("Diogrande", True)
-            reader = PyPDF2.PdfReader(io.BytesIO(pdf_r.content))
-            encontrou = False
-            trecho = ""
-            for page in reader.pages:
-                txt = page.extract_text()
-                if txt and PADRAO_TI.search(txt) and PADRAO_VAGA.search(txt):
-                    encontrou = True
-                    idx = PADRAO_TI.search(txt).start()
-                    trecho = txt[max(0, idx-150):min(len(txt), idx+150)].replace('\n', ' ')
-                    break
+        for l_obj in links:
+            link = l_obj["url"]
+            titulo_padrao = l_obj["nome"]
             
-            if encontrou:
-                msg = f"🚨 *ALERTA NO DIOGRANDE (DIÁRIO OFICIAL)!*\n\n📝 *Trecho:* ...{trecho}...\n\n🔗 *Baixar:* {link}"
-                msg, keyword = destacar_termo(msg, trecho)
-                if disparar_telegram(msg):
-                    db = adicionar_vaga(db, link, "Diário Oficial Campo Grande", "Diogrande", trecho, link, False, None, "Campo Grande - MS", "Capturado", keyword)
-                    novos += 1
+            if ja_existe(db, link): 
+                continue
+            
+            pdf_r = requests.get(link, headers={"User-Agent": "Mozilla/5.0"}, timeout=45, verify=False)
+            if pdf_r.status_code == 200:
+                reader = PyPDF2.PdfReader(io.BytesIO(pdf_r.content))
+                encontrou = False
+                trecho = ""
+                for page in reader.pages:
+                    txt = page.extract_text()
+                    if txt and PADRAO_TI.search(txt) and PADRAO_VAGA.search(txt):
+                        encontrou = True
+                        idx = PADRAO_TI.search(txt).start()
+                        trecho = txt[max(0, idx-150):min(len(txt), idx+150)].replace('\n', ' ')
+                        break
+                
+                if encontrou:
+                    msg = f"🚨 *ALERTA NO DIOGRANDE!*\n\n📌 *Arquivo:* {titulo_padrao}\n📝 *Trecho:* ...{trecho}...\n\n🔗 *Baixar:* {link}"
+                    msg, keyword = destacar_termo(msg, trecho)
+                    if disparar_telegram(msg):
+                        db = adicionar_vaga(db, link, titulo_padrao, "Diogrande", trecho, link, False, None, "Campo Grande - MS", "Capturado", keyword)
+                        novos += 1
+                else:
+                    db = adicionar_vaga(db, link, titulo_padrao + " (Sem TI)", "Diogrande", "Sem vagas detectadas.", link, is_silent=True, local="Campo Grande - MS")
             else:
-                db = adicionar_vaga(db, link, "Edição sem TI", "Diogrande", "Sem vagas detectadas.", link, is_silent=True, local="Campo Grande - MS")
-        else:
-            registrar_saude("Diogrande", False, f"Erro ao baixar PDF: HTTP {pdf_r.status_code}")
+                registrar_saude("Diogrande", False, f"Erro ao baixar PDF {link}: HTTP {pdf_r.status_code}")
+                return db, novos # Stop if download fails to avoid loop stalling
+                
+        registrar_saude("Diogrande", True)
     except Exception as e:
         print(f"Erro Diogrande: {e}")
         registrar_saude("Diogrande", False, str(e))

@@ -446,9 +446,10 @@ function renderFeed(filterKey) {
   let vagas = DB.filter(v => !v.silent);
   
   // Apply filter
-  if (filterKey === 'ufms') vagas = vagas.filter(v => /ufms|ifms/i.test(v.fonte));
-  else if (filterKey === 'gov') vagas = vagas.filter(v => /governo|sad/i.test(v.fonte));
-  else if (filterKey === 'pci') vagas = vagas.filter(v => /pci/i.test(v.fonte));
+  const fullText = v => (v.titulo + ' ' + v.detalhes + ' ' + v.fonte).toLowerCase();
+  if (filterKey === 'ufms') vagas = vagas.filter(v => /ufms|ifms|universidade federal|instituto federal/i.test(fullText(v)));
+  else if (filterKey === 'gov') vagas = vagas.filter(v => /governo|sad|ms\.gov|econcurso|diário oficial|diogrande/i.test(fullText(v)));
+  else if (filterKey === 'pci') vagas = vagas.filter(v => /pci|pciconcursos/i.test(fullText(v)));
 
   // Stats
   const allActive = DB.filter(v => !v.silent);

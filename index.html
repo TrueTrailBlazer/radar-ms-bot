@@ -88,9 +88,7 @@ tailwind.config = {
 <!-- ========== HEADER ========== -->
 <header class="fixed top-0 left-0 w-full z-50 bg-[#0A0A0A] border-b border-[#262626]" id="app-header">
   <div class="h-14 flex items-center justify-between px-4 max-w-5xl mx-auto relative">
-    <button id="search-toggle" class="text-white hover:opacity-80 active:scale-95 transition-all flex items-center justify-center w-10 h-10">
-      <span class="material-symbols-outlined">search</span>
-    </button>
+    <div class="w-10 h-10"></div>
     <h1 id="header-title" class="font-headline text-headline-md font-bold text-white tracking-tight cursor-pointer" onclick="navigateTo('feed')">Radar MS</h1>
     <div class="flex items-center gap-1">
       <button id="health-btn" class="text-white hover:opacity-80 active:scale-95 transition-all flex items-center justify-center w-10 h-10" onclick="openHealthModal()">
@@ -100,17 +98,6 @@ tailwind.config = {
         <span class="material-symbols-outlined">sync</span>
       </button>
     </div>
-  </div>
-  <!-- Search bar (hidden by default) -->
-  <div id="search-bar" class="hidden bg-[#0A0A0A] border-b border-[#262626] relative">
-    <div class="max-w-5xl mx-auto px-4 py-2 flex items-center gap-2">
-      <span class="material-symbols-outlined text-[#c4c7c8]">search</span>
-      <input id="search-input" type="text" placeholder="Buscar concursos, vagas, editais..." class="flex-grow bg-transparent text-white text-sm focus:outline-none placeholder-[#8e9192]" autocomplete="off"/>
-      <button onclick="closeSearch()" class="text-[#c4c7c8] hover:text-white transition-colors">
-        <span class="material-symbols-outlined text-[20px]">close</span>
-      </button>
-    </div>
-    <div id="search-dropdown"></div>
   </div>
 </header>
 
@@ -131,6 +118,11 @@ tailwind.config = {
         <p class="text-[10px] text-[#c4c7c8] font-medium uppercase tracking-wider mb-0.5">Maior Fonte</p>
         <h2 id="stat-source" class="text-sm font-semibold text-white font-headline">—</h2>
       </div>
+    </div>
+    <!-- Search Bar -->
+    <div class="relative w-full">
+      <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-[#8e9192]">search</span>
+      <input id="inline-search-input" type="text" placeholder="Buscar por termo livre (ex: Enfermagem, Bolsa, Campo Grande)..." class="w-full bg-[#171717] border border-[#262626] text-white text-sm rounded-xl pl-11 pr-4 py-3 focus:outline-none focus:border-[#444748] transition-colors placeholder-[#8e9192]" autocomplete="off"/>
     </div>
     <!-- Filter Tabs -->
     <nav class="flex overflow-x-auto gap-2 no-scrollbar">
@@ -380,58 +372,7 @@ function navigateTo(view) {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// ===== SEARCH =====
-function openSearch() {
-  document.getElementById('search-bar').classList.remove('hidden');
-  document.getElementById('search-input').focus();
-}
-function closeSearch() {
-  document.getElementById('search-bar').classList.add('hidden');
-  document.getElementById('search-input').value = '';
-  document.getElementById('search-dropdown').classList.remove('open');
-  document.getElementById('search-dropdown').innerHTML = '';
-}
-
-document.getElementById('search-toggle').addEventListener('click', () => {
-  const bar = document.getElementById('search-bar');
-  if (bar.classList.contains('hidden')) openSearch(); else closeSearch();
-});
-
-document.getElementById('search-input').addEventListener('input', (e) => {
-  const q = e.target.value.toLowerCase().trim();
-  const dropdown = document.getElementById('search-dropdown');
-  if (q.length < 2) { dropdown.classList.remove('open'); dropdown.innerHTML = ''; return; }
-
-  const results = DB.filter(v => !v.silent && (v.titulo + ' ' + v.detalhes + ' ' + v.fonte).toLowerCase().includes(q)).slice(0, 15);
-  if (results.length === 0) {
-    dropdown.innerHTML = '<div class="p-4 text-sm text-[#c4c7c8] text-center">Nenhum resultado encontrado</div>';
-    dropdown.classList.add('open');
-    return;
-  }
-
-  dropdown.innerHTML = results.map(v => {
-    const cat = getCategory(v);
-    return `<a href="javascript:void(0)" onclick="openDetailModalById('${v.id}'); closeSearch()" class="flex items-start gap-3 p-3 hover:bg-[#262626]/50 transition-colors border-b border-[#262626] last:border-0 cursor-pointer">
-      <div class="flex-shrink-0 mt-0.5"><span class="${cat.cls} px-2 py-0.5 rounded text-[9px] font-bold uppercase tracking-wider">${cat.label}</span></div>
-      <div class="flex-1 min-w-0">
-        <p class="text-sm text-white font-medium truncate">${v.titulo}</p>
-        <p class="text-[11px] text-[#8e9192] truncate mt-0.5">${v.local ? '<span class="material-symbols-outlined text-[11px] align-middle mr-0.5">location_on</span>' + v.local + ' • ' : ''}${v.detalhes}</p>
-      </div>
-      <span class="text-[11px] text-[#8e9192] flex-shrink-0 whitespace-nowrap text-right flex flex-col justify-center"><span class="font-medium text-[#c4c7c8]">${v.data_tipo || 'Capturado'}</span>${formatDate(v.data) || ''}</span>
-    </a>`;
-  }).join('');
-  dropdown.classList.add('open');
-});
-
-document.getElementById('search-input').addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') closeSearch();
-});
-
-// Close search on click outside
-document.addEventListener('click', (e) => {
-  if (!document.getElementById('app-header').contains(e.target)) closeSearch();
-});
-
+// Removed old dropdown search logic
 // ===== REFRESH =====
 document.getElementById('refresh-btn').addEventListener('click', () => {
   const icon = document.querySelector('#refresh-btn span');
@@ -472,6 +413,21 @@ function renderFeed(filterKey) {
   if (filterKey === 'ufms') vagas = vagas.filter(v => /ufms|ifms|universidade federal|instituto federal/i.test(fullText(v)));
   else if (filterKey === 'gov') vagas = vagas.filter(v => /governo|sad|ms\.gov|econcurso|diário oficial|diogrande/i.test(fullText(v)));
   else if (filterKey === 'pci') vagas = vagas.filter(v => /pci|pciconcursos/i.test(fullText(v)));
+
+  // Inline Search Filter
+  const q = (document.getElementById('inline-search-input')?.value || '').toLowerCase().trim();
+  if (q.length > 0) {
+    vagas = vagas.filter(v => fullText(v).includes(q) || (v.local || '').toLowerCase().includes(q) || (v.palavra_chave || '').toLowerCase().includes(q));
+  }
+
+  // Event listener hook (done once)
+  const searchInput = document.getElementById('inline-search-input');
+  if (searchInput && !searchInput.dataset.listening) {
+    searchInput.dataset.listening = 'true';
+    searchInput.addEventListener('input', () => {
+      renderFeed(document.querySelector('.filter-tab.bg-white')?.dataset.filter === 'all' ? null : document.querySelector('.filter-tab.bg-white')?.dataset.filter);
+    });
+  }
 
   // Stats
   const allActive = DB.filter(v => !v.silent);

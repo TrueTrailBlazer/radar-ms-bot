@@ -523,7 +523,7 @@ function renderFeed(filterKey) {
           <div class="flex items-center gap-1.5 text-[11px] text-[#8e9192]">
             <span class="material-symbols-outlined text-[13px]">calendar_today</span>
             <div class="flex flex-col">
-               <span><span class="font-medium text-[#c4c7c8]">Capturado:</span> ${formatDate(v.data_captura || v.data)}</span>
+               ${v.data_captura ? `<span><span class="font-medium text-[#c4c7c8]">Capturado:</span> ${formatDate(v.data_captura)}</span>` : `<span><span class="font-medium text-[#c4c7c8]">${v.data_tipo || 'Capturado'}:</span> ${formatDate(v.data)}</span>`}
                ${v.data_publicacao ? `<span><span class="font-medium text-[#c4c7c8]">Publicado:</span> ${formatDate(v.data_publicacao)}</span>` : ''}
             </div>
           </div>
@@ -592,7 +592,7 @@ function renderSaved() {
           <div class="flex items-center gap-1.5 text-[11px] text-[#8e9192]">
             <span class="material-symbols-outlined text-[13px]">calendar_today</span>
             <div class="flex flex-col">
-               <span><span class="font-medium text-[#c4c7c8]">Capturado:</span> ${formatDate(v.data_captura || v.data)}</span>
+               ${v.data_captura ? `<span><span class="font-medium text-[#c4c7c8]">Capturado:</span> ${formatDate(v.data_captura)}</span>` : `<span><span class="font-medium text-[#c4c7c8]">${v.data_tipo || 'Capturado'}:</span> ${formatDate(v.data)}</span>`}
                ${v.data_publicacao ? `<span><span class="font-medium text-[#c4c7c8]">Publicado:</span> ${formatDate(v.data_publicacao)}</span>` : ''}
             </div>
           </div>
@@ -638,7 +638,7 @@ function renderHistory() {
           <div class="flex items-center gap-1.5 text-[11px] text-[#8e9192]">
             <span class="material-symbols-outlined text-[13px]">calendar_today</span>
             <div class="flex flex-col">
-               <span><span class="font-medium text-[#c4c7c8]">Capturado:</span> ${formatDate(v.data_captura || v.data)}</span>
+               ${v.data_captura ? `<span><span class="font-medium text-[#c4c7c8]">Capturado:</span> ${formatDate(v.data_captura)}</span>` : `<span><span class="font-medium text-[#c4c7c8]">${v.data_tipo || 'Capturado'}:</span> ${formatDate(v.data)}</span>`}
                ${v.data_publicacao ? `<span><span class="font-medium text-[#c4c7c8]">Publicado:</span> ${formatDate(v.data_publicacao)}</span>` : ''}
             </div>
           </div>
@@ -806,7 +806,10 @@ function openDetailModal(v) {
   document.getElementById('detail-badge').className = `px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider flex-shrink-0 ${cat.cls}`;
   document.getElementById('detail-keyword').innerHTML = v.palavra_chave ? `<span class="bg-[#1C0000] text-[#ffb4ab] border border-[#4a0000] px-2 py-0.5 rounded text-[9px] font-bold tracking-wider flex items-center gap-1"><span class="material-symbols-outlined text-[10px]">target</span>${v.palavra_chave.toUpperCase()}</span>` : '';
   
-  let dateHtml = `<div class="flex items-start gap-1"><span class="material-symbols-outlined text-[14px]">calendar_today</span><div class="flex flex-col"><span><span class="font-medium">Capturado:</span> ${formatDate(v.data_captura || v.data) || ''}</span>${v.data_publicacao ? `<span><span class="font-medium">Publicado:</span> ${formatDate(v.data_publicacao)}</span>` : ''}</div></div>`;
+  let dateHtml = `<div class="flex items-start gap-1"><span class="material-symbols-outlined text-[14px]">calendar_today</span><div class="flex flex-col">`;
+  dateHtml += v.data_captura ? `<span><span class="font-medium">Capturado:</span> ${formatDate(v.data_captura) || ''}</span>` : `<span><span class="font-medium">${v.data_tipo || 'Capturado'}:</span> ${formatDate(v.data) || ''}</span>`;
+  dateHtml += v.data_publicacao ? `<span><span class="font-medium">Publicado:</span> ${formatDate(v.data_publicacao)}</span>` : '';
+  dateHtml += `</div></div>`;
   if(v.local) dateHtml += `<div class="flex items-center gap-1 mt-2"><span class="material-symbols-outlined text-[14px]">location_on</span><span>${v.local}</span></div>`;
   document.getElementById('detail-date').innerHTML = dateHtml;
   

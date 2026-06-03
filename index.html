@@ -373,7 +373,7 @@ document.getElementById('search-input').addEventListener('input', (e) => {
       <div class="flex-shrink-0 mt-0.5"><span class="${cat.cls} px-2 py-0.5 rounded text-[9px] font-bold uppercase tracking-wider">${cat.label}</span></div>
       <div class="flex-1 min-w-0">
         <p class="text-sm text-white font-medium truncate">${v.titulo}</p>
-        <p class="text-[11px] text-[#8e9192] truncate mt-0.5">${v.detalhes}</p>
+        <p class="text-[11px] text-[#8e9192] truncate mt-0.5">${v.local ? '<span class="material-symbols-outlined text-[11px] align-middle mr-0.5">location_on</span>' + v.local + ' • ' : ''}${v.detalhes}</p>
       </div>
       <span class="text-[11px] text-[#8e9192] flex-shrink-0 whitespace-nowrap">${v.data || ''}</span>
     </a>`;
@@ -448,6 +448,7 @@ function renderFeed(filterKey) {
           <span class="text-[11px] text-[#8e9192]">${v.data}</span>
         </div>
         <h3 class="text-base font-semibold text-white font-headline mb-1.5 leading-tight">${v.titulo}</h3>
+        ${v.local ? `<p class="text-[12px] text-[#c4c7c8] font-medium mb-1.5 flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">location_on</span>${v.local}</p>` : ''}
         <p class="text-[13px] text-[#c4c7c8] leading-relaxed" style="display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden">${v.detalhes}</p>
       </div>
       <div class="mt-4 pt-3 border-t border-[#262626] flex gap-2">
@@ -502,6 +503,7 @@ function renderSaved() {
       <div class="flex flex-col gap-1.5 flex-1">
         <div class="flex items-center gap-2 mb-1">${getCategoryBadgeHTML(v)}<span class="text-[11px] text-[#8e9192]">${v.data}</span></div>
         <h2 class="text-base font-semibold text-white font-headline">${v.titulo}</h2>
+        ${v.local ? `<p class="text-[12px] text-[#c4c7c8] font-medium flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">location_on</span>${v.local}</p>` : ''}
         <p class="text-[13px] text-[#c4c7c8]" style="display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">${v.detalhes}</p>
       </div>
       <div class="flex items-center gap-2 pt-3 md:pt-0 border-t border-[#262626] md:border-0">
@@ -539,6 +541,7 @@ function renderHistory() {
           <span class="text-[14px] sm:text-[15px] font-semibold text-white font-headline leading-tight break-words">${v.titulo}</span>
           <span class="text-[10px] sm:text-[11px] text-[#8e9192] whitespace-nowrap flex-shrink-0">${v.data}</span>
         </div>
+        ${v.local ? `<p class="text-[12px] text-[#c4c7c8] font-medium flex items-center gap-1 mt-0.5"><span class="material-symbols-outlined text-[14px]">location_on</span>${v.local}</p>` : ''}
         <p class="text-[12px] sm:text-[13px] text-[#c4c7c8]" style="display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">${v.detalhes}</p>
         <div class="flex items-center gap-2 mt-0.5 flex-wrap">
           ${getCategoryBadgeHTML(v)}

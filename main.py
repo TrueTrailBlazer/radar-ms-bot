@@ -89,7 +89,7 @@ def ja_existe(db, link_ou_hash):
             return True
     return False
 
-def adicionar_vaga(db, id_vaga, titulo, fonte, detalhes, link, is_silent=False):
+def adicionar_vaga(db, id_vaga, titulo, fonte, detalhes, link, is_silent=False, data_publicacao=None, local=None):
     # Se for is_silent = True, significa que não achou vaga, mas queremos
     # registrar o hash no DB para não procurar novamente e poluir a rede.
     hoje = datetime.now().strftime("%d/%m/%Y %H:%M")
@@ -98,10 +98,12 @@ def adicionar_vaga(db, id_vaga, titulo, fonte, detalhes, link, is_silent=False):
         "titulo": titulo,
         "fonte": fonte,
         "detalhes": detalhes,
-        "data": hoje,
+        "data": data_publicacao if data_publicacao else hoje,
         "link": link,
         "silent": is_silent
     }
+    if local:
+        nova_vaga["local"] = local
     db.insert(0, nova_vaga) # Mais recentes primeiro
     return db[:200] # Limite para não explodir arquivo
 
@@ -132,7 +134,7 @@ def monitorar_pci(db):
                 msg = f"🚨 *NOVA VAGA EM {cidade.upper()}!*\n\n🏢 *Órgão:* {orgao}\n📝 *Detalhes:* {detalhes}\n📅 *Inscrições:* {prazo}\n\n🔗 *Link:* {link_direto}"
                 msg = destacar_termo(msg, detalhes)
                 if disparar_telegram(msg):
-                    db = adicionar_vaga(db, link_direto, f"{cidade} - {orgao}", "PCI Concursos", detalhes, link_direto)
+                    db = adicionar_vaga(db, link_direto, f"{cidade} - {orgao}", "PCI Concursos", detalhes, link_direto, False, prazo, cidade)
                     novos += 1
                     time.sleep(2)
         except Exception as e:
@@ -156,8 +158,15 @@ def monitorar_rss_google(db):
             resumo_curto = resumo[:147] + "..." if len(resumo)>150 else resumo
             msg = f"🌐 *RADAR GOOGLE ALERTS*\n\n📌 *Título:* {titulo}\n🔎 *Resumo:* {resumo_curto}\n\n🔗 *Acessar:* {link}"
             msg = destacar_termo(msg, texto)
+            
+            data_pub = entry.published if hasattr(entry, 'published') else None
+            cidades_ms = ["Campo Grande", "Dourados", "Três Lagoas", "Corumbá", "Ponta Porã", "Aquidauana", "Naviraí", "Nova Andradina", "Coxim", "Paranaíba", "Chapadão do Sul", "MS"]
+            cidades = [c for c in cidades_ms if c.lower() in texto.lower() and c != "MS"]
+            if not cidades and "ms" in texto.lower().split(): cidades.append("Mato Grosso do Sul")
+            local_str = ", ".join(cidades) if cidades else None
+            
             if disparar_telegram(msg):
-                db = adicionar_vaga(db, link, titulo[:100], "Google Alerts", resumo_curto, link)
+                db = adicionar_vaga(db, link, titulo[:100], "Google Alerts", resumo_curto, link, False, data_pub, local_str)
                 novos += 1
                 time.sleep(2)
     except Exception as e:
@@ -183,10 +192,10 @@ def monitorar_sad(db):
                 if ja_existe(db, link): continue
                 
                 detalhes = texto[:200] + "..." if len(texto) > 200 else texto
-                msg = f"\U0001f6a8 *NOVA VAGA NA SAD/MS (GOV MS)!*\n\n\U0001f4dd *Detalhes:* {detalhes}\n\n\U0001f517 *Link:* {link}"
+                msg = f"🚨 *NOVA VAGA NA SAD/MS (GOV MS)!*\n\n📝 *Detalhes:* {detalhes}\n\n🔗 *Link:* {link}"
                 msg = destacar_termo(msg, texto)
                 if disparar_telegram(msg):
-                    db = adicionar_vaga(db, link, "Processo Seletivo (SAD/MS)", "Governo MS", detalhes, link)
+                    db = adicionar_vaga(db, link, "Processo Seletivo (SAD/MS)", "Governo MS", detalhes, link, False, None, "Mato Grosso do Sul")
                     novos += 1
                     time.sleep(2)
     except Exception as e:
@@ -215,8 +224,13 @@ def monitorar_universidades(db):
                 detalhes = texto[:200] + "..."
                 msg = f"🚨 *PROCESSO SELETIVO NA {nome}!*\n\n📝 *Detalhes:* {detalhes}\n\n🔗 *Link:* {link}"
                 msg = destacar_termo(msg, texto)
+                
+                cidades_ms = ["Campo Grande", "Dourados", "Três Lagoas", "Corumbá", "Ponta Porã", "Aquidauana", "Naviraí", "Nova Andradina", "Coxim", "Paranaíba", "Chapadão do Sul"]
+                cidades = [c for c in cidades_ms if c.lower() in texto.lower()]
+                local_str = ", ".join(cidades) if cidades else "Mato Grosso do Sul"
+                
                 if disparar_telegram(msg):
-                    db = adicionar_vaga(db, link, f"Processo Seletivo {nome}", nome, detalhes, link)
+                    db = adicionar_vaga(db, link, f"Processo Seletivo {nome}", nome, detalhes, link, False, None, local_str)
                     novos += 1
                     time.sleep(2)
         except Exception as e:
@@ -262,10 +276,10 @@ def monitorar_diogrande(db):
                 msg = f"🚨 *ALERTA NO DIOGRANDE (DIÁRIO OFICIAL)!*\n\n📝 *Trecho:* ...{trecho}...\n\n🔗 *Baixar:* {link}"
                 msg = destacar_termo(msg, trecho)
                 if disparar_telegram(msg):
-                    db = adicionar_vaga(db, link, "Diário Oficial Campo Grande", "Diogrande", trecho, link)
+                    db = adicionar_vaga(db, link, "Diário Oficial Campo Grande", "Diogrande", trecho, link, False, None, "Campo Grande - MS")
                     novos += 1
             else:
-                db = adicionar_vaga(db, link, "Edição sem TI", "Diogrande", "Sem vagas detectadas.", link, is_silent=True)
+                db = adicionar_vaga(db, link, "Edição sem TI", "Diogrande", "Sem vagas detectadas.", link, is_silent=True, local="Campo Grande - MS")
     except Exception as e:
         print(f"Erro Diogrande: {e}")
     return db, novos
@@ -316,8 +330,13 @@ def monitorar_ufms_lato_sensu(db):
                     titulo_curso = titulo_curso[:120]
                     
                     msg = f"\U0001f6a8 *Pós-Graduação UFMS - Inscrição Aberta!*\n\n\U0001f3eb *Curso:* {titulo_curso}\n\U0001f4dd *Palavras:* {', '.join(encontradas[:5])}\n\n\U0001f517 *Inscreva-se:* {link_curso}"
+                    
+                    cidades_ms = ["Campo Grande", "Dourados", "Três Lagoas", "Corumbá", "Ponta Porã", "Aquidauana", "Naviraí", "Nova Andradina", "Coxim", "Paranaíba", "Chapadão do Sul"]
+                    cidades = [c for c in cidades_ms if c.lower() in texto.lower()]
+                    local_str = ", ".join(cidades) if cidades else "Mato Grosso do Sul"
+                    
                     if disparar_telegram(msg):
-                        db = adicionar_vaga(db, link_curso, titulo_curso, "UFMS Pós", f"Inscrições abertas. Palavras: {', '.join(encontradas[:5])}", link_curso)
+                        db = adicionar_vaga(db, link_curso, titulo_curso, "UFMS Pós", f"Inscrições abertas. Palavras: {', '.join(encontradas[:5])}", link_curso, False, None, local_str)
                         novos += 1
                         time.sleep(2)
             else:
@@ -341,8 +360,13 @@ def monitorar_ufms_lato_sensu(db):
                             if href.startswith('http'): best_link = href; break
                     
                     msg = f"\U0001f6a8 *Nova Atualização na UFMS Pós-Graduação!*\n\n\U0001f3eb *Alvo:* {nome}\n\U0001f4dd *Palavras encontradas:* {', '.join(encontradas[:5])}\n\n\U0001f517 *Acesse:* {best_link}"
+                    
+                    cidades_ms = ["Campo Grande", "Dourados", "Três Lagoas", "Corumbá", "Ponta Porã", "Aquidauana", "Naviraí", "Nova Andradina", "Coxim", "Paranaíba", "Chapadão do Sul"]
+                    cidades = [c for c in cidades_ms if c.lower() in texto.lower()]
+                    local_str = ", ".join(cidades) if cidades else "Mato Grosso do Sul"
+                    
                     if disparar_telegram(msg):
-                        db = adicionar_vaga(db, id_hash, f"Pós-Graduação: {nome}", "UFMS Pós", f"Atualização contendo: {', '.join(encontradas[:5])}", best_link)
+                        db = adicionar_vaga(db, id_hash, f"Pós-Graduação: {nome}", "UFMS Pós", f"Atualização contendo: {', '.join(encontradas[:5])}", best_link, False, None, local_str)
                         novos += 1
                 else:
                     db = adicionar_vaga(db, id_hash, f"Atualização Pós: {nome}", "UFMS Pós", "Página alterada (Sem palavras TI detectadas)", url, is_silent=True)

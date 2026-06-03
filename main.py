@@ -8,6 +8,7 @@ import hashlib
 import io
 import urllib3
 import PyPDF2
+import base64
 from datetime import datetime, timezone, timedelta
 from bs4 import BeautifulSoup
 

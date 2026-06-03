@@ -57,14 +57,20 @@ def registrar_saude(scraper_name, sucesso, msg_erro=""):
     chave = f"{scraper_name}_falhas"
     falhas = dados.get(chave, 0)
     
+    agora = datetime.now(timezone(timedelta(hours=-4))).strftime("%d/%m/%Y %H:%M:%S")
+    
     if sucesso:
         dados[chave] = 0
+        dados[f"{scraper_name}_ultimo_erro"] = ""
     else:
         falhas += 1
         if falhas >= 24: # 3 dias
             disparar_telegram(f"⚠️ *Alerta de Manutenção Radar MS:*\nO scraper `{scraper_name}` falhou 24 vezes consecutivas (3 dias).\n\nÚltimo erro: `{msg_erro}`\n\nVerifique se o site mudou de estrutura ou está fora do ar/bloqueando o robô!")
             falhas = 0
         dados[chave] = falhas
+        dados[f"{scraper_name}_ultimo_erro"] = msg_erro
+    
+    dados[f"{scraper_name}_data"] = agora
 
     try:
         with open(arquivo, "w") as f: json.dump(dados, f)

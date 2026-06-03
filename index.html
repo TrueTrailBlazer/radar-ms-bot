@@ -441,7 +441,7 @@ function renderFeed(filterKey) {
   const saved = JSON.parse(localStorage.getItem('saved_vagas') || '[]');
   grid.innerHTML = vagas.map(v => {
     const isSaved = saved.includes(v.id);
-    return `<article class="bg-[#171717] border border-[#262626] rounded-xl p-5 flex flex-col justify-between hover:border-[#444748] transition-colors">
+    return `<article class="bg-[#171717] border border-[#262626] rounded-xl p-5 flex flex-col justify-between hover:border-[#444748] transition-colors cursor-pointer" onclick='openDetailModal(${JSON.stringify(v).replace(/'/g,"&#39;")})'>
       <div>
         <div class="flex justify-between items-start mb-2">
           ${getCategoryBadgeHTML(v)}
@@ -451,7 +451,7 @@ function renderFeed(filterKey) {
         ${v.local ? `<p class="text-[12px] text-[#c4c7c8] font-medium mb-1.5 flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">location_on</span>${v.local}</p>` : ''}
         <p class="text-[13px] text-[#c4c7c8] leading-relaxed" style="display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden">${v.detalhes}</p>
       </div>
-      <div class="mt-4 pt-3 border-t border-[#262626] flex gap-2">
+      <div class="mt-4 pt-3 border-t border-[#262626] flex gap-2" onclick="event.stopPropagation()">
         <a href="${v.link}" target="_blank" class="flex-grow text-center bg-white text-[#0a0a0a] font-bold rounded-lg hover:opacity-90 active:scale-[0.98] transition-all py-2 text-sm">Acessar Edital</a>
         <button onclick="toggleSave('${v.id}')" id="btn-save-${v.id}" class="w-10 flex items-center justify-center rounded-lg border border-[#262626] hover:bg-[#262626] transition-colors text-white">
           <span class="material-symbols-outlined" style="font-variation-settings:'FILL' ${isSaved?1:0}">bookmark</span>

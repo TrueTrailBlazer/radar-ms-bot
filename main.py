@@ -8,7 +8,7 @@ import hashlib
 import io
 import urllib3
 import PyPDF2
-from datetime import datetime
+from datetime import datetime, timezone, timedelta
 from bs4 import BeautifulSoup
 
 # ================= CONFIGURAÇÕES =================
@@ -92,7 +92,8 @@ def ja_existe(db, link_ou_hash):
 def adicionar_vaga(db, id_vaga, titulo, fonte, detalhes, link, is_silent=False, data_publicacao=None, local=None, data_tipo="Capturado"):
     # Se for is_silent = True, significa que não achou vaga, mas queremos
     # registrar o hash no DB para não procurar novamente e poluir a rede.
-    hoje = datetime.now().strftime("%d/%m/%Y %H:%M")
+    fuso_ms = timezone(timedelta(hours=-4))
+    hoje = datetime.now(fuso_ms).strftime("%d/%m/%Y %H:%M")
     nova_vaga = {
         "id": id_vaga,
         "titulo": titulo,

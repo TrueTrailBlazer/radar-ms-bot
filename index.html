@@ -727,7 +727,7 @@ function fetchHealth() {
       container.innerHTML = '';
       const scrapers = new Set();
       Object.keys(data).forEach(k => {
-        const name = k.replace('_falhas', '').replace('_ultimo_erro', '').replace('_data', '');
+        const name = k.replace('_falhas', '').replace('_ultimo_erro', '').replace('_data', '').replace('_info', '');
         if (name.trim()) scrapers.add(name);
       });
       

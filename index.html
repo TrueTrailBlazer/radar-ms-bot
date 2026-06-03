@@ -476,9 +476,24 @@ function renderFeed(filterKey) {
   const allActive = DB.filter(v => !v.silent);
   document.getElementById('stat-total').textContent = allActive.length;
   
-  // Last update should be the date of the most recent sweep (which usually leaves a 'Capturado' entry)
-  const lastSweep = DB.find(v => v.data_tipo === 'Capturado') || DB[0];
-  document.getElementById('stat-update').textContent = lastSweep ? formatDate(lastSweep.data) : '—';
+  // Last update will be populated via health.json for accuracy
+  document.getElementById('stat-update').textContent = 'Carregando...';
+  fetch('health.json?_t=' + Date.now())
+    .then(r => r.ok ? r.json() : {})
+    .then(data => {
+      let maxStr = '—';
+      let maxVal = 0;
+      Object.keys(data).forEach(k => {
+        if(k.endsWith('_data')) {
+          const parts = data[k].match(/(\d+)\/(\d+)\/(\d+) (\d+):(\d+):(\d+)/);
+          if(parts) {
+            const val = new Date(parts[3], parts[2]-1, parts[1], parts[4], parts[5], parts[6]).getTime();
+            if(val > maxVal) { maxVal = val; maxStr = `${parts[1]}/${parts[2]}/${parts[3]} ${parts[4]}:${parts[5]}`; }
+          }
+        }
+      });
+      document.getElementById('stat-update').textContent = maxVal ? maxStr : (vagas[0] ? formatDate(vagas[0].data) : '—');
+    }).catch(() => { document.getElementById('stat-update').textContent = '—'; });
 
   if (allActive.length > 0) {
     // Most common source

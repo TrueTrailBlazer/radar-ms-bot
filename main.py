@@ -46,6 +46,30 @@ ALVOS_UFMS = [
 urllib3.disable_warnings()
 # =================================================
 
+def registrar_saude(scraper_name, sucesso, msg_erro=""):
+    arquivo = "health.json"
+    dados = {}
+    try:
+        if os.path.exists(arquivo):
+            with open(arquivo, "r") as f: dados = json.load(f)
+    except: pass
+
+    chave = f"{scraper_name}_falhas"
+    falhas = dados.get(chave, 0)
+    
+    if sucesso:
+        dados[chave] = 0
+    else:
+        falhas += 1
+        if falhas >= 24: # 3 dias
+            disparar_telegram(f"⚠️ *Alerta de Manutenção Radar MS:*\nO scraper `{scraper_name}` falhou 24 vezes consecutivas (3 dias).\n\nÚltimo erro: `{msg_erro}`\n\nVerifique se o site mudou de estrutura ou está fora do ar/bloqueando o robô!")
+            falhas = 0
+        dados[chave] = falhas
+
+    try:
+        with open(arquivo, "w") as f: json.dump(dados, f)
+    except: pass
+
 def destacar_termo(mensagem_base, texto_verificado):
     match = PADRAO_TI.search(texto_verificado)
     if match:
@@ -174,6 +198,7 @@ def monitorar_rss_google(db):
                 time.sleep(2)
     except Exception as e:
         print(f"Erro RSS: {e}")
+        registrar_saude("RSS_Google", False, str(e))
     return db, novos
 
 def monitorar_sad(db):
@@ -182,27 +207,28 @@ def monitorar_sad(db):
     try:
         r = requests.get(URL_SAD_MS, headers=headers, timeout=45, verify=False)
         if r.status_code == 200:
+            registrar_saude("SAD_MS", True)
             soup = BeautifulSoup(r.text, "html.parser")
             for el in soup.find_all(['tr', 'li', 'div', 'a']):
-                lt = el if el.name == 'a' else el.find('a')
-                if not lt: continue
-                texto = el.get_text(separator=" ").strip()
-                if not PADRAO_TI.search(texto): continue
-                link = lt.get('href')
-                if not link: continue
-                if link.startswith('/'): link = "https://www.econcursoms.ms.gov.br" + link
-                if not link.startswith('http'): continue
-                if ja_existe(db, link): continue
-                
-                detalhes = texto[:200] + "..." if len(texto) > 200 else texto
-                msg = f"🚨 *NOVA VAGA NA SAD/MS (GOV MS)!*\n\n📝 *Detalhes:* {detalhes}\n\n🔗 *Link:* {link}"
-                msg, keyword = destacar_termo(msg, texto)
-                if disparar_telegram(msg):
-                    db = adicionar_vaga(db, link, "Processo Seletivo (SAD/MS)", "Governo MS", detalhes, link, False, None, "Mato Grosso do Sul", "Capturado", keyword)
-                    novos += 1
-                    time.sleep(2)
+                txt = el.get_text(separator=' ').strip()
+                if not txt: continue
+                if PADRAO_TI.search(txt):
+                    link_tag = el if el.name == 'a' else el.find('a')
+                    link = link_tag.get('href') if link_tag else None
+                    if link and link.startswith('/'): link = "https://www.econcursoms.ms.gov.br" + link
+                    
+                    if not link or ja_existe(db, link): continue
+                    
+                    msg = f"🚨 *NOVIDADE NA SAD MS!*\n\n📝 *Detalhe:* {txt}\n\n🔗 *Link:* {link}"
+                    msg, keyword = destacar_termo(msg, txt)
+                    if disparar_telegram(msg):
+                        db = adicionar_vaga(db, link, "Atualização SAD MS", "Governo MS", txt, link, False, None, "MS", "Capturado", keyword)
+                        novos += 1
+        else:
+            registrar_saude("SAD_MS", False, f"HTTP {r.status_code}")
     except Exception as e:
         print(f"Erro SAD: {e}")
+        registrar_saude("SAD_MS", False, str(e))
     return db, novos
 
 def monitorar_universidades(db):
@@ -212,62 +238,38 @@ def monitorar_universidades(db):
     for nome, url in urls:
         try:
             r = requests.get(url, headers=headers, timeout=45, verify=False)
-            if r.status_code != 200: continue
+            if r.status_code != 200:
+                registrar_saude(f"Uni_{nome}", False, f"HTTP {r.status_code}")
+                continue
+            registrar_saude(f"Uni_{nome}", True)
             soup = BeautifulSoup(r.text, "html.parser")
             for el in soup.find_all(['tr', 'li', 'div', 'a']):
-                lt = el if el.name == 'a' else el.find('a')
-                if not lt: continue
-                texto = el.get_text(separator=" ").strip()
-                if not PADRAO_TI.search(texto) or not PADRAO_VAGA.search(texto): continue
-                link = lt.get('href')
-                if not link: continue
-                if link.startswith('/'): link = url.rstrip('/') + link
-                if ja_existe(db, link): continue
-                
-                detalhes = texto[:200] + "..."
-                msg = f"🚨 *PROCESSO SELETIVO NA {nome}!*\n\n📝 *Detalhes:* {detalhes}\n\n🔗 *Link:* {link}"
-                msg, keyword = destacar_termo(msg, texto)
-                
-                cidades_ms = ["Campo Grande", "Dourados", "Três Lagoas", "Corumbá", "Ponta Porã", "Aquidauana", "Naviraí", "Nova Andradina", "Coxim", "Paranaíba", "Chapadão do Sul"]
-                cidades = [c for c in cidades_ms if c.lower() in texto.lower()]
-                local_str = ", ".join(cidades) if cidades else "Mato Grosso do Sul"
-                
-                if disparar_telegram(msg):
-                    db = adicionar_vaga(db, link, f"Processo Seletivo {nome}", nome, detalhes, link, False, None, local_str, "Capturado", keyword)
-                    novos += 1
-                    time.sleep(2)
+                txt = el.get_text(separator=' ').strip()
+                if not txt: continue
+                if PADRAO_TI.search(txt) and PADRAO_VAGA.search(txt):
+                    link_tag = el if el.name == 'a' else el.find('a')
+                    link = link_tag.get('href') if link_tag else None
+                    if link and link.startswith('/'): link = url.rstrip('/') + link
+                    
+                    if not link or ja_existe(db, link): continue
+                    
+                    msg = f"🚨 *NOVIDADE NA {nome}!*\n\n📝 *Detalhe:* {txt}\n\n🔗 *Acessar:* {link}"
+                    msg, keyword = destacar_termo(msg, txt)
+                    if disparar_telegram(msg):
+                        db = adicionar_vaga(db, link, f"Atualização {nome}", "Universidades MS", txt, link, False, None, None, "Capturado", keyword)
+                        novos += 1
         except Exception as e:
             print(f"Erro Uni {nome}: {e}")
+            registrar_saude(f"Uni_{nome}", False, str(e))
     return db, novos
 
 def monitorar_diogrande(db):
     import base64
-    import json
     headers = {"User-Agent": "Mozilla/5.0", "X-Requested-With": "XMLHttpRequest"}
     novos = 0
     
-    def registrar_sucesso():
-        try:
-            with open("health.json", "w") as f: json.dump({"diogrande_falhas": 0}, f)
-        except: pass
-
-    def registrar_falha():
-        falhas = 0
-        try:
-            if os.path.exists("health.json"):
-                with open("health.json", "r") as f: falhas = json.load(f).get("diogrande_falhas", 0)
-        except: pass
-        falhas += 1
-        if falhas >= 24: # 3 days assuming 8 runs/day
-            disparar_telegram("⚠️ *Chefe, o Diogrande parece ter mudado de site, preciso de manutenção!*")
-            falhas = 0
-        try:
-            with open("health.json", "w") as f: json.dump({"diogrande_falhas": falhas}, f)
-        except: pass
-
     try:
         links = []
-        # Tenta a API oficial primeiro
         url_api = "https://diogrande.campogrande.ms.gov.br/wp-admin/admin-ajax.php?action=edicao2_dia_json"
         r = requests.get(url_api, headers=headers, timeout=45, verify=False)
         if r.status_code == 200:
@@ -281,7 +283,6 @@ def monitorar_diogrande(db):
                             links.append(f"https://diogrande.campogrande.ms.gov.br/download_edicao/{b64}.pdf")
             except: pass
         
-        # Fallback (Plano B) se a API falhou ou não retornou links
         if not links:
             r_fall = requests.get("https://diogrande.campogrande.ms.gov.br/", headers={"User-Agent": "Mozilla/5.0"}, timeout=45, verify=False)
             if r_fall.status_code == 200:
@@ -291,20 +292,20 @@ def monitorar_diogrande(db):
                         href = a["href"]
                         if href.startswith("/"): href = "https://diogrande.campogrande.ms.gov.br" + href
                         links.append(href)
-                        break # Pegar só a edição mais recente exposta na home
+                        break 
         
         if not links:
-            registrar_falha()
+            registrar_saude("Diogrande", False, "Nem a API nem o Fallback retornaram links")
             return db, 0
         
         link = links[0]
         if ja_existe(db, link): 
-            registrar_sucesso()
+            registrar_saude("Diogrande", True)
             return db, 0
         
         pdf_r = requests.get(link, headers={"User-Agent": "Mozilla/5.0"}, timeout=45, verify=False)
         if pdf_r.status_code == 200:
-            registrar_sucesso() # Conseguiu ler o PDF com sucesso
+            registrar_saude("Diogrande", True)
             reader = PyPDF2.PdfReader(io.BytesIO(pdf_r.content))
             encontrou = False
             trecho = ""
@@ -325,10 +326,10 @@ def monitorar_diogrande(db):
             else:
                 db = adicionar_vaga(db, link, "Edição sem TI", "Diogrande", "Sem vagas detectadas.", link, is_silent=True, local="Campo Grande - MS")
         else:
-            registrar_falha()
+            registrar_saude("Diogrande", False, f"Erro ao baixar PDF: HTTP {pdf_r.status_code}")
     except Exception as e:
         print(f"Erro Diogrande: {e}")
-        registrar_falha()
+        registrar_saude("Diogrande", False, str(e))
     return db, novos
 
 def extrair_texto_ufms(html, tipo):
@@ -350,15 +351,16 @@ def monitorar_ufms_lato_sensu(db):
         tipo = alvo["tipo_extracao"]
         try:
             r = requests.get(url, headers=headers, timeout=45)
-            if r.status_code != 200: continue
+            if r.status_code != 200:
+                registrar_saude(f"UFMS_Lato_Sensu_{nome}", False, f"HTTP {r.status_code}")
+                continue
+            registrar_saude(f"UFMS_Lato_Sensu_{nome}", True)
             
             soup = BeautifulSoup(r.text, 'html.parser')
             
             if tipo == "lista_cursos":
-                # Extract individual course links from the listing
                 lista = soup.find('ul', id='ListagemProcessos')
-                if not lista:
-                    lista = soup  # fallback to whole page
+                if not lista: lista = soup
                 for li in lista.find_all(['li', 'a', 'div']):
                     link_tag = li if li.name == 'a' else li.find('a')
                     if not link_tag: continue
@@ -368,9 +370,10 @@ def monitorar_ufms_lato_sensu(db):
                     if link_curso.startswith('/'): link_curso = "https://posgraduacao.ufms.br" + link_curso
                     if not link_curso.startswith('http'): continue
                     
+                    if ja_existe(db, link_curso): continue
+                    
                     encontradas = [p for p in KEYWORDS_CONFIG + ["especialização", "lato sensu"] if p.lower() in texto]
                     if not encontradas: continue
-                    if ja_existe(db, link_curso): continue
                     
                     titulo_curso = link_tag.get_text(separator=" ").strip()
                     if len(titulo_curso) < 5: titulo_curso = texto[:100]

@@ -121,19 +121,26 @@ def ja_existe(db, link_ou_hash):
     return False
 
 def adicionar_vaga(db, id_vaga, titulo, fonte, detalhes, link, is_silent=False, data_publicacao=None, local=None, data_tipo="Capturado", palavra_chave=None):
-    # Se for is_silent = True, significa que não achou vaga, mas queremos
-    # registrar o hash no DB para não procurar novamente e poluir a rede.
-    fuso_ms = timezone(timedelta(hours=-4))
-    hoje = datetime.now(fuso_ms).strftime("%d/%m/%Y %H:%M")
+    if ja_existe(db, id_vaga): return db
+    
+    data_captura_str = datetime.now(pytz.timezone('America/Campo_Grande')).strftime('%d/%m/%Y %H:%M')
+    
+    if data_publicacao:
+        data_str = data_publicacao
+    else:
+        data_str = data_captura_str
+
     nova_vaga = {
         "id": id_vaga,
         "titulo": titulo,
         "fonte": fonte,
         "detalhes": detalhes,
-        "data": data_publicacao if data_publicacao else hoje,
-        "data_tipo": data_tipo if data_publicacao else "Capturado",
         "link": link,
         "silent": is_silent,
+        "data": data_str,
+        "data_captura": data_captura_str,
+        "data_publicacao": data_publicacao,
+        "data_tipo": data_tipo,
         "palavra_chave": palavra_chave
     }
     if local:
@@ -274,8 +281,13 @@ def monitorar_universidades(db):
     return db, novos
 
 def monitorar_diogrande(db):
-    import base64
-    headers = {"User-Agent": "Mozilla/5.0", "X-Requested-With": "XMLHttpRequest"}
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        "Accept": "application/json, text/javascript, */*; q=0.01",
+        "Accept-Language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
+        "X-Requested-With": "XMLHttpRequest",
+        "Referer": "https://diogrande.campogrande.ms.gov.br/"
+    }
     novos = 0
     
     try:
@@ -435,17 +447,38 @@ def monitorar_ufms_lato_sensu(db):
     return db, novos
 
 
+def verificar_inatividade_diogrande():
+    arquivo = "health.json"
+    if not os.path.exists(arquivo): return
+    try:
+        with open(arquivo, "r") as f: dados = json.load(f)
+        data_str = dados.get("Diogrande_data", "")
+        if not data_str: return
+        ultima = datetime.strptime(data_str, "%d/%m/%Y %H:%M:%S")
+        agora = datetime.now()
+        horas_passadas = (agora - ultima).total_seconds() / 3600
+        if horas_passadas > 48:
+            disparar_telegram(f"⚠️ *Alerta de Inatividade (Máquina de Trabalho):*\nO scraper local do Diogrande não sincroniza há {int(horas_passadas)} horas.\nÚltima vez: `{data_str}`\nVerifique se o PC do trabalho está ligado e conectado!")
+    except Exception as e:
+        print(f"Erro ao verificar inatividade: {e}")
+
 def main():
+    import sys
     print("Iniciando varredura unificada Radar MS...")
     db = carregar_database()
     total_novos = 0
     
-    db, n = monitorar_pci(db); total_novos += n
-    db, n = monitorar_rss_google(db); total_novos += n
-    db, n = monitorar_sad(db); total_novos += n
-    db, n = monitorar_universidades(db); total_novos += n
-    db, n = monitorar_diogrande(db); total_novos += n
-    db, n = monitorar_ufms_lato_sensu(db); total_novos += n
+    if "--diogrande-only" in sys.argv:
+        print("Modo Local: Rodando apenas Diogrande...")
+        db, n = monitorar_diogrande(db); total_novos += n
+    else:
+        print("Modo Nuvem: Rodando scrapers e checando inatividade...")
+        verificar_inatividade_diogrande()
+        db, n = monitorar_pci(db); total_novos += n
+        db, n = monitorar_rss_google(db); total_novos += n
+        db, n = monitorar_sad(db); total_novos += n
+        db, n = monitorar_universidades(db); total_novos += n
+        db, n = monitorar_ufms_lato_sensu(db); total_novos += n
     
     salvar_database(db)
     print(f"Varredura concluída. {total_novos} novos alertas disparados e salvos no banco de dados.")

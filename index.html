@@ -369,7 +369,7 @@ document.getElementById('search-input').addEventListener('input', (e) => {
 
   dropdown.innerHTML = results.map(v => {
     const cat = getCategory(v);
-    return `<a href="${v.link}" target="_blank" class="flex items-start gap-3 p-3 hover:bg-[#262626]/50 transition-colors border-b border-[#262626] last:border-0 cursor-pointer">
+    return `<a href="javascript:void(0)" onclick="openDetailModalById('${v.id}'); closeSearch()" class="flex items-start gap-3 p-3 hover:bg-[#262626]/50 transition-colors border-b border-[#262626] last:border-0 cursor-pointer">
       <div class="flex-shrink-0 mt-0.5"><span class="${cat.cls} px-2 py-0.5 rounded text-[9px] font-bold uppercase tracking-wider">${cat.label}</span></div>
       <div class="flex-1 min-w-0">
         <p class="text-sm text-white font-medium truncate">${v.titulo}</p>
@@ -441,7 +441,7 @@ function renderFeed(filterKey) {
   const saved = JSON.parse(localStorage.getItem('saved_vagas') || '[]');
   grid.innerHTML = vagas.map(v => {
     const isSaved = saved.includes(v.id);
-    return `<article class="bg-[#171717] border border-[#262626] rounded-xl p-5 flex flex-col justify-between hover:border-[#444748] transition-colors cursor-pointer" onclick='openDetailModal(${JSON.stringify(v).replace(/'/g,"&#39;")})'>
+    return `<article class="bg-[#171717] border border-[#262626] rounded-xl p-5 flex flex-col justify-between hover:border-[#444748] transition-colors cursor-pointer" onclick="openDetailModalById('${v.id}')">
       <div>
         <div class="flex justify-between items-start mb-2">
           ${getCategoryBadgeHTML(v)}
@@ -499,14 +499,14 @@ function renderSaved() {
     return;
   }
   feed.innerHTML = vagas.map(v => `
-    <article id="art-${v.id}" class="bg-[#171717] border border-[#262626] p-5 rounded-xl flex flex-col md:flex-row md:items-center justify-between gap-4 hover:border-[#444748] transition-colors">
+    <article id="art-${v.id}" class="bg-[#171717] border border-[#262626] p-5 rounded-xl flex flex-col md:flex-row md:items-center justify-between gap-4 hover:border-[#444748] transition-colors cursor-pointer" onclick="openDetailModalById('${v.id}')">
       <div class="flex flex-col gap-1.5 flex-1">
         <div class="flex items-center gap-2 mb-1">${getCategoryBadgeHTML(v)}<span class="text-[11px] text-[#8e9192]"><span class="font-medium text-[#c4c7c8]">${v.data_tipo || 'Capturado'}:</span> ${v.data}</span></div>
         <h2 class="text-base font-semibold text-white font-headline">${v.titulo}</h2>
         ${v.local ? `<p class="text-[12px] text-[#c4c7c8] font-medium flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">location_on</span>${v.local}</p>` : ''}
         <p class="text-[13px] text-[#c4c7c8]" style="display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">${v.detalhes}</p>
       </div>
-      <div class="flex items-center gap-2 pt-3 md:pt-0 border-t border-[#262626] md:border-0">
+      <div class="flex items-center gap-2 pt-3 md:pt-0 border-t border-[#262626] md:border-0" onclick="event.stopPropagation()">
         <a href="${v.link}" target="_blank" class="bg-white text-[#0a0a0a] text-sm font-bold px-4 py-2 rounded-lg hover:opacity-90 transition-opacity">Acessar</a>
         <button onclick="removeSaved('${v.id}')" class="w-10 h-10 flex items-center justify-center rounded-lg border border-[#262626] hover:border-white transition-colors text-white">
           <span class="material-symbols-outlined fill">bookmark</span>
@@ -545,7 +545,7 @@ function renderHistory() {
         <p class="text-[12px] sm:text-[13px] text-[#c4c7c8]" style="display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">${v.detalhes}</p>
         <div class="flex items-center gap-2 mt-0.5 flex-wrap">
           ${getCategoryBadgeHTML(v)}
-          <button onclick='openDetailModal(${JSON.stringify(v).replace(/'/g,"&#39;")})' class="text-[12px] text-white hover:underline flex items-center gap-1 ml-auto cursor-pointer font-medium whitespace-nowrap">
+          <button onclick="openDetailModalById('${v.id}')" class="text-[12px] text-white hover:underline flex items-center gap-1 ml-auto cursor-pointer font-medium whitespace-nowrap">
             Ver Detalhes <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
           </button>
         </div>
@@ -633,6 +633,10 @@ document.getElementById('modal-keyword-input').addEventListener('keydown', e => 
   if (e.key === 'Escape') closeKeywordModal();
 });
 
+function openDetailModalById(id) {
+  const v = DB.find(x => x.id === id);
+  if (v) openDetailModal(v);
+}
 function openDetailModal(v) {
   const cat = getCategory(v);
   document.getElementById('detail-title').textContent = v.titulo;

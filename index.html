@@ -276,12 +276,11 @@ tailwind.config = {
       <h4 id="detail-title" class="text-lg font-bold text-white font-headline leading-tight flex-1 break-words"></h4>
       <button onclick="closeDetailModal()" class="text-[#c4c7c8] hover:text-white transition-colors flex-shrink-0"><span class="material-symbols-outlined">close</span></button>
     </div>
-    <div class="flex items-center gap-2 flex-wrap">
+    <div class="flex items-center gap-2 flex-wrap mb-2">
       <span id="detail-badge" class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider flex-shrink-0"></span>
       <div id="detail-keyword" class="flex-shrink-0"></div>
-      <span class="text-[#c4c7c8] text-[10px] hidden sm:inline">•</span>
-      <span id="detail-date" class="text-[12px] text-[#c4c7c8] flex-shrink-0"></span>
     </div>
+    <div id="detail-date" class="flex flex-wrap items-center gap-x-3 gap-y-1 text-[12px] text-[#c4c7c8] mb-3"></div>
     <p id="detail-text" class="text-sm text-[#c4c7c8] leading-relaxed max-h-[40vh] overflow-y-auto custom-scrollbar pr-2 break-words"></p>
     <a id="detail-link" href="#" target="_blank" class="block text-center w-full bg-white text-[#0a0a0a] font-bold rounded-lg hover:opacity-90 active:scale-[0.98] transition-all py-2.5 text-sm mt-1">Acessar Edital</a>
   </div>
@@ -701,8 +700,11 @@ function openDetailModal(v) {
   document.getElementById('detail-badge').textContent = cat.label;
   document.getElementById('detail-badge').className = `px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider flex-shrink-0 ${cat.cls}`;
   document.getElementById('detail-keyword').innerHTML = v.palavra_chave ? `<span class="bg-[#1C0000] text-[#ffb4ab] border border-[#4a0000] px-2 py-0.5 rounded text-[9px] font-bold tracking-wider flex items-center gap-1"><span class="material-symbols-outlined text-[10px]">target</span>${v.palavra_chave.toUpperCase()}</span>` : '';
-  document.getElementById('detail-date').innerHTML = `<span class="material-symbols-outlined text-[12px] align-middle mr-1">calendar_today</span>${v.data_tipo || 'Capturado'}: ${formatDate(v.data) || ''}`;
-  if(v.local) document.getElementById('detail-date').innerHTML += `<span class="mx-2">•</span><span class="material-symbols-outlined text-[12px] align-middle mr-1">location_on</span>${v.local}`;
+  
+  let dateHtml = `<div class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">calendar_today</span><span><span class="font-medium">${v.data_tipo || 'Capturado'}:</span> ${formatDate(v.data) || ''}</span></div>`;
+  if(v.local) dateHtml += `<div class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">location_on</span><span>${v.local}</span></div>`;
+  document.getElementById('detail-date').innerHTML = dateHtml;
+  
   document.getElementById('detail-text').innerHTML = v.detalhes.replace(/\n/g, '<br>');
   document.getElementById('detail-link').href = v.link;
   document.getElementById('detail-modal').classList.add('open');

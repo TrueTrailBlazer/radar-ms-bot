@@ -180,7 +180,7 @@ def monitorar_sad(db):
     headers = {"User-Agent": "Mozilla/5.0"}
     novos = 0
     try:
-        r = requests.get(URL_SAD_MS, headers=headers, timeout=30, verify=False)
+        r = requests.get(URL_SAD_MS, headers=headers, timeout=45, verify=False)
         if r.status_code == 200:
             soup = BeautifulSoup(r.text, "html.parser")
             for el in soup.find_all(['tr', 'li', 'div', 'a']):
@@ -211,7 +211,7 @@ def monitorar_universidades(db):
     novos = 0
     for nome, url in urls:
         try:
-            r = requests.get(url, headers=headers, timeout=30, verify=False)
+            r = requests.get(url, headers=headers, timeout=45, verify=False)
             if r.status_code != 200: continue
             soup = BeautifulSoup(r.text, "html.parser")
             for el in soup.find_all(['tr', 'li', 'div', 'a']):
@@ -269,7 +269,7 @@ def monitorar_diogrande(db):
         links = []
         # Tenta a API oficial primeiro
         url_api = "https://diogrande.campogrande.ms.gov.br/wp-admin/admin-ajax.php?action=edicao2_dia_json"
-        r = requests.get(url_api, headers=headers, timeout=30, verify=False)
+        r = requests.get(url_api, headers=headers, timeout=45, verify=False)
         if r.status_code == 200:
             try:
                 dados = r.json()
@@ -283,7 +283,7 @@ def monitorar_diogrande(db):
         
         # Fallback (Plano B) se a API falhou ou não retornou links
         if not links:
-            r_fall = requests.get("https://diogrande.campogrande.ms.gov.br/", headers={"User-Agent": "Mozilla/5.0"}, timeout=30, verify=False)
+            r_fall = requests.get("https://diogrande.campogrande.ms.gov.br/", headers={"User-Agent": "Mozilla/5.0"}, timeout=45, verify=False)
             if r_fall.status_code == 200:
                 soup = BeautifulSoup(r_fall.text, "html.parser")
                 for a in soup.find_all("a", href=True):
@@ -302,7 +302,7 @@ def monitorar_diogrande(db):
             registrar_sucesso()
             return db, 0
         
-        pdf_r = requests.get(link, headers={"User-Agent": "Mozilla/5.0"}, timeout=30, verify=False)
+        pdf_r = requests.get(link, headers={"User-Agent": "Mozilla/5.0"}, timeout=45, verify=False)
         if pdf_r.status_code == 200:
             registrar_sucesso() # Conseguiu ler o PDF com sucesso
             reader = PyPDF2.PdfReader(io.BytesIO(pdf_r.content))
@@ -349,7 +349,7 @@ def monitorar_ufms_lato_sensu(db):
         url = alvo["url"]
         tipo = alvo["tipo_extracao"]
         try:
-            r = requests.get(url, headers=headers, timeout=30)
+            r = requests.get(url, headers=headers, timeout=45)
             if r.status_code != 200: continue
             
             soup = BeautifulSoup(r.text, 'html.parser')

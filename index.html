@@ -464,7 +464,8 @@ function loadDatabase() {
 // ===== FEED =====
 function renderFeed(filterKey) {
   const grid = document.getElementById('feed-grid');
-  let vagas = DB.filter(v => !v.silent);
+  const hidden = JSON.parse(localStorage.getItem('hidden_vagas') || '[]');
+  let vagas = DB.filter(v => !v.silent && !hidden.includes(v.id));
   
   // Apply filter
   const fullText = v => (v.titulo + ' ' + v.detalhes + ' ' + v.fonte).toLowerCase();
@@ -511,7 +512,7 @@ function renderFeed(filterKey) {
   const saved = JSON.parse(localStorage.getItem('saved_vagas') || '[]');
   grid.innerHTML = vagas.map(v => {
     const isSaved = saved.includes(v.id);
-    return `<article class="bg-[#171717] border border-[#262626] rounded-xl p-5 flex flex-col justify-between hover:border-[#444748] transition-colors cursor-pointer" onclick="openDetailModalById('${v.id}')">
+    return `<article id="art-feed-${v.id}" class="bg-[#171717] border border-[#262626] rounded-xl p-5 flex flex-col justify-between hover:border-[#444748] transition-colors cursor-pointer" onclick="openDetailModalById('${v.id}')">
       <div>
         <div class="flex justify-between items-start mb-2">
           ${getCategoryBadgeHTML(v)}
@@ -527,8 +528,11 @@ function renderFeed(filterKey) {
       </div>
       <div class="mt-4 pt-3 border-t border-[#262626] flex gap-2" onclick="event.stopPropagation()">
         <a href="${v.link}" target="_blank" class="flex-grow text-center bg-white text-[#0a0a0a] font-bold rounded-lg hover:opacity-90 active:scale-[0.98] transition-all py-2 text-sm">Acessar Edital</a>
-        <button onclick="toggleSave('${v.id}')" id="btn-save-${v.id}" class="w-10 flex items-center justify-center rounded-lg border border-[#262626] hover:bg-[#262626] transition-colors text-white">
+        <button onclick="toggleSave('${v.id}')" id="btn-save-${v.id}" class="w-10 flex items-center justify-center rounded-lg border border-[#262626] hover:bg-[#262626] transition-colors text-white" title="Salvar">
           <span class="material-symbols-outlined" style="font-variation-settings:'FILL' ${isSaved?1:0}">bookmark</span>
+        </button>
+        <button onclick="toggleHide('${v.id}')" class="w-10 flex items-center justify-center rounded-lg border border-[#262626] hover:bg-[#1C0000] hover:text-[#ffb4ab] hover:border-[#4a0000] transition-colors text-[#8e9192]" title="Ocultar">
+          <span class="material-symbols-outlined text-[18px]">visibility_off</span>
         </button>
       </div>
     </article>`;
@@ -551,29 +555,49 @@ document.querySelectorAll('.filter-tab').forEach(btn => {
 window.toggleSave = function(id) {
   let saved = JSON.parse(localStorage.getItem('saved_vagas') || '[]');
   const btn = document.getElementById('btn-save-' + id);
-  if (!btn) return;
-  const icon = btn.querySelector('span');
   if (saved.includes(id)) {
     saved = saved.filter(x => x !== id);
-    icon.style.fontVariationSettings = "'FILL' 0";
+    if(btn) btn.querySelector('span').style.fontVariationSettings = "'FILL' 0";
   } else {
     saved.push(id);
-    icon.style.fontVariationSettings = "'FILL' 1";
+    if(btn) btn.querySelector('span').style.fontVariationSettings = "'FILL' 1";
   }
   localStorage.setItem('saved_vagas', JSON.stringify(saved));
+  if (window.location.hash === '#salvos') renderSaved();
+};
+
+window.toggleHide = function(id) {
+  let hidden = JSON.parse(localStorage.getItem('hidden_vagas') || '[]');
+  if (hidden.includes(id)) {
+    hidden = hidden.filter(x => x !== id);
+  } else {
+    hidden.push(id);
+  }
+  localStorage.setItem('hidden_vagas', JSON.stringify(hidden));
+  
+  if (window.location.hash === '#salvos') renderSaved();
+  else if (!window.location.hash || window.location.hash === '#feed') {
+    const art = document.getElementById('art-feed-' + id);
+    if (art) { art.style.opacity = '0'; art.style.transform = 'scale(0.95)'; art.style.transition = 'all .2s'; setTimeout(() => renderFeed(document.querySelector('.filter-tab.bg-white')?.dataset.filter === 'all' ? null : document.querySelector('.filter-tab.bg-white')?.dataset.filter), 200); }
+    else renderFeed(document.querySelector('.filter-tab.bg-white')?.dataset.filter === 'all' ? null : document.querySelector('.filter-tab.bg-white')?.dataset.filter);
+  }
 };
 
 // ===== SAVED =====
 function renderSaved() {
   const feed = document.getElementById('saved-feed');
   const saved = JSON.parse(localStorage.getItem('saved_vagas') || '[]');
-  const vagas = DB.filter(v => saved.includes(v.id) && !v.silent);
-  if (vagas.length === 0) {
-    feed.innerHTML = '<div class="text-[#c4c7c8] text-sm text-center p-6">Nenhuma vaga salva. Explore o Feed para salvar oportunidades.</div>';
+  const hidden = JSON.parse(localStorage.getItem('hidden_vagas') || '[]');
+  const savedVagas = DB.filter(v => saved.includes(v.id) && !v.silent);
+  const hiddenVagas = DB.filter(v => hidden.includes(v.id) && !v.silent);
+  
+  if (savedVagas.length === 0 && hiddenVagas.length === 0) {
+    feed.innerHTML = '<div class="text-[#c4c7c8] text-sm text-center p-6">Nenhuma vaga salva ou oculta. Explore o Feed.</div>';
     return;
   }
-  feed.innerHTML = vagas.map(v => `
-    <article id="art-${v.id}" class="bg-[#171717] border border-[#262626] p-5 rounded-xl flex flex-col md:flex-row md:items-center justify-between gap-4 hover:border-[#444748] transition-colors cursor-pointer" onclick="openDetailModalById('${v.id}')">
+
+  const generateList = (vagas, isHiddenList) => vagas.map(v => `
+    <article class="bg-[#171717] border border-[#262626] p-5 rounded-xl flex flex-col md:flex-row md:items-center justify-between gap-4 hover:border-[#444748] transition-colors cursor-pointer ${isHiddenList ? 'opacity-50 hover:opacity-100' : ''}" onclick="openDetailModalById('${v.id}')">
       <div class="flex flex-col gap-1.5 flex-1">
         <div class="flex justify-between items-start gap-2 mb-1">
           <div class="flex items-center gap-2">
@@ -590,22 +614,27 @@ function renderSaved() {
         </div>
       </div>
       <div class="flex items-center gap-2 pt-3 md:pt-0 border-t border-[#262626] md:border-0" onclick="event.stopPropagation()">
-        <a href="${v.link}" target="_blank" class="bg-white text-[#0a0a0a] text-sm font-bold px-4 py-2 rounded-lg hover:opacity-90 transition-opacity">Acessar</a>
-        <button onclick="removeSaved('${v.id}')" class="w-10 h-10 flex items-center justify-center rounded-lg border border-[#262626] hover:border-white transition-colors text-white">
-          <span class="material-symbols-outlined fill">bookmark</span>
+        ${isHiddenList ? '' : `<a href="${v.link}" target="_blank" class="bg-white text-[#0a0a0a] text-sm font-bold px-4 py-2 rounded-lg hover:opacity-90 transition-opacity">Acessar</a>`}
+        <button onclick="${isHiddenList ? `toggleHide('${v.id}')` : `toggleSave('${v.id}')`}" class="w-10 h-10 flex items-center justify-center rounded-lg border border-[#262626] hover:border-white transition-colors text-white" title="${isHiddenList ? 'Restaurar' : 'Remover Salvo'}">
+          <span class="material-symbols-outlined ${isHiddenList ? '' : 'fill'}">${isHiddenList ? 'visibility' : 'bookmark'}</span>
         </button>
       </div>
     </article>
   `).join('');
-}
 
-window.removeSaved = function(id) {
-  let saved = JSON.parse(localStorage.getItem('saved_vagas') || '[]');
-  saved = saved.filter(x => x !== id);
-  localStorage.setItem('saved_vagas', JSON.stringify(saved));
-  const art = document.getElementById('art-' + id);
-  if (art) { art.style.opacity = '0'; art.style.transform = 'scale(0.95)'; art.style.transition = 'all .2s'; setTimeout(() => { art.remove(); if (saved.length===0) renderSaved(); }, 200); }
-};
+  let html = '';
+  if (savedVagas.length > 0) {
+    html += '<h3 class="text-white font-bold mb-3 flex items-center gap-2 mt-2"><span class="material-symbols-outlined text-green-400 text-[18px] fill">bookmark</span> Vagas Salvas</h3>';
+    html += '<div class="flex flex-col gap-3 mb-8">' + generateList(savedVagas, false) + '</div>';
+  }
+  
+  if (hiddenVagas.length > 0) {
+    html += '<h3 class="text-[#8e9192] font-bold mb-3 flex items-center gap-2"><span class="material-symbols-outlined text-red-400 text-[18px]">delete</span> Lixeira / Ocultos</h3>';
+    html += '<div class="flex flex-col gap-3">' + generateList(hiddenVagas, true) + '</div>';
+  }
+
+  feed.innerHTML = html;
+}
 
 // ===== ALERTS / HISTORY =====
 function renderHistory() {

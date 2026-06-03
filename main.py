@@ -89,7 +89,7 @@ def ja_existe(db, link_ou_hash):
             return True
     return False
 
-def adicionar_vaga(db, id_vaga, titulo, fonte, detalhes, link, is_silent=False, data_publicacao=None, local=None):
+def adicionar_vaga(db, id_vaga, titulo, fonte, detalhes, link, is_silent=False, data_publicacao=None, local=None, data_tipo="Capturado"):
     # Se for is_silent = True, significa que não achou vaga, mas queremos
     # registrar o hash no DB para não procurar novamente e poluir a rede.
     hoje = datetime.now().strftime("%d/%m/%Y %H:%M")
@@ -99,6 +99,7 @@ def adicionar_vaga(db, id_vaga, titulo, fonte, detalhes, link, is_silent=False, 
         "fonte": fonte,
         "detalhes": detalhes,
         "data": data_publicacao if data_publicacao else hoje,
+        "data_tipo": data_tipo if data_publicacao else "Capturado",
         "link": link,
         "silent": is_silent
     }
@@ -134,7 +135,7 @@ def monitorar_pci(db):
                 msg = f"🚨 *NOVA VAGA EM {cidade.upper()}!*\n\n🏢 *Órgão:* {orgao}\n📝 *Detalhes:* {detalhes}\n📅 *Inscrições:* {prazo}\n\n🔗 *Link:* {link_direto}"
                 msg = destacar_termo(msg, detalhes)
                 if disparar_telegram(msg):
-                    db = adicionar_vaga(db, link_direto, f"{cidade} - {orgao}", "PCI Concursos", detalhes, link_direto, False, prazo, cidade)
+                    db = adicionar_vaga(db, link_direto, f"{cidade} - {orgao}", "PCI Concursos", detalhes, link_direto, False, prazo, cidade, "Inscrições")
                     novos += 1
                     time.sleep(2)
         except Exception as e:
@@ -166,7 +167,7 @@ def monitorar_rss_google(db):
             local_str = ", ".join(cidades) if cidades else None
             
             if disparar_telegram(msg):
-                db = adicionar_vaga(db, link, titulo[:100], "Google Alerts", resumo_curto, link, False, data_pub, local_str)
+                db = adicionar_vaga(db, link, titulo[:100], "Google Alerts", resumo_curto, link, False, data_pub, local_str, "Publicado")
                 novos += 1
                 time.sleep(2)
     except Exception as e:

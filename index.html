@@ -278,6 +278,7 @@ tailwind.config = {
     </div>
     <div class="flex items-center gap-2 flex-wrap">
       <span id="detail-badge" class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider flex-shrink-0"></span>
+      <div id="detail-keyword" class="flex-shrink-0"></div>
       <span class="text-[#c4c7c8] text-[10px] hidden sm:inline">•</span>
       <span id="detail-date" class="text-[12px] text-[#c4c7c8] flex-shrink-0"></span>
     </div>
@@ -479,11 +480,17 @@ function renderFeed(filterKey) {
       <div>
         <div class="flex justify-between items-start mb-2">
           ${getCategoryBadgeHTML(v)}
-          <span class="text-[11px] text-[#8e9192] text-right"><span class="font-medium text-[#c4c7c8]">${v.data_tipo || 'Capturado'}:</span> ${formatDate(v.data)}</span>
+          ${v.palavra_chave ? `<span class="bg-[#1C0000] text-[#ffb4ab] border border-[#4a0000] px-2 py-0.5 rounded text-[9px] font-bold tracking-wider flex items-center gap-1"><span class="material-symbols-outlined text-[10px]">target</span>${v.palavra_chave.toUpperCase()}</span>` : ''}
         </div>
         <h3 class="text-base font-semibold text-white font-headline mb-1.5 leading-tight">${v.titulo}</h3>
-        ${v.local ? `<p class="text-[12px] text-[#c4c7c8] font-medium mb-1.5 flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">location_on</span>${v.local}</p>` : ''}
-        <p class="text-[13px] text-[#c4c7c8] leading-relaxed" style="display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden">${v.detalhes}</p>
+        <p class="text-[13px] text-[#c4c7c8] leading-relaxed mb-3" style="display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden">${v.detalhes}</p>
+        <div class="flex flex-wrap gap-x-4 gap-y-2 mt-auto pt-2 border-t border-[#262626]/50">
+          <div class="flex items-center gap-1.5 text-[11px] text-[#8e9192]">
+            <span class="material-symbols-outlined text-[13px]">calendar_today</span>
+            <span><span class="font-medium text-[#c4c7c8]">${v.data_tipo || 'Capturado'}:</span> ${formatDate(v.data)}</span>
+          </div>
+          ${v.local ? `<div class="flex items-center gap-1.5 text-[11px] text-[#8e9192]"><span class="material-symbols-outlined text-[13px]">location_on</span><span>${v.local}</span></div>` : ''}
+        </div>
       </div>
       <div class="mt-4 pt-3 border-t border-[#262626] flex gap-2" onclick="event.stopPropagation()">
         <a href="${v.link}" target="_blank" class="flex-grow text-center bg-white text-[#0a0a0a] font-bold rounded-lg hover:opacity-90 active:scale-[0.98] transition-all py-2 text-sm">Acessar Edital</a>
@@ -535,10 +542,21 @@ function renderSaved() {
   feed.innerHTML = vagas.map(v => `
     <article id="art-${v.id}" class="bg-[#171717] border border-[#262626] p-5 rounded-xl flex flex-col md:flex-row md:items-center justify-between gap-4 hover:border-[#444748] transition-colors cursor-pointer" onclick="openDetailModalById('${v.id}')">
       <div class="flex flex-col gap-1.5 flex-1">
-        <div class="flex items-center gap-2 mb-1">${getCategoryBadgeHTML(v)}<span class="text-[11px] text-[#8e9192]"><span class="font-medium text-[#c4c7c8]">${v.data_tipo || 'Capturado'}:</span> ${formatDate(v.data)}</span></div>
+        <div class="flex justify-between items-start gap-2 mb-1">
+          <div class="flex items-center gap-2">
+            ${getCategoryBadgeHTML(v)}
+            ${v.palavra_chave ? `<span class="bg-[#1C0000] text-[#ffb4ab] border border-[#4a0000] px-2 py-0.5 rounded text-[9px] font-bold tracking-wider flex items-center gap-1"><span class="material-symbols-outlined text-[10px]">target</span>${v.palavra_chave.toUpperCase()}</span>` : ''}
+          </div>
+        </div>
         <h2 class="text-base font-semibold text-white font-headline">${v.titulo}</h2>
-        ${v.local ? `<p class="text-[12px] text-[#c4c7c8] font-medium flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">location_on</span>${v.local}</p>` : ''}
-        <p class="text-[13px] text-[#c4c7c8]" style="display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">${v.detalhes}</p>
+        <p class="text-[13px] text-[#c4c7c8] mb-1" style="display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">${v.detalhes}</p>
+        <div class="flex flex-wrap gap-x-4 gap-y-2 mt-1">
+          <div class="flex items-center gap-1.5 text-[11px] text-[#8e9192]">
+            <span class="material-symbols-outlined text-[13px]">calendar_today</span>
+            <span><span class="font-medium text-[#c4c7c8]">${v.data_tipo || 'Capturado'}:</span> ${formatDate(v.data)}</span>
+          </div>
+          ${v.local ? `<div class="flex items-center gap-1.5 text-[11px] text-[#8e9192]"><span class="material-symbols-outlined text-[13px]">location_on</span><span>${v.local}</span></div>` : ''}
+        </div>
       </div>
       <div class="flex items-center gap-2 pt-3 md:pt-0 border-t border-[#262626] md:border-0" onclick="event.stopPropagation()">
         <a href="${v.link}" target="_blank" class="bg-white text-[#0a0a0a] text-sm font-bold px-4 py-2 rounded-lg hover:opacity-90 transition-opacity">Acessar</a>
@@ -573,12 +591,18 @@ function renderHistory() {
       <div class="flex flex-col gap-1.5 flex-grow min-w-0">
         <div class="flex justify-between items-start gap-3">
           <span class="text-[14px] sm:text-[15px] font-semibold text-white font-headline leading-tight break-words">${v.titulo}</span>
-          <span class="text-[10px] sm:text-[11px] text-[#8e9192] whitespace-nowrap flex-shrink-0 text-right"><span class="font-medium text-[#c4c7c8] block sm:inline">${v.data_tipo || 'Capturado'}:</span> ${formatDate(v.data)}</span>
         </div>
-        ${v.local ? `<p class="text-[12px] text-[#c4c7c8] font-medium flex items-center gap-1 mt-0.5"><span class="material-symbols-outlined text-[14px]">location_on</span>${v.local}</p>` : ''}
         <p class="text-[12px] sm:text-[13px] text-[#c4c7c8]" style="display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">${v.detalhes}</p>
-        <div class="flex items-center gap-2 mt-0.5 flex-wrap">
+        <div class="flex flex-wrap gap-x-4 gap-y-2 mt-1">
+          <div class="flex items-center gap-1.5 text-[11px] text-[#8e9192]">
+            <span class="material-symbols-outlined text-[13px]">calendar_today</span>
+            <span><span class="font-medium text-[#c4c7c8]">${v.data_tipo || 'Capturado'}:</span> ${formatDate(v.data)}</span>
+          </div>
+          ${v.local ? `<div class="flex items-center gap-1.5 text-[11px] text-[#8e9192]"><span class="material-symbols-outlined text-[13px]">location_on</span><span>${v.local}</span></div>` : ''}
+        </div>
+        <div class="flex items-center gap-2 mt-1.5 flex-wrap">
           ${getCategoryBadgeHTML(v)}
+          ${v.palavra_chave ? `<span class="bg-[#1C0000] text-[#ffb4ab] border border-[#4a0000] px-2 py-0.5 rounded text-[9px] font-bold tracking-wider flex items-center gap-1"><span class="material-symbols-outlined text-[10px]">target</span>${v.palavra_chave.toUpperCase()}</span>` : ''}
           <button onclick="openDetailModalById('${v.id}')" class="text-[12px] text-white hover:underline flex items-center gap-1 ml-auto cursor-pointer font-medium whitespace-nowrap">
             Ver Detalhes <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
           </button>
@@ -676,7 +700,9 @@ function openDetailModal(v) {
   document.getElementById('detail-title').textContent = v.titulo;
   document.getElementById('detail-badge').textContent = cat.label;
   document.getElementById('detail-badge').className = `px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider flex-shrink-0 ${cat.cls}`;
-  document.getElementById('detail-date').textContent = `${v.data_tipo || 'Capturado'}: ${formatDate(v.data) || ''}`;
+  document.getElementById('detail-keyword').innerHTML = v.palavra_chave ? `<span class="bg-[#1C0000] text-[#ffb4ab] border border-[#4a0000] px-2 py-0.5 rounded text-[9px] font-bold tracking-wider flex items-center gap-1"><span class="material-symbols-outlined text-[10px]">target</span>${v.palavra_chave.toUpperCase()}</span>` : '';
+  document.getElementById('detail-date').innerHTML = `<span class="material-symbols-outlined text-[12px] align-middle mr-1">calendar_today</span>${v.data_tipo || 'Capturado'}: ${formatDate(v.data) || ''}`;
+  if(v.local) document.getElementById('detail-date').innerHTML += `<span class="mx-2">•</span><span class="material-symbols-outlined text-[12px] align-middle mr-1">location_on</span>${v.local}`;
   document.getElementById('detail-text').innerHTML = v.detalhes.replace(/\n/g, '<br>');
   document.getElementById('detail-link').href = v.link;
   document.getElementById('detail-modal').classList.add('open');

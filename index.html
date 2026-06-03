@@ -454,8 +454,12 @@ function renderFeed(filterKey) {
   // Stats
   const allActive = DB.filter(v => !v.silent);
   document.getElementById('stat-total').textContent = allActive.length;
+  
+  // Last update should be the date of the most recent sweep (which usually leaves a 'Capturado' entry)
+  const lastSweep = DB.find(v => v.data_tipo === 'Capturado') || DB[0];
+  document.getElementById('stat-update').textContent = lastSweep ? formatDate(lastSweep.data) : '—';
+
   if (allActive.length > 0) {
-    document.getElementById('stat-update').textContent = formatDate(allActive[0].data) || '—';
     // Most common source
     const sources = {};
     allActive.forEach(v => { sources[v.fonte] = (sources[v.fonte]||0)+1; });

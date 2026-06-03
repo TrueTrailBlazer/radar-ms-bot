@@ -19,31 +19,25 @@ TELEGRAM_CHAT_ID = os.environ.get("TELEGRAM_CHAT_ID", "1243055118")
 
 DATABASE_FILE = "database.json"
 
-def carregar_palavras_chave():
+def carregar_configuracao():
     try:
         with open("config.json", "r", encoding="utf-8") as f:
-            data = json.load(f)
-            return data.get("keywords", [])
+            return json.load(f)
     except:
-        return ["TI", "Desenvolvedor", "Redes"]
+        return {}
 
-KEYWORDS_CONFIG = carregar_palavras_chave()
+CONFIG = carregar_configuracao()
+KEYWORDS_CONFIG = CONFIG.get("keywords", ["TI"])
+URLS_PCI = CONFIG.get("urls_pci", ["https://www.pciconcursos.com.br/concursos/ms/campo-grande"])
+ALVOS_UFMS = CONFIG.get("alvos_ufms", [{"nome": "PROPP Editais", "url": "https://propp.ufms.br/", "tipo_extracao": "geral"}])
+
 if not KEYWORDS_CONFIG: KEYWORDS_CONFIG = ["TI"]
 PADRAO_TI = re.compile(r'(?i)\b(' + '|'.join(re.escape(k) for k in KEYWORDS_CONFIG) + r')\b')
 PADRAO_LOCAL = re.compile(r'\b(ms|mato grosso do sul|campo grande|sidrol[âa]ndia|ufms|uems|ifms|sad|agesul)\b', re.IGNORECASE)
 PADRAO_VAGA = re.compile(r'\b(processo seletivo|concurso|edital|contrata[çc][ãa]o|sele[çc][ãa]o|vaga|especialização|lato sensu)\b', re.IGNORECASE)
 
-URLS_PCI = [
-    "https://www.pciconcursos.com.br/concursos/ms/campo-grande",
-    "https://www.pciconcursos.com.br/concursos/ms/sidrolandia"
-]
 URL_SAD_MS = "https://www.econcursoms.ms.gov.br/"
 LINK_RSS_GOOGLE = "https://www.google.com/alerts/feeds/13337804871994635216/9517030646560371598"
-
-ALVOS_UFMS = [
-    {"nome": "PROPP Editais", "url": "https://propp.ufms.br/", "tipo_extracao": "geral"},
-    {"nome": "Inscrições Abertas Pós", "url": "https://posgraduacao.ufms.br/portal/cursos/listagem-inscricoes-abertas", "tipo_extracao": "lista_cursos"}
-]
 
 urllib3.disable_warnings()
 # =================================================

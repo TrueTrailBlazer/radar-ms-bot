@@ -11,5 +11,21 @@
     "Informática",
     "Lato Sensu",
     "Pós-graduação"
+  ],
+  "urls_pci": [
+    "https://www.pciconcursos.com.br/concursos/ms/campo-grande",
+    "https://www.pciconcursos.com.br/concursos/ms/sidrolandia"
+  ],
+  "alvos_ufms": [
+    {
+      "nome": "PROPP Editais",
+      "url": "https://propp.ufms.br/",
+      "tipo_extracao": "geral"
+    },
+    {
+      "nome": "Inscrições Abertas Pós",
+      "url": "https://posgraduacao.ufms.br/portal/cursos/listagem-inscricoes-abertas",
+      "tipo_extracao": "lista_cursos"
+    }
   ]
 }

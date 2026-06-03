@@ -99,6 +99,9 @@ tailwind.config = {
       <button id="refresh-btn" class="text-white hover:opacity-80 active:scale-95 transition-all flex items-center justify-center w-10 h-10">
         <span class="material-symbols-outlined">sync</span>
       </button>
+      <button id="force-scan-btn" class="text-yellow-400 hover:opacity-80 active:scale-95 transition-all flex items-center justify-center w-10 h-10" onclick="forceScanCloud()" title="Forçar Varredura (Nuvem)">
+        <span class="material-symbols-outlined">rocket_launch</span>
+      </button>
     </div>
   </div>
   <!-- Search bar (hidden by default) -->
@@ -133,11 +136,8 @@ tailwind.config = {
       </div>
     </div>
     <!-- Filter Tabs -->
-    <nav class="flex overflow-x-auto gap-2 no-scrollbar">
+    <nav id="filter-nav" class="flex overflow-x-auto gap-2 no-scrollbar">
       <button class="filter-tab px-5 py-2 rounded-full text-[12px] font-medium whitespace-nowrap bg-white text-[#0a0a0a]" data-filter="all">Todas</button>
-      <button class="filter-tab px-5 py-2 rounded-full text-[12px] font-medium whitespace-nowrap bg-[#171717] border border-[#262626] text-[#c4c7c8] hover:border-[#444748]" data-filter="ufms">UFMS / IFMS</button>
-      <button class="filter-tab px-5 py-2 rounded-full text-[12px] font-medium whitespace-nowrap bg-[#171717] border border-[#262626] text-[#c4c7c8] hover:border-[#444748]" data-filter="gov">SAD / Governo</button>
-      <button class="filter-tab px-5 py-2 rounded-full text-[12px] font-medium whitespace-nowrap bg-[#171717] border border-[#262626] text-[#c4c7c8] hover:border-[#444748]" data-filter="pci">PCI Concursos</button>
     </nav>
     <!-- Feed Grid -->
     <div id="feed-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -181,6 +181,14 @@ tailwind.config = {
           <button id="save-keywords-btn" class="bg-[#262626] text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-white hover:text-[#0a0a0a] transition-colors flex items-center gap-2 disabled:opacity-50">
             <span class="material-symbols-outlined text-[16px]">cloud_upload</span> Salvar no GitHub
           </button>
+        </div>
+        <!-- PCI URLs UI -->
+        <div class="mt-6 border-t border-[#262626] pt-4 mb-3">
+          <span class="text-base font-semibold text-white font-headline">Links do PCI Concursos</span>
+          <p class="text-[12px] text-[#c4c7c8] mt-1">Configure quais cidades o robô deve monitorar.</p>
+        </div>
+        <div id="pci-container" class="flex flex-col gap-2 mb-4">
+          <span class="text-[#c4c7c8] text-sm">Carregando...</span>
         </div>
       </div>
     </section>
@@ -311,6 +319,7 @@ tailwind.config = {
 // ===== GLOBAL STATE =====
 let DB = [];
 let currentKeywords = [];
+let currentUrlsPci = [];
 let fileSha = null;
 let historyShown = 0;
 const HISTORY_PAGE = 5;
@@ -458,7 +467,39 @@ function loadDatabase() {
         .then(r => r.json())
         .then(data => { DB = data; })
         .catch(() => { DB = []; });
+    }).finally(() => {
+      renderTabs();
     });
+}
+
+function renderTabs() {
+  const nav = document.getElementById('filter-nav');
+  if (!nav) return;
+  const fontes = new Set(DB.filter(v => !v.silent).map(v => v.fonte));
+  
+  const activeBtn = nav.querySelector('.filter-tab.bg-white');
+  const activeFilter = activeBtn ? activeBtn.dataset.filter : 'all';
+
+  let html = `<button class="filter-tab px-5 py-2 rounded-full text-[12px] font-medium whitespace-nowrap ${activeFilter === 'all' ? 'bg-white text-[#0a0a0a]' : 'bg-[#171717] border border-[#262626] text-[#c4c7c8] hover:border-[#444748]'}" data-filter="all">Todas</button>`;
+  
+  Array.from(fontes).sort().forEach(f => {
+    if(!f) return;
+    const isActive = activeFilter === f;
+    html += `<button class="filter-tab px-5 py-2 rounded-full text-[12px] font-medium whitespace-nowrap ${isActive ? 'bg-white text-[#0a0a0a]' : 'bg-[#171717] border border-[#262626] text-[#c4c7c8] hover:border-[#444748]'}" data-filter="${f}">${f}</button>`;
+  });
+  
+  nav.innerHTML = html;
+
+  nav.querySelectorAll('.filter-tab').forEach(btn => {
+    btn.addEventListener('click', () => {
+      nav.querySelectorAll('.filter-tab').forEach(b => {
+        b.className = b.className.replace(/bg-white text-\[#0a0a0a\]/g, 'bg-[#171717] border border-[#262626] text-[#c4c7c8]');
+      });
+      btn.className = btn.className.replace(/bg-\[#171717\] border border-\[#262626\] text-\[#c4c7c8\]|hover:border-\[#444748\]/g, '').trim();
+      btn.classList.add('bg-white', 'text-[#0a0a0a]');
+      renderFeed(btn.dataset.filter === 'all' ? null : btn.dataset.filter);
+    });
+  });
 }
 
 // ===== FEED =====
@@ -469,9 +510,9 @@ function renderFeed(filterKey) {
   
   // Apply filter
   const fullText = v => (v.titulo + ' ' + v.detalhes + ' ' + v.fonte).toLowerCase();
-  if (filterKey === 'ufms') vagas = vagas.filter(v => /ufms|ifms|universidade federal|instituto federal/i.test(fullText(v)));
-  else if (filterKey === 'gov') vagas = vagas.filter(v => /governo|sad|ms\.gov|econcurso|diário oficial|diogrande/i.test(fullText(v)));
-  else if (filterKey === 'pci') vagas = vagas.filter(v => /pci|pciconcursos/i.test(fullText(v)));
+  if (filterKey && filterKey !== 'all') {
+    vagas = vagas.filter(v => v.fonte === filterKey);
+  }
 
   // Stats
   const allActive = DB.filter(v => !v.silent);
@@ -538,18 +579,6 @@ function renderFeed(filterKey) {
     </article>`;
   }).join('');
 }
-
-// Filter tabs
-document.querySelectorAll('.filter-tab').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.filter-tab').forEach(b => {
-      b.className = b.className.replace(/bg-white text-\[#0a0a0a\]/g, 'bg-[#171717] border border-[#262626] text-[#c4c7c8]');
-    });
-    btn.className = btn.className.replace(/bg-\[#171717\] border border-\[#262626\] text-\[#c4c7c8\]|hover:border-\[#444748\]/g, '').trim();
-    btn.classList.add('bg-white', 'text-[#0a0a0a]');
-    renderFeed(btn.dataset.filter === 'all' ? null : btn.dataset.filter);
-  });
-});
 
 // Save toggle
 window.toggleSave = function(id) {
@@ -701,13 +730,39 @@ function loadKeywords() {
         fileSha = data.sha;
         const content = JSON.parse(decodeURIComponent(escape(atob(data.content))));
         currentKeywords = content.keywords || [];
+        currentUrlsPci = content.urls_pci || [];
       }
       renderKeywords();
+      renderPciUrls();
     })
     .catch(() => {
-      fetch('config.json').then(r=>r.json()).then(d=>{ currentKeywords = d.keywords||[]; renderKeywords(); }).catch(()=>renderKeywords());
+      fetch('config.json').then(r=>r.json()).then(d=>{ currentKeywords = d.keywords||[]; currentUrlsPci = d.urls_pci||[]; renderKeywords(); renderPciUrls(); }).catch(()=>{renderKeywords(); renderPciUrls();});
     });
 }
+
+function renderPciUrls() {
+  const container = document.getElementById('pci-container');
+  if(!container) return;
+  container.innerHTML = '';
+  currentUrlsPci.forEach((url, idx) => {
+    const btn = document.createElement('div');
+    btn.className = 'bg-[#171717] border border-[#262626] text-[#c4c7c8] px-3 py-2 rounded-lg text-[11px] flex justify-between items-center gap-2 w-full overflow-hidden';
+    btn.innerHTML = `<span class="truncate" title="${url}">${url}</span> <span class="material-symbols-outlined text-[14px] cursor-pointer hover:text-red-400" onclick="removePciUrl(${idx})">delete</span>`;
+    container.appendChild(btn);
+  });
+  const addBtn = document.createElement('button');
+  addBtn.className = 'bg-[#262626] border border-[#262626] text-[#c4c7c8] px-3 py-1.5 rounded-lg text-[12px] font-bold flex items-center gap-1.5 hover:text-white hover:border-[#444748] transition-colors uppercase tracking-wider mt-2';
+  addBtn.innerHTML = '<span class="material-symbols-outlined text-[14px]">add</span> Adicionar Link';
+  addBtn.onclick = () => {
+    const val = prompt("Novo link do PCI Concursos:");
+    if(val && val.includes('pciconcursos')) {
+      currentUrlsPci.push(val.trim());
+      renderPciUrls();
+    }
+  };
+  container.appendChild(addBtn);
+}
+window.removePciUrl = function(idx) { currentUrlsPci.splice(idx, 1); renderPciUrls(); };
 
 // ===== HEALTH =====
 function openHealthModal() {
@@ -776,7 +831,7 @@ document.getElementById('save-keywords-btn').addEventListener('click', function(
   const btn = this;
   btn.innerHTML = '<span class="material-symbols-outlined text-[16px] animate-spin">sync</span> Salvando...';
   btn.disabled = true;
-  const encoded = btoa(unescape(encodeURIComponent(JSON.stringify({ keywords: currentKeywords }, null, 2))));
+  const encoded = btoa(unescape(encodeURIComponent(JSON.stringify({ keywords: currentKeywords, urls_pci: currentUrlsPci, alvos_ufms: [{"nome": "PROPP Editais", "url": "https://propp.ufms.br/", "tipo_extracao": "geral"}, {"nome": "Inscrições Abertas Pós", "url": "https://posgraduacao.ufms.br/portal/cursos/listagem-inscricoes-abertas", "tipo_extracao": "lista_cursos"}] }, null, 2))));
   fetch(`https://api.github.com/repos/${REPO}/contents/config.json`, {
     method:'PUT', headers:{'Authorization':`token ${token}`,'Content-Type':'application/json'},
     body: JSON.stringify({ message:"Update keywords via Radar MS UI", content:encoded, sha:fileSha })
@@ -858,6 +913,27 @@ document.getElementById('save-token-btn').addEventListener('click', () => {
   if (val) { localStorage.setItem('github_pat', val); document.getElementById('save-token-btn').textContent='Salvo!'; setTimeout(loadProfile, 500); }
   else { localStorage.removeItem('github_pat'); window.location.reload(); }
 });
+
+window.forceScanCloud = function() {
+  const pat = localStorage.getItem('github_pat');
+  if(!pat) { alert("Configure o Token do GitHub na aba Perfil primeiro."); navigateTo('perfil'); return; }
+  if(!confirm("Isso iniciará os servidores na nuvem para fazer uma varredura imediatamente. Continuar?")) return;
+  
+  const btn = document.getElementById('force-scan-btn');
+  btn.querySelector('span').classList.add('animate-bounce');
+  
+  fetch(`https://api.github.com/repos/${REPO}/actions/workflows/monitor.yml/dispatches`, {
+    method: 'POST',
+    headers: { 'Authorization': `token ${pat}`, 'Accept': 'application/vnd.github.v3+json' },
+    body: JSON.stringify({ ref: 'main' })
+  })
+  .then(r => {
+    if(r.ok || r.status === 204) alert('Foguete lançado! A varredura começou na nuvem.');
+    else throw new Error('Erro ao disparar.');
+  })
+  .catch(e => alert(e))
+  .finally(() => btn.querySelector('span').classList.remove('animate-bounce'));
+}
 
 // ===== INIT =====
 loadDatabase().then(() => {

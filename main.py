@@ -180,7 +180,7 @@ def monitorar_sad(db):
     headers = {"User-Agent": "Mozilla/5.0"}
     novos = 0
     try:
-        r = requests.get(URL_SAD_MS, headers=headers, timeout=15, verify=False)
+        r = requests.get(URL_SAD_MS, headers=headers, timeout=30, verify=False)
         if r.status_code == 200:
             soup = BeautifulSoup(r.text, "html.parser")
             for el in soup.find_all(['tr', 'li', 'div', 'a']):
@@ -211,7 +211,7 @@ def monitorar_universidades(db):
     novos = 0
     for nome, url in urls:
         try:
-            r = requests.get(url, headers=headers, timeout=15, verify=False)
+            r = requests.get(url, headers=headers, timeout=30, verify=False)
             if r.status_code != 200: continue
             soup = BeautifulSoup(r.text, "html.parser")
             for el in soup.find_all(['tr', 'li', 'div', 'a']):
@@ -246,7 +246,7 @@ def monitorar_diogrande(db):
     novos = 0
     try:
         url_api = "https://diogrande.campogrande.ms.gov.br/wp-admin/admin-ajax.php?action=edicao2_dia_json"
-        r = requests.get(url_api, headers=headers, timeout=15, verify=False)
+        r = requests.get(url_api, headers=headers, timeout=30, verify=False)
         if r.status_code != 200: return db, 0
         dados = r.json()
         if 'atual' not in dados or 'arquivos' not in dados['atual']: return db, 0
@@ -305,7 +305,7 @@ def monitorar_ufms_lato_sensu(db):
         url = alvo["url"]
         tipo = alvo["tipo_extracao"]
         try:
-            r = requests.get(url, headers=headers, timeout=15)
+            r = requests.get(url, headers=headers, timeout=30)
             if r.status_code != 200: continue
             
             soup = BeautifulSoup(r.text, 'html.parser')

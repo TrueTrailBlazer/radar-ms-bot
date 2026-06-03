@@ -425,11 +425,19 @@ document.getElementById('refresh-btn').addEventListener('click', () => {
 });
 
 // ===== DATABASE =====
+const RAW_DB_URL = `https://raw.githubusercontent.com/${REPO}/main/database.json`;
 function loadDatabase() {
-  return fetch('database.json')
+  // Always fetch direct from GitHub raw (always latest, skips Pages CDN cache)
+  return fetch(RAW_DB_URL + '?t=' + Date.now())
     .then(r => { if (!r.ok) throw new Error('not found'); return r.json(); })
     .then(data => { DB = data; })
-    .catch(() => { DB = []; });
+    .catch(() => {
+      // Fallback: try local (useful when running locally)
+      return fetch('database.json')
+        .then(r => r.json())
+        .then(data => { DB = data; })
+        .catch(() => { DB = []; });
+    });
 }
 
 // ===== FEED =====

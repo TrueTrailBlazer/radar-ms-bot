@@ -1,5 +1,33 @@
 [
     {
+        "id": "https://www.google.com/url?rct=j&sa=t&url=https://www.campograndenews.com.br/educacao-e-tecnologia/ufms-abre-140-vagas-para-licenciatura-em-computacao-em-4-cidades&ct=ga&cd=CAIyHzUxN2JiOTE5YWI4NDk1Y2I6Y29tLmJyOnB0OkJSOlI&usg=AOvVaw0bruuAGzPOWWO9n1nD9VEx",
+        "titulo": "UFMS abre 140 vagas para licenciatura em computação em 4 cidades - Campo Grande News",
+        "fonte": "Google Alerts",
+        "detalhes": "A UFMS (Universidade Federal de Mato Grosso do Sul) abriu processo seletivo com 140 vagas para o curso de Licenciatura em Computação. ... CAMPO GRA...",
+        "link": "https://www.google.com/url?rct=j&sa=t&url=https://www.campograndenews.com.br/educacao-e-tecnologia/ufms-abre-140-vagas-para-licenciatura-em-computacao-em-4-cidades&ct=ga&cd=CAIyHzUxN2JiOTE5YWI4NDk1Y2I6Y29tLmJyOnB0OkJSOlI&usg=AOvVaw0bruuAGzPOWWO9n1nD9VEx",
+        "silent": false,
+        "data": "2026-06-05T20:33:49Z",
+        "data_captura": "05/06/2026 18:13",
+        "data_publicacao": "2026-06-05T20:33:49Z",
+        "data_tipo": "Publicado",
+        "palavra_chave": "COMPUTAÇÃO",
+        "local": "Campo Grande"
+    },
+    {
+        "id": "https://www.google.com/url?rct=j&sa=t&url=https://midiamax.com.br/cotidiano/emprego-concurso/2026/ifms-inscricoes-abertas-professor-subsituto-5-municipios/&ct=ga&cd=CAIyHzUxN2JiOTE5YWI4NDk1Y2I6Y29tLmJyOnB0OkJSOlI&usg=AOvVaw2oNCwvh9ifT8biRzCuF9Yh",
+        "titulo": "IFMS está com inscrições abertas para professor subsituto em 5 municípios - Midiamax",
+        "fonte": "Google Alerts",
+        "detalhes": "O Campus de Naviraí está com uma vaga aberta para professor substituto de Física e duas para Informática/Desenvolvimento Web. ... Concurso do CRQ-M...",
+        "link": "https://www.google.com/url?rct=j&sa=t&url=https://midiamax.com.br/cotidiano/emprego-concurso/2026/ifms-inscricoes-abertas-professor-subsituto-5-municipios/&ct=ga&cd=CAIyHzUxN2JiOTE5YWI4NDk1Y2I6Y29tLmJyOnB0OkJSOlI&usg=AOvVaw2oNCwvh9ifT8biRzCuF9Yh",
+        "silent": false,
+        "data": "2026-06-05T20:41:48Z",
+        "data_captura": "05/06/2026 18:13",
+        "data_publicacao": "2026-06-05T20:41:48Z",
+        "data_tipo": "Publicado",
+        "palavra_chave": "INFORMÁTICA",
+        "local": "Naviraí"
+    },
+    {
         "id": "https://www.google.com/url?rct=j&sa=t&url=https://www.souenfermagem.com.br/noticias/ifms-abre-selecao-professores-substitutos-fisica-informatica/&ct=ga&cd=CAIyHzUxN2JiOTE5YWI4NDk1Y2I6Y29tLmJyOnB0OkJSOlI&usg=AOvVaw2jmsb4ZijR9agh4VnsQLzi",
         "titulo": "IFMS abre seleção professores substitutos física informática - Sou Enfermagem",
         "fonte": "Google Alerts",

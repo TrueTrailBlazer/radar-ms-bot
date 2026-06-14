@@ -1,5 +1,19 @@
 [
     {
+        "id": "https://www.google.com/url?rct=j&sa=t&url=https://www.msnews.com.br/noticia/172590/homem-e-assassinado-no-leblon-3-ordm-atentado-da-noite-em-campo-grande&ct=ga&cd=CAIyHzUxN2JiOTE5YWI4NDk1Y2I6Y29tLmJyOnB0OkJSOlI&usg=AOvVaw28U7TWjt3TerngxYIHbY3x",
+        "titulo": "Homem é assassinado no Leblon; 3º atentado da noite em Campo Grande - MS NEWS",
+        "fonte": "Google Alerts",
+        "detalhes": "Concurso, Emprego e Processo Seletivo · Educação · Esportes, Tempo ... Falha no Nubank foi causada quando desenvolvedor acionou ferramenta errada ...",
+        "link": "https://www.google.com/url?rct=j&sa=t&url=https://www.msnews.com.br/noticia/172590/homem-e-assassinado-no-leblon-3-ordm-atentado-da-noite-em-campo-grande&ct=ga&cd=CAIyHzUxN2JiOTE5YWI4NDk1Y2I6Y29tLmJyOnB0OkJSOlI&usg=AOvVaw28U7TWjt3TerngxYIHbY3x",
+        "silent": false,
+        "data": "2026-06-14T11:13:08Z",
+        "data_captura": "14/06/2026 12:19",
+        "data_publicacao": "2026-06-14T11:13:08Z",
+        "data_tipo": "Publicado",
+        "palavra_chave": "DESENVOLVEDOR",
+        "local": "Campo Grande"
+    },
+    {
         "id": "https://www.google.com/url?rct=j&sa=t&url=https://www.campograndenews.com.br/cidades/empregos/selecao-do-censo-agropecuario-tem-284-vagas-em-ms-com-salario-de-ate-r-4-mil&ct=ga&cd=CAIyHzUxN2JiOTE5YWI4NDk1Y2I6Y29tLmJyOnB0OkJSOlI&usg=AOvVaw2uwHdsq26WARHzCKRKBNo0",
         "titulo": "Seleção do Censo Agropecuário tem 284 vagas em MS com salário de até R$ 4 mil",
         "fonte": "Google Alerts",

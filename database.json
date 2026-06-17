@@ -1,5 +1,33 @@
 [
     {
+        "id": "https://propp.ufms.br/_951923a782168bb31eb6d5e19f75a24a",
+        "titulo": "Pós-Graduação: PROPP Editais",
+        "fonte": "UFMS Pós",
+        "detalhes": "Atualização contendo: TI, Pós-graduação",
+        "link": "https://propp.ufms.br/diretorias/edital-no-53-2026-propp-ufms-auxilio-para-publicacao-e-revisao-de-artigos-cientificos-em-2026/",
+        "silent": false,
+        "data": "17/06/2026 18:44",
+        "data_captura": "17/06/2026 18:44",
+        "data_publicacao": null,
+        "data_tipo": "Capturado",
+        "palavra_chave": "TI",
+        "local": "Mato Grosso do Sul"
+    },
+    {
+        "id": "https://www.google.com/url?rct=j&sa=t&url=https://buritinews.com.br/noticia/25249/do-celular-guardado-ao-robo-em-movimento-escolas-de-ms-reinventam-o-uso-da&ct=ga&cd=CAIyHzUxN2JiOTE5YWI4NDk1Y2I6Y29tLmJyOnB0OkJSOlI&usg=AOvVaw19nPTM5mwhgkjKH1OsW6Yo",
+        "titulo": "Do celular guardado ao robô em movimento: escolas de MS reinventam o uso da tecnologia ...",
+        "fonte": "Google Alerts",
+        "detalhes": "... informática e robôs montados pelos próprios estudantes. ... Governo de MS autoriza novo concurso com 2 mil vagas para professores da Rede Estad...",
+        "link": "https://www.google.com/url?rct=j&sa=t&url=https://buritinews.com.br/noticia/25249/do-celular-guardado-ao-robo-em-movimento-escolas-de-ms-reinventam-o-uso-da&ct=ga&cd=CAIyHzUxN2JiOTE5YWI4NDk1Y2I6Y29tLmJyOnB0OkJSOlI&usg=AOvVaw19nPTM5mwhgkjKH1OsW6Yo",
+        "silent": false,
+        "data": "2026-06-17T18:46:29Z",
+        "data_captura": "17/06/2026 18:44",
+        "data_publicacao": "2026-06-17T18:46:29Z",
+        "data_tipo": "Publicado",
+        "palavra_chave": "INFORMÁTICA",
+        "local": "Mato Grosso do Sul"
+    },
+    {
         "id": "https://www.google.com/url?rct=j&sa=t&url=https://bocadopovonews.com.br/do-celular-guardado-ao-robo-em-movimento-escolas-de-ms-reinventam-o-uso-da-tecnologia-em-sala-de-aula/&ct=ga&cd=CAIyHzUxN2JiOTE5YWI4NDk1Y2I6Y29tLmJyOnB0OkJSOlI&usg=AOvVaw1EEvezKdXitHIC8tDtnCuF",
         "titulo": "Do celular guardado ao robô em movimento: escolas de MS reinventam o uso da tecnologia ...",
         "fonte": "Google Alerts",

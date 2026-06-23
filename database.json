@@ -1,5 +1,19 @@
 [
     {
+        "id": "https://www.google.com/url?rct=j&sa=t&url=https://g1.globo.com/ms/mato-grosso-do-sul/noticia/2026/06/23/censo-do-agro-abre-284-vagas-com-salario-de-ate-r-4-mil-e-vale-em-ms.ghtml&ct=ga&cd=CAIyHzUxN2JiOTE5YWI4NDk1Y2I6Y29tLmJyOnB0OkJSOlI&usg=AOvVaw0GFEenJPtJVEdzIATb4B-j",
+        "titulo": "Censo do Agro abre 284 vagas com salário de até R$ 4 mil e vale em MS - G1",
+        "fonte": "Google Alerts",
+        "detalhes": "... processo seletivo com 284 vagas temporárias em Mato Grosso do Sul. As ... Agente Censitário de Informática: 26 vagas (R$ 2.128,00); Agente ...",
+        "link": "https://www.google.com/url?rct=j&sa=t&url=https://g1.globo.com/ms/mato-grosso-do-sul/noticia/2026/06/23/censo-do-agro-abre-284-vagas-com-salario-de-ate-r-4-mil-e-vale-em-ms.ghtml&ct=ga&cd=CAIyHzUxN2JiOTE5YWI4NDk1Y2I6Y29tLmJyOnB0OkJSOlI&usg=AOvVaw0GFEenJPtJVEdzIATb4B-j",
+        "silent": false,
+        "data": "2026-06-23T21:07:26Z",
+        "data_captura": "23/06/2026 18:10",
+        "data_publicacao": "2026-06-23T21:07:26Z",
+        "data_tipo": "Publicado",
+        "palavra_chave": "INFORMÁTICA",
+        "local": "Mato Grosso do Sul"
+    },
+    {
         "id": "https://propp.ufms.br/_428c1964846b1c92badadc7d1dc6a4ac",
         "titulo": "Pós-Graduação: PROPP Editais",
         "fonte": "UFMS Pós",

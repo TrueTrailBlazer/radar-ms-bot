@@ -1,5 +1,33 @@
 [
     {
+        "id": "https://propp.ufms.br/_07a575abff6b43735eef224f9ee9ce87",
+        "titulo": "Pós-Graduação: PROPP Editais",
+        "fonte": "UFMS Pós",
+        "detalhes": "Atualização contendo: TI, Pós-graduação",
+        "link": "https://propp.ufms.br/diretorias/edital-no-53-2026-propp-ufms-auxilio-para-publicacao-e-revisao-de-artigos-cientificos-em-2026/",
+        "silent": false,
+        "data": "06/07/2026 08:43",
+        "data_captura": "06/07/2026 08:43",
+        "data_publicacao": null,
+        "data_tipo": "Capturado",
+        "palavra_chave": "TI",
+        "local": "Mato Grosso do Sul"
+    },
+    {
+        "id": "https://www.google.com/url?rct=j&sa=t&url=https://www.msnews.com.br/noticia/172953/ibge-prorroga-inscricoes-de-selecao-com-mais-de-8-mil-vagas&ct=ga&cd=CAIyHzUxN2JiOTE5YWI4NDk1Y2I6Y29tLmJyOnB0OkJSOlI&usg=AOvVaw1Lyejczv96LeCKIE4migCa",
+        "titulo": "IBGE prorroga inscrições de seleção com mais de 8 mil vagas - MS NEWS",
+        "fonte": "Google Alerts",
+        "detalhes": "Concurso, Emprego e Processo Seletivo · Educação · Esportes, Tempo ... Informática, Agente Operacional Regional, Agente Censitário Regional e Agent...",
+        "link": "https://www.google.com/url?rct=j&sa=t&url=https://www.msnews.com.br/noticia/172953/ibge-prorroga-inscricoes-de-selecao-com-mais-de-8-mil-vagas&ct=ga&cd=CAIyHzUxN2JiOTE5YWI4NDk1Y2I6Y29tLmJyOnB0OkJSOlI&usg=AOvVaw1Lyejczv96LeCKIE4migCa",
+        "silent": false,
+        "data": "2026-07-06T11:51:16Z",
+        "data_captura": "06/07/2026 08:43",
+        "data_publicacao": "2026-07-06T11:51:16Z",
+        "data_tipo": "Publicado",
+        "palavra_chave": "INFORMÁTICA",
+        "local": "Mato Grosso do Sul"
+    },
+    {
         "id": "https://propp.ufms.br/_40d4163b2838b165a36e200ce63f47ed",
         "titulo": "Pós-Graduação: PROPP Editais",
         "fonte": "UFMS Pós",

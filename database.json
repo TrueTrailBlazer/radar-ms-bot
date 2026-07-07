@@ -1,5 +1,19 @@
 [
     {
+        "id": "https://propp.ufms.br/_b73b4f6766fecfa10c1e0197b64dc378",
+        "titulo": "Pós-Graduação: PROPP Editais",
+        "fonte": "UFMS Pós",
+        "detalhes": "Atualização contendo: TI, Pós-graduação",
+        "link": "https://propp.ufms.br/diretorias/edital-no-53-2026-propp-ufms-auxilio-para-publicacao-e-revisao-de-artigos-cientificos-em-2026/",
+        "silent": false,
+        "data": "07/07/2026 10:26",
+        "data_captura": "07/07/2026 10:26",
+        "data_publicacao": null,
+        "data_tipo": "Capturado",
+        "palavra_chave": "TI",
+        "local": "Mato Grosso do Sul"
+    },
+    {
         "id": "https://www.google.com/url?rct=j&sa=t&url=https://www.capitalnews.com.br/politica-e-poder/executivo/governo-de-mato-grosso-do-sul-prorroga-contrato-de-r-407-milhoes-para-servicos-de-tecnologia/443332/&ct=ga&cd=CAIyHzUxN2JiOTE5YWI4NDk1Y2I6Y29tLmJyOnB0OkJSOlI&usg=AOvVaw2QKw5huj7uFWka90Hh8O3L",
         "titulo": "Governo de Mato Grosso do Sul prorroga contrato de R$ 40,7 milhões para serviços de tecnologia",
         "fonte": "Google Alerts",

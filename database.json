@@ -1,5 +1,19 @@
 [
     {
+        "id": "https://www.google.com/url?rct=j&sa=t&url=https://www.opantaneiro.com.br/aquidauana/ifms-oferece-160-vagas-em-cursos-tecnicos-integrados-gratuitos-em/235127/&ct=ga&cd=CAIyHzUxN2JiOTE5YWI4NDk1Y2I6Y29tLmJyOnB0OkJSOlI&usg=AOvVaw2xXIQ6qZv-oIILqMd4OD0S",
+        "titulo": "IFMS oferece 160 vagas em cursos técnicos integrados gratuitos em Aquidauana",
+        "fonte": "Google Alerts",
+        "detalhes": "... Informática, distribuídas entre os períodos matutino e vespertino. Ao todo, o processo seletivo disponibiliza 2.270 vagas em 12 municípios do E...",
+        "link": "https://www.google.com/url?rct=j&sa=t&url=https://www.opantaneiro.com.br/aquidauana/ifms-oferece-160-vagas-em-cursos-tecnicos-integrados-gratuitos-em/235127/&ct=ga&cd=CAIyHzUxN2JiOTE5YWI4NDk1Y2I6Y29tLmJyOnB0OkJSOlI&usg=AOvVaw2xXIQ6qZv-oIILqMd4OD0S",
+        "silent": false,
+        "data": "2026-07-11T14:05:56Z",
+        "data_captura": "11/07/2026 14:58",
+        "data_publicacao": "2026-07-11T14:05:56Z",
+        "data_tipo": "Publicado",
+        "palavra_chave": "INFORMÁTICA",
+        "local": "Aquidauana"
+    },
+    {
         "id": "https://www.google.com/url?rct=j&sa=t&url=https://folhams.com.br/2026/07/10/pericia-contabil-enriquecimento-contrato-informatica-tce-ms/&ct=ga&cd=CAIyHzUxN2JiOTE5YWI4NDk1Y2I6Y29tLmJyOnB0OkJSOlI&usg=AOvVaw1mJ0eFUINqIhOoHUlsMhXb",
         "titulo": "Perícia contábil investiga suposto enriquecimento ilícito em contrato de informática do TCE-MS",
         "fonte": "Google Alerts",

@@ -1,5 +1,33 @@
 [
     {
+        "id": "https://propp.ufms.br/_9a8f961a1580fb71493ecf6c864f73ad",
+        "titulo": "Pós-Graduação: PROPP Editais",
+        "fonte": "UFMS Pós",
+        "detalhes": "Atualização contendo: TI, Pós-graduação",
+        "link": "https://propp.ufms.br/diretorias/edital-no-53-2026-propp-ufms-auxilio-para-publicacao-e-revisao-de-artigos-cientificos-em-2026/",
+        "silent": false,
+        "data": "13/07/2026 07:58",
+        "data_captura": "13/07/2026 07:58",
+        "data_publicacao": null,
+        "data_tipo": "Capturado",
+        "palavra_chave": "TI",
+        "local": "Mato Grosso do Sul"
+    },
+    {
+        "id": "https://www.google.com/url?rct=j&sa=t&url=https://www.agorams.com.br/ifms-abre-2-270-vagas-gratuitas-em-cursos-tecnicos-integrados-para-2027/&ct=ga&cd=CAIyHzUxN2JiOTE5YWI4NDk1Y2I6Y29tLmJyOnB0OkJSOlI&usg=AOvVaw2OYWc-TKe25YV5-x_-9_q1",
+        "titulo": "IFMS abre 2.270 vagas gratuitas em cursos técnicos integrados para 2027 - Agora MS",
+        "fonte": "Google Alerts",
+        "detalhes": "... Informática, Informática para Internet, Mecânica e Metalurgia. ... MPT-MS encerra neste domingo as inscrições para o Processo Seletivo de Estág...",
+        "link": "https://www.google.com/url?rct=j&sa=t&url=https://www.agorams.com.br/ifms-abre-2-270-vagas-gratuitas-em-cursos-tecnicos-integrados-para-2027/&ct=ga&cd=CAIyHzUxN2JiOTE5YWI4NDk1Y2I6Y29tLmJyOnB0OkJSOlI&usg=AOvVaw2OYWc-TKe25YV5-x_-9_q1",
+        "silent": false,
+        "data": "2026-07-12T15:20:25Z",
+        "data_captura": "13/07/2026 07:58",
+        "data_publicacao": "2026-07-12T15:20:25Z",
+        "data_tipo": "Publicado",
+        "palavra_chave": "INFORMÁTICA",
+        "local": "Mato Grosso do Sul"
+    },
+    {
         "id": "https://www.google.com/url?rct=j&sa=t&url=https://www.msnews.com.br/noticia/173076/12-cidades-recebem-vagas-em-cursos-tecnicos-gratuitos-do-ifms&ct=ga&cd=CAIyHzUxN2JiOTE5YWI4NDk1Y2I6Y29tLmJyOnB0OkJSOlI&usg=AOvVaw3ctVGpxHLYsfpaSV9X9jo4",
         "titulo": "12 cidades recebem vagas em cursos técnicos gratuitos do IFMS - MS NEWS",
         "fonte": "Google Alerts",

@@ -1,5 +1,19 @@
 [
     {
+        "id": "https://posgraduacao.ufms.br/portal/cursos/verificar-inscricao/355",
+        "titulo": "Especialização em Gestão Contábil e Controladoria",
+        "fonte": "UFMS Pós",
+        "detalhes": "Inscrições abertas. Palavras: especialização",
+        "link": "https://posgraduacao.ufms.br/portal/cursos/verificar-inscricao/355",
+        "silent": false,
+        "data": "22/07/2026 01:47",
+        "data_captura": "22/07/2026 01:47",
+        "data_publicacao": null,
+        "data_tipo": "Capturado",
+        "palavra_chave": "especialização",
+        "local": "Nova Andradina"
+    },
+    {
         "id": "https://www.google.com/url?rct=j&sa=t&url=https://www.rcn67.com.br/campo-grande/funsat-abre-inscricoes-para-seis-cursos-gratuitos-de-qualificacao-profissional-em-campo-grande/&ct=ga&cd=CAIyHzUxN2JiOTE5YWI4NDk1Y2I6Y29tLmJyOnB0OkJSOlI&usg=AOvVaw1-NQll5hRYbxmKGgMjjZui",
         "titulo": "Funsat abre inscrições para seis cursos gratuitos de qualificação profissional em Campo Grande",
         "fonte": "Google Alerts",

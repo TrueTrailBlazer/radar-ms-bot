@@ -1,5 +1,19 @@
 [
     {
+        "id": "https://propp.ufms.br/_76cf7a533c9ab124558c43d3da95c0e6",
+        "titulo": "Pós-Graduação: PROPP Editais",
+        "fonte": "UFMS Pós",
+        "detalhes": "Atualização contendo: TI, Pós-graduação",
+        "link": "https://propp.ufms.br/diretorias/edital-no-53-2026-propp-ufms-auxilio-para-publicacao-e-revisao-de-artigos-cientificos-em-2026/",
+        "silent": false,
+        "data": "24/07/2026 09:38",
+        "data_captura": "24/07/2026 09:38",
+        "data_publicacao": null,
+        "data_tipo": "Capturado",
+        "palavra_chave": "TI",
+        "local": "Mato Grosso do Sul"
+    },
+    {
         "id": "https://www.google.com/url?rct=j&sa=t&url=https://midiamax.com.br/politica/transparencia/2026/tce-ms-revoga-licitacao-r-125-milhoes-informatica-apos-falha-sistema/&ct=ga&cd=CAIyHzUxN2JiOTE5YWI4NDk1Y2I6Y29tLmJyOnB0OkJSOlI&usg=AOvVaw1RwhWOrztqn9K08bjwIqUT",
         "titulo": "TCE-MS revoga licitação de R$ 12,5 milhões de informática após 'falha no sistema'",
         "fonte": "Google Alerts",

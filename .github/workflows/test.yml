@@ -1,0 +1,10 @@
+name: Test Diogrande
+on:
+  workflow_dispatch:
+
+jobs:
+  test-curl:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Test Diogrande API
+        run: curl -v -A "Mozilla/5.0" "https://diogrande.campogrande.ms.gov.br/wp-admin/admin-ajax.php?action=edicao2_dia_json"

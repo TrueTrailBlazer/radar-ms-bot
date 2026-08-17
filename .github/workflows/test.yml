@@ -1,6 +1,6 @@
 name: Test Diogrande
 on:
-  workflow_dispatch:
+  push:
 
 jobs:
   test-curl:

@@ -1,5 +1,19 @@
 [
     {
+        "id": "https://propp.ufms.br/_8b42c1229482af20445d59e1138f9be5",
+        "titulo": "Pós-Graduação: PROPP Editais",
+        "fonte": "UFMS Pós",
+        "detalhes": "Atualização contendo: TI, Pós-graduação",
+        "link": "https://propp.ufms.br/diretorias/edital-no-53-2026-propp-ufms-auxilio-para-publicacao-e-revisao-de-artigos-cientificos-em-2026/",
+        "silent": false,
+        "data": "17/08/2026 08:37",
+        "data_captura": "17/08/2026 08:37",
+        "data_publicacao": null,
+        "data_tipo": "Capturado",
+        "palavra_chave": "TI",
+        "local": "Mato Grosso do Sul"
+    },
+    {
         "id": "https://www.google.com/url?rct=j&sa=t&url=https://www.diariodigital.com.br/vagas/cursos/ifms-prorroga-prazo-de-inscricao-e-pedidos-de-isencao-do-exame-de-selecao&ct=ga&cd=CAIyHzUxN2JiOTE5YWI4NDk1Y2I6Y29tLmJyOnB0OkJSOlI&usg=AOvVaw1mwY7-gtqMBufUoI28fkHa",
         "titulo": "IFMS prorroga prazo de inscrição e pedidos de isenção do Exame de Seleção - Cursos",
         "fonte": "Google Alerts",

@@ -1,5 +1,33 @@
 [
     {
+        "id": "https://www.google.com/url?rct=j&sa=t&url=https://www.novaconcursos.com.br/portal/noticias/concurso-funsau-ms/&ct=ga&cd=CAIyHzUxN2JiOTE5YWI4NDk1Y2I6Y29tLmJyOnB0OkJSOlI&usg=AOvVaw1mLPEjv6EDOG5sB-MK7QRD",
+        "titulo": "Concurso Funsau MS: Comissão formada para 194 vagas!",
+        "fonte": "Google Alerts",
+        "detalhes": "Etapas do concurso Funsau MS · Língua Portuguesa: 10 questões · Noções de Informática: 10 questões · Conhecimentos sobre saúde pública: 10 questões...",
+        "link": "https://www.google.com/url?rct=j&sa=t&url=https://www.novaconcursos.com.br/portal/noticias/concurso-funsau-ms/&ct=ga&cd=CAIyHzUxN2JiOTE5YWI4NDk1Y2I6Y29tLmJyOnB0OkJSOlI&usg=AOvVaw1mLPEjv6EDOG5sB-MK7QRD",
+        "silent": false,
+        "data": "2026-08-21T18:38:42Z",
+        "data_captura": "21/08/2026 17:20",
+        "data_publicacao": "2026-08-21T18:38:42Z",
+        "data_tipo": "Publicado",
+        "palavra_chave": "INFORMÁTICA",
+        "local": "Mato Grosso do Sul"
+    },
+    {
+        "id": "https://www.google.com/url?rct=j&sa=t&url=https://correiodoestado.com.br/cidades/tres-municipios-de-mato-grosso-do-sul-passam-a-ter-cep-por-rua/471509/&ct=ga&cd=CAIyHzUxN2JiOTE5YWI4NDk1Y2I6Y29tLmJyOnB0OkJSOlI&usg=AOvVaw3uKMScPdcs7OWzFMrxESJ3",
+        "titulo": "Três municípios de Mato Grosso do Sul passam a ter CEP por rua - Correio do Estado",
+        "fonte": "Google Alerts",
+        "detalhes": "... Informática, Informática para Internet, Mecânica e Metalurgia. A ... MS localizada a erca de 150 km de Campo Grande. A entidade é alvo de ...",
+        "link": "https://www.google.com/url?rct=j&sa=t&url=https://correiodoestado.com.br/cidades/tres-municipios-de-mato-grosso-do-sul-passam-a-ter-cep-por-rua/471509/&ct=ga&cd=CAIyHzUxN2JiOTE5YWI4NDk1Y2I6Y29tLmJyOnB0OkJSOlI&usg=AOvVaw3uKMScPdcs7OWzFMrxESJ3",
+        "silent": false,
+        "data": "2026-08-21T19:55:01Z",
+        "data_captura": "21/08/2026 17:20",
+        "data_publicacao": "2026-08-21T19:55:01Z",
+        "data_tipo": "Publicado",
+        "palavra_chave": "INFORMÁTICA",
+        "local": "Campo Grande"
+    },
+    {
         "id": "https://propp.ufms.br/_f9de69584c026189ad6ad6653321cd2f",
         "titulo": "Pós-Graduação: PROPP Editais",
         "fonte": "UFMS Pós",

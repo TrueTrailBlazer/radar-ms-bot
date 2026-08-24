@@ -1,5 +1,19 @@
 [
     {
+        "id": "https://propp.ufms.br/_2401f1ffc26d6c978971576fa743275e",
+        "titulo": "Pós-Graduação: PROPP Editais",
+        "fonte": "UFMS Pós",
+        "detalhes": "Atualização contendo: TI, Pós-graduação",
+        "link": "https://propp.ufms.br/diretorias/edital-no-53-2026-propp-ufms-auxilio-para-publicacao-e-revisao-de-artigos-cientificos-em-2026/",
+        "silent": false,
+        "data": "24/08/2026 17:24",
+        "data_captura": "24/08/2026 17:24",
+        "data_publicacao": null,
+        "data_tipo": "Capturado",
+        "palavra_chave": "TI",
+        "local": "Mato Grosso do Sul"
+    },
+    {
         "id": "https://www.google.com/url?rct=j&sa=t&url=https://amp.campograndenews.com.br/cidades/interior/camara-de-ponta-pora-tem-concurso-com-19-vagas-e-salarios-de-ate-r-8-mil&ct=ga&cd=CAIyHzUxN2JiOTE5YWI4NDk1Y2I6Y29tLmJyOnB0OkJSOlI&usg=AOvVaw3JmHErsemeK5wiglFD7RZt",
         "titulo": "Concurso Câmara de Ponta Porã: 19 vagas e salários até R$ 8 mil - Campo Grande News",
         "fonte": "Google Alerts",

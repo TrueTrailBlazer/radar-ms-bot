@@ -1,5 +1,19 @@
 [
     {
+        "id": "https://posgraduacao.ufms.br/portal/cursos/verificar-inscricao/408",
+        "titulo": "Especialização em Gestão Contábil e Controladoria - Ead",
+        "fonte": "UFMS Pós",
+        "detalhes": "Inscrições abertas. Palavras: especialização",
+        "link": "https://posgraduacao.ufms.br/portal/cursos/verificar-inscricao/408",
+        "silent": false,
+        "data": "28/08/2026 10:52",
+        "data_captura": "28/08/2026 10:52",
+        "data_publicacao": null,
+        "data_tipo": "Capturado",
+        "palavra_chave": "especialização",
+        "local": "Nova Andradina"
+    },
+    {
         "id": "https://propp.ufms.br/_680d7af9911cf07ce1e69a546df440b4",
         "titulo": "Pós-Graduação: PROPP Editais",
         "fonte": "UFMS Pós",

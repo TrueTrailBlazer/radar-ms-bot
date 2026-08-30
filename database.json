@@ -1,5 +1,19 @@
 [
     {
+        "id": "https://www.google.com/url?rct=j&sa=t&url=https://jornaldiadia.com.br/ultima-semana-para-se-inscrever-em-concurso-com-400-vagas-e-salarios-de-ate-r-9-mil-para-ms/&ct=ga&cd=CAIyHzUxN2JiOTE5YWI4NDk1Y2I6Y29tLmJyOnB0OkJSOlI&usg=AOvVaw3xf4pKRGP5kPfMnnerEgbi",
+        "titulo": "Última semana para se inscrever em concurso com 400 vagas e salários de até R$ 9 mil para MS",
+        "fonte": "Google Alerts",
+        "detalhes": "... Campo Grande, em Mato Grosso do Sul, seguem abertas até a próxima ... Monitor de Informática (4 vagas); Monitor e Recreador (36 vagas) ...",
+        "link": "https://www.google.com/url?rct=j&sa=t&url=https://jornaldiadia.com.br/ultima-semana-para-se-inscrever-em-concurso-com-400-vagas-e-salarios-de-ate-r-9-mil-para-ms/&ct=ga&cd=CAIyHzUxN2JiOTE5YWI4NDk1Y2I6Y29tLmJyOnB0OkJSOlI&usg=AOvVaw3xf4pKRGP5kPfMnnerEgbi",
+        "silent": false,
+        "data": "2026-08-30T19:34:41Z",
+        "data_captura": "30/08/2026 16:30",
+        "data_publicacao": "2026-08-30T19:34:41Z",
+        "data_tipo": "Publicado",
+        "palavra_chave": "INFORMÁTICA",
+        "local": "Campo Grande"
+    },
+    {
         "id": "https://posgraduacao.ufms.br/portal/cursos/verificar-inscricao/408",
         "titulo": "Especialização em Gestão Contábil e Controladoria - Ead",
         "fonte": "UFMS Pós",

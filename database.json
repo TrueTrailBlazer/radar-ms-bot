@@ -1,5 +1,33 @@
 [
     {
+        "id": "https://propp.ufms.br/_9a1d01271241af09cc0cc33af8b91e4e",
+        "titulo": "Pós-Graduação: PROPP Editais",
+        "fonte": "UFMS Pós",
+        "detalhes": "Atualização contendo: TI, Pós-graduação",
+        "link": "https://propp.ufms.br/diretorias/edital-no-53-2026-propp-ufms-auxilio-para-publicacao-e-revisao-de-artigos-cientificos-em-2026/",
+        "silent": false,
+        "data": "01/09/2026 09:54",
+        "data_captura": "01/09/2026 09:54",
+        "data_publicacao": null,
+        "data_tipo": "Capturado",
+        "palavra_chave": "TI",
+        "local": "Mato Grosso do Sul"
+    },
+    {
+        "id": "https://www.google.com/url?rct=j&sa=t&url=https://jornaldanova.com.br/noticia/474772/ifms-abre-200-vagas-em-nova-andradina-inscricoes-vao-ate-8-de-setembro&ct=ga&cd=CAIyHzUxN2JiOTE5YWI4NDk1Y2I6Y29tLmJyOnB0OkJSOlI&usg=AOvVaw3M1BICTfjAzEs4bizBWV0P",
+        "titulo": "IFMS abre 200 vagas em Nova Andradina; inscrições vão até 8 de setembro",
+        "fonte": "Google Alerts",
+        "detalhes": "... Informática, no período vespertino. Em todo Mato Grosso do Sul, o processo seletivo disponibiliza 2.270 vagas, distribuídas entre 11 opções de ...",
+        "link": "https://www.google.com/url?rct=j&sa=t&url=https://jornaldanova.com.br/noticia/474772/ifms-abre-200-vagas-em-nova-andradina-inscricoes-vao-ate-8-de-setembro&ct=ga&cd=CAIyHzUxN2JiOTE5YWI4NDk1Y2I6Y29tLmJyOnB0OkJSOlI&usg=AOvVaw3M1BICTfjAzEs4bizBWV0P",
+        "silent": false,
+        "data": "2026-09-01T10:13:56Z",
+        "data_captura": "01/09/2026 09:54",
+        "data_publicacao": "2026-09-01T10:13:56Z",
+        "data_tipo": "Publicado",
+        "palavra_chave": "INFORMÁTICA",
+        "local": "Nova Andradina"
+    },
+    {
         "id": "https://www.google.com/url?rct=j&sa=t&url=https://www.correiodecorumbapantanal.com.br/educacao/ifms-recebe-inscricoes-para-exame-de-selecao-2027-ate-dia-8&ct=ga&cd=CAIyHzUxN2JiOTE5YWI4NDk1Y2I6Y29tLmJyOnB0OkJSOlI&usg=AOvVaw2yQxSQt3dVkIlN0XZmjMKQ",
         "titulo": "IFMS recebe inscrições para Exame de Seleção 2027 até dia 8 - Correio de Corumbá",
         "fonte": "Google Alerts",

@@ -1,5 +1,33 @@
 [
     {
+        "id": "https://propp.ufms.br/_f90cc205c003e3e7d87e4b95ca0312da",
+        "titulo": "Pós-Graduação: PROPP Editais",
+        "fonte": "UFMS Pós",
+        "detalhes": "Atualização contendo: TI, Pós-graduação",
+        "link": "https://propp.ufms.br/diretorias/edital-no-53-2026-propp-ufms-auxilio-para-publicacao-e-revisao-de-artigos-cientificos-em-2026/",
+        "silent": false,
+        "data": "04/09/2026 09:07",
+        "data_captura": "04/09/2026 09:07",
+        "data_publicacao": null,
+        "data_tipo": "Capturado",
+        "palavra_chave": "TI",
+        "local": "Mato Grosso do Sul"
+    },
+    {
+        "id": "https://www.google.com/url?rct=j&sa=t&url=https://oestadoonline.com.br/destaque/instituto-luther-king-abre-inscricoes-para-cursos-gratuitos-de-informatica-e-ingles-em-campo-grande/&ct=ga&cd=CAIyHzUxN2JiOTE5YWI4NDk1Y2I6Y29tLmJyOnB0OkJSOlI&usg=AOvVaw32wW-m6rjzKaE9iu0pRaQt",
+        "titulo": "Instituto Luther King abre inscrições para cursos gratuitos de Informática e Inglês em Campo Grande",
+        "fonte": "Google Alerts",
+        "detalhes": "Veja notícias em Campo Grande e Mato Grosso do Sul - O Estado Online ... Campo Grande: Informática e Inglês. As capacitações serão realizadas ...",
+        "link": "https://www.google.com/url?rct=j&sa=t&url=https://oestadoonline.com.br/destaque/instituto-luther-king-abre-inscricoes-para-cursos-gratuitos-de-informatica-e-ingles-em-campo-grande/&ct=ga&cd=CAIyHzUxN2JiOTE5YWI4NDk1Y2I6Y29tLmJyOnB0OkJSOlI&usg=AOvVaw32wW-m6rjzKaE9iu0pRaQt",
+        "silent": false,
+        "data": "2026-09-04T03:44:25Z",
+        "data_captura": "04/09/2026 09:07",
+        "data_publicacao": "2026-09-04T03:44:25Z",
+        "data_tipo": "Publicado",
+        "palavra_chave": "INFORMÁTICA",
+        "local": "Campo Grande"
+    },
+    {
         "id": "https://www.google.com/url?rct=j&sa=t&url=https://acritica.net/politica/riedel-qualificacao-empregos-melhores-salarios-ms/&ct=ga&cd=CAIyHzUxN2JiOTE5YWI4NDk1Y2I6Y29tLmJyOnB0OkJSOlI&usg=AOvVaw05XRSvfU1TG9nKtV-r1CD-",
         "titulo": "Riedel quer transformar emprego em salário maior e qualificação em MS",
         "fonte": "Google Alerts",

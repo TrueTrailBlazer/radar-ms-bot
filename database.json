@@ -1,5 +1,46 @@
 [
     {
+        "id": "https://propp.ufms.br/_e224b5521d01bb3fb6e4bb307bf9c874",
+        "titulo": "Pós-Graduação: PROPP Editais",
+        "fonte": "UFMS Pós",
+        "detalhes": "Atualização contendo: TI, Pós-graduação",
+        "link": "https://propp.ufms.br/diretorias/edital-no-53-2026-propp-ufms-auxilio-para-publicacao-e-revisao-de-artigos-cientificos-em-2026/",
+        "silent": false,
+        "data": "08/09/2026 09:17",
+        "data_captura": "08/09/2026 09:17",
+        "data_publicacao": null,
+        "data_tipo": "Capturado",
+        "palavra_chave": "TI",
+        "local": "Mato Grosso do Sul"
+    },
+    {
+        "id": "https://www.google.com/url?rct=j&sa=t&url=https://www.enfoquems.com.br/apos-feriado-funsat-abre-semana-com-816-vagas-de-emprego-em-campo-grande/%3Famp&ct=ga&cd=CAIyHzUxN2JiOTE5YWI4NDk1Y2I6Y29tLmJyOnB0OkJSOlI&usg=AOvVaw2erA5bY-B4-xdPbLG3POL-",
+        "titulo": "Após feriado, Funsat abre semana com 816 vagas de emprego em Campo Grande",
+        "fonte": "Google Alerts",
+        "detalhes": "... informática, professor de pilates e terapeuta ocupacional. Vagas para ... Enfoque MS - Notícias de Campo Grande - MS. SOBRE NÓS. Diretora ...",
+        "link": "https://www.google.com/url?rct=j&sa=t&url=https://www.enfoquems.com.br/apos-feriado-funsat-abre-semana-com-816-vagas-de-emprego-em-campo-grande/%3Famp&ct=ga&cd=CAIyHzUxN2JiOTE5YWI4NDk1Y2I6Y29tLmJyOnB0OkJSOlI&usg=AOvVaw2erA5bY-B4-xdPbLG3POL-",
+        "silent": false,
+        "data": "2026-09-07T19:17:13Z",
+        "data_captura": "08/09/2026 09:17",
+        "data_publicacao": "2026-09-07T19:17:13Z",
+        "data_tipo": "Publicado",
+        "palavra_chave": "INFORMÁTICA",
+        "local": "Campo Grande"
+    },
+    {
+        "id": "https://www.google.com/url?rct=j&sa=t&url=https://www.enfoquems.com.br/inscricoes-para-2-270-vagas-em-cursos-tecnicos-do-ifms-terminam-nesta-terca/&ct=ga&cd=CAIyHzUxN2JiOTE5YWI4NDk1Y2I6Y29tLmJyOnB0OkJSOlI&usg=AOvVaw0lEl1dqLcB2J6chtpEDbR3",
+        "titulo": "Inscrições para 2.270 vagas em cursos técnicos do IFMS terminam nesta terça",
+        "fonte": "Google Alerts",
+        "detalhes": "Seleção oferece oportunidades gratuitas em 11 cursos integrados ao ensino médio em 12 municípios de Mato Grosso do Sul. ... Informática, Informátic...",
+        "link": "https://www.google.com/url?rct=j&sa=t&url=https://www.enfoquems.com.br/inscricoes-para-2-270-vagas-em-cursos-tecnicos-do-ifms-terminam-nesta-terca/&ct=ga&cd=CAIyHzUxN2JiOTE5YWI4NDk1Y2I6Y29tLmJyOnB0OkJSOlI&usg=AOvVaw0lEl1dqLcB2J6chtpEDbR3",
+        "silent": false,
+        "data": "2026-09-08T11:20:35Z",
+        "data_captura": "08/09/2026 09:17",
+        "data_publicacao": "2026-09-08T11:20:35Z",
+        "data_tipo": "Publicado",
+        "palavra_chave": "INFORMÁTICA"
+    },
+    {
         "id": "https://www.google.com/url?rct=j&sa=t&url=https://correiodoestado.com.br/cidades/cmo-leva-mil-militares-e-34-viaturas-as-ruas-de-campo-grande/472324/&ct=ga&cd=CAIyHzUxN2JiOTE5YWI4NDk1Y2I6Y29tLmJyOnB0OkJSOlI&usg=AOvVaw2tJPqfgNoyjeeOhnl60aZA",
         "titulo": "CMO leva mil militares e 34 viaturas às ruas de Campo Grande - Correio do Estado",
         "fonte": "Google Alerts",

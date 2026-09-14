@@ -1,5 +1,19 @@
 [
     {
+        "id": "https://posgraduacao.ufms.br/portal/cursos/verificar-inscricao/370",
+        "titulo": "Especialização em MBA em Economia do Agronegócio",
+        "fonte": "UFMS Pós",
+        "detalhes": "Inscrições abertas. Palavras: especialização",
+        "link": "https://posgraduacao.ufms.br/portal/cursos/verificar-inscricao/370",
+        "silent": false,
+        "data": "14/09/2026 07:44",
+        "data_captura": "14/09/2026 07:44",
+        "data_publicacao": null,
+        "data_tipo": "Capturado",
+        "palavra_chave": "especialização",
+        "local": "Campo Grande"
+    },
+    {
         "id": "https://www.google.com/url?rct=j&sa=t&url=https://www.capitalnews.com.br/politica-e-poder/executivo/ses-ms-renova-contrato-de-r-76-milhoes-para-servicos-de-informatica/446425&ct=ga&cd=CAIyHzUxN2JiOTE5YWI4NDk1Y2I6Y29tLmJyOnB0OkJSOlI&usg=AOvVaw11WXmIl9ZXvsdlaFYlT2fO",
         "titulo": "SES-MS renova contrato de R$ 7,6 milhões para serviços de informática",
         "fonte": "Google Alerts",

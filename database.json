@@ -1,5 +1,32 @@
 [
     {
+        "id": "https://propp.ufms.br/_1ed8a355f83ea28629966b0f99ba6d8c",
+        "titulo": "Pós-Graduação: PROPP Editais",
+        "fonte": "UFMS Pós",
+        "detalhes": "Atualização contendo: TI, Pós-graduação",
+        "link": "https://propp.ufms.br/diretorias/edital-no-53-2026-propp-ufms-auxilio-para-publicacao-e-revisao-de-artigos-cientificos-em-2026/",
+        "silent": false,
+        "data": "15/09/2026 19:23",
+        "data_captura": "15/09/2026 19:23",
+        "data_publicacao": null,
+        "data_tipo": "Capturado",
+        "palavra_chave": "TI",
+        "local": "Mato Grosso do Sul"
+    },
+    {
+        "id": "https://www.google.com/url?rct=j&sa=t&url=https://www.capitaldopantanal.com.br/educacao/2026/09/15/candidatos-do-ifms-tem-ate-quarta-para-corrigir-inscricao.html&ct=ga&cd=CAIyHzUxN2JiOTE5YWI4NDk1Y2I6Y29tLmJyOnB0OkJSOlI&usg=AOvVaw3bIksvPGlkigAoO8BzD193",
+        "titulo": "Candidatos do IFMS têm até quarta para corrigir inscrição - Capital do Pantanal",
+        "fonte": "Google Alerts",
+        "detalhes": "... Informática e Metalurgia. (Foto: Arquivo/IFMS). Candidatos inscritos no Exame de Seleção 2027 do Instituto Federal de Mato Grosso do Sul (IFMS)...",
+        "link": "https://www.google.com/url?rct=j&sa=t&url=https://www.capitaldopantanal.com.br/educacao/2026/09/15/candidatos-do-ifms-tem-ate-quarta-para-corrigir-inscricao.html&ct=ga&cd=CAIyHzUxN2JiOTE5YWI4NDk1Y2I6Y29tLmJyOnB0OkJSOlI&usg=AOvVaw3bIksvPGlkigAoO8BzD193",
+        "silent": false,
+        "data": "2026-09-15T21:06:39Z",
+        "data_captura": "15/09/2026 19:23",
+        "data_publicacao": "2026-09-15T21:06:39Z",
+        "data_tipo": "Publicado",
+        "palavra_chave": "INFORMÁTICA"
+    },
+    {
         "id": "https://www.google.com/url?rct=j&sa=t&url=https://www.mpf.mp.br/o-mpf/unidades/pr-ms/noticias/procuradoria-da-republica-em-mato-grosso-do-sul-abre-prazo-para-envio-de-curriculos-de-bachareis-em-direito/pr-ms-atinge-mais-de-1-300-curriculos-em-processo-para-selecao-de-assessor-externo&ct=ga&cd=CAIyHzUxN2JiOTE5YWI4NDk1Y2I6Y29tLmJyOnB0OkJSOlI&usg=AOvVaw1FJpTRU1mOcg2s0yknckmu",
         "titulo": "PR/MS atinge mais de 1.300 currículos em processo para seleção de assessor externo",
         "fonte": "Google Alerts",
@@ -2740,30 +2767,5 @@
         "silent": false,
         "palavra_chave": "TI",
         "local": "Mato Grosso do Sul"
-    },
-    {
-        "id": "https://www.google.com/url?rct=j&sa=t&url=https://folhams.com.br/2026/06/02/concurso-crq-ms-2026-abre-80-vagas-imediatas-e-cadastro-reserva/&ct=ga&cd=CAIyHzUxN2JiOTE5YWI4NDk1Y2I6Y29tLmJyOnB0OkJSOlI&usg=AOvVaw3USDwj-aVbzduQxTLsBUIZ",
-        "titulo": "Concurso CRQ-MS 2026 abre 80 vagas imediatas e cadastro reserva",
-        "fonte": "Google Alerts",
-        "detalhes": "Etapas da seleção e calendário. O concurso CRQ-MS prevê prova objetiva para todos os cargos, com questões de Língua Portuguesa, Informática, ...",
-        "data": "2026-06-02T20:43:34Z",
-        "data_tipo": "Publicado",
-        "link": "https://www.google.com/url?rct=j&sa=t&url=https://folhams.com.br/2026/06/02/concurso-crq-ms-2026-abre-80-vagas-imediatas-e-cadastro-reserva/&ct=ga&cd=CAIyHzUxN2JiOTE5YWI4NDk1Y2I6Y29tLmJyOnB0OkJSOlI&usg=AOvVaw3USDwj-aVbzduQxTLsBUIZ",
-        "silent": false,
-        "data_publicacao": "2026-06-02T20:43:34Z",
-        "data_captura": "03/06/2026 11:49"
-    },
-    {
-        "id": "https://www.google.com/url?rct=j&sa=t&url=https://correiodoestado.com.br/cidades/ifms-abre-120-vagas-para-pos-graduacao-em-tres-cidades-de-ms/467528/&ct=ga&cd=CAIyHzUxN2JiOTE5YWI4NDk1Y2I6Y29tLmJyOnB0OkJSOlI&usg=AOvVaw2HdVBWdEEVEEHrlVQY7b-l",
-        "titulo": "IFMS abre 120 vagas para pós-graduação em três cidades de MS - Correio do Estado",
-        "fonte": "Google Alerts",
-        "detalhes": "... Campo Grande e Aquidauana, e Informática Aplicada à Educação, em Corumbá. ... Mato Grosso do Sul. A sentença, proferida em 27 de maio pelo juiz...",
-        "data": "2026-06-02T22:41:42Z",
-        "data_tipo": "Publicado",
-        "link": "https://www.google.com/url?rct=j&sa=t&url=https://correiodoestado.com.br/cidades/ifms-abre-120-vagas-para-pos-graduacao-em-tres-cidades-de-ms/467528/&ct=ga&cd=CAIyHzUxN2JiOTE5YWI4NDk1Y2I6Y29tLmJyOnB0OkJSOlI&usg=AOvVaw2HdVBWdEEVEEHrlVQY7b-l",
-        "silent": false,
-        "local": "Campo Grande, Corumbá, Aquidauana",
-        "data_publicacao": "2026-06-02T22:41:42Z",
-        "data_captura": "03/06/2026 11:49"
     }
 ]

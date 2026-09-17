@@ -1,5 +1,19 @@
 [
     {
+        "id": "https://www.google.com/url?rct=j&sa=t&url=https://www.uems.br/noticias/detalhes/UEMS-Gloria-de-Dourados-convoca-candidatos-para-matricula-na-Licenciatura-em-Computacao-pelo-PRILEI&ct=ga&cd=CAIyHzUxN2JiOTE5YWI4NDk1Y2I6Y29tLmJyOnB0OkJSOlI&usg=AOvVaw3PKwtTaqzLoSXhy6vVzZhl",
+        "titulo": "UEMS convoca candidatos para matrícula na Licenciatura em Computação pelo PRILEI",
+        "fonte": "Google Alerts",
+        "detalhes": "... Campo Grande, Dourados e Ivinhema. ... Observatório da Democracia, Políticas Públicas e Desenvolvimento de Mato Grosso do Sul - OBSERVA/MS ...",
+        "link": "https://www.google.com/url?rct=j&sa=t&url=https://www.uems.br/noticias/detalhes/UEMS-Gloria-de-Dourados-convoca-candidatos-para-matricula-na-Licenciatura-em-Computacao-pelo-PRILEI&ct=ga&cd=CAIyHzUxN2JiOTE5YWI4NDk1Y2I6Y29tLmJyOnB0OkJSOlI&usg=AOvVaw3PKwtTaqzLoSXhy6vVzZhl",
+        "silent": false,
+        "data": "2026-09-17T17:55:03Z",
+        "data_captura": "17/09/2026 16:55",
+        "data_publicacao": "2026-09-17T17:55:03Z",
+        "data_tipo": "Publicado",
+        "palavra_chave": "COMPUTAÇÃO",
+        "local": "Campo Grande, Dourados"
+    },
+    {
         "id": "https://propp.ufms.br/_b0acfa291936de2f1a2b812cd4b451b9",
         "titulo": "Pós-Graduação: PROPP Editais",
         "fonte": "UFMS Pós",
@@ -2757,17 +2771,5 @@
         "palavra_chave": "TECNÓLOGO",
         "data_publicacao": "2026-06-03T16:04:38Z",
         "data_captura": "03/06/2026 11:49"
-    },
-    {
-        "id": "https://posgraduacao.ufms.br/portal/cursos/verificar-inscricao/405",
-        "titulo": "Especialização em Conexões Interdisciplinares entre Metodologias Ativas, Educação Especial e Neurociência",
-        "fonte": "UFMS Pós",
-        "detalhes": "Inscrições abertas. Palavras: TI, especialização",
-        "data": "03/06/2026 11:49",
-        "data_tipo": "Capturado",
-        "link": "https://posgraduacao.ufms.br/portal/cursos/verificar-inscricao/405",
-        "silent": false,
-        "palavra_chave": "TI",
-        "local": "Aquidauana"
     }
 ]

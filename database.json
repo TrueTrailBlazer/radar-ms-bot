@@ -1,5 +1,19 @@
 [
     {
+        "id": "https://propp.ufms.br/_b0acfa291936de2f1a2b812cd4b451b9",
+        "titulo": "Pós-Graduação: PROPP Editais",
+        "fonte": "UFMS Pós",
+        "detalhes": "Atualização contendo: TI, Pós-graduação",
+        "link": "https://propp.ufms.br/diretorias/edital-no-53-2026-propp-ufms-auxilio-para-publicacao-e-revisao-de-artigos-cientificos-em-2026/",
+        "silent": false,
+        "data": "17/09/2026 12:12",
+        "data_captura": "17/09/2026 12:12",
+        "data_publicacao": null,
+        "data_tipo": "Capturado",
+        "palavra_chave": "TI",
+        "local": "Mato Grosso do Sul"
+    },
+    {
         "id": "https://propp.ufms.br/_1ed8a355f83ea28629966b0f99ba6d8c",
         "titulo": "Pós-Graduação: PROPP Editais",
         "fonte": "UFMS Pós",
@@ -2755,17 +2769,5 @@
         "silent": false,
         "palavra_chave": "TI",
         "local": "Aquidauana"
-    },
-    {
-        "id": "https://propp.ufms.br/_c37824f3ab2e9ed7cccb7e0fc56ee147",
-        "titulo": "Pós-Graduação: PROPP Editais",
-        "fonte": "UFMS Pós",
-        "detalhes": "Atualização contendo: TI, Pós-graduação, especialização",
-        "data": "03/06/2026 11:49",
-        "data_tipo": "Capturado",
-        "link": "https://propp.ufms.br/diretorias/edital-no-53-2026-propp-ufms-auxilio-para-publicacao-e-revisao-de-artigos-cientificos-em-2026/",
-        "silent": false,
-        "palavra_chave": "TI",
-        "local": "Mato Grosso do Sul"
     }
 ]

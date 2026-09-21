@@ -1,5 +1,19 @@
 [
     {
+        "id": "https://propp.ufms.br/_5c9d04a4f5ff7863e1ef7aa132e1b66b",
+        "titulo": "Pós-Graduação: PROPP Editais",
+        "fonte": "UFMS Pós",
+        "detalhes": "Atualização contendo: TI, Pós-graduação",
+        "link": "https://propp.ufms.br/diretorias/edital-no-53-2026-propp-ufms-auxilio-para-publicacao-e-revisao-de-artigos-cientificos-em-2026/",
+        "silent": false,
+        "data": "21/09/2026 17:54",
+        "data_captura": "21/09/2026 17:54",
+        "data_publicacao": null,
+        "data_tipo": "Capturado",
+        "palavra_chave": "TI",
+        "local": "Mato Grosso do Sul"
+    },
+    {
         "id": "https://www.google.com/url?rct=j&sa=t&url=https://www.uems.br/noticias/detalhes/UEMS-Gloria-de-Dourados-convoca-candidatos-para-matricula-na-Licenciatura-em-Computacao-pelo-PRILEI&ct=ga&cd=CAIyHzUxN2JiOTE5YWI4NDk1Y2I6Y29tLmJyOnB0OkJSOlI&usg=AOvVaw3PKwtTaqzLoSXhy6vVzZhl",
         "titulo": "UEMS convoca candidatos para matrícula na Licenciatura em Computação pelo PRILEI",
         "fonte": "Google Alerts",
@@ -2758,18 +2772,5 @@
         "data_tipo": "Capturado",
         "palavra_chave": null,
         "local": "Campo Grande - MS"
-    },
-    {
-        "id": "https://www.google.com/url?rct=j&sa=t&url=https://folha.qconcursos.com/n/ifms-abre-processo-seletivo-para-1-vaga-de-professor-de-administracao&ct=ga&cd=CAIyHzUxN2JiOTE5YWI4NDk1Y2I6Y29tLmJyOnB0OkJSOlI&usg=AOvVaw1ocLqLTnog6PqhRdfnb3ld",
-        "titulo": "IFMS abre processo seletivo para 1 vaga de professor de Administração | Folha Dirigida",
-        "fonte": "Google Alerts",
-        "detalhes": "Crédito: Governo de MS. Quem pode concorrer. Graduação exigida: bacharelado em Administração, Administração Pública ou tecnólogo em Gestão do ...",
-        "data": "2026-06-03T16:04:38Z",
-        "data_tipo": "Publicado",
-        "link": "https://www.google.com/url?rct=j&sa=t&url=https://folha.qconcursos.com/n/ifms-abre-processo-seletivo-para-1-vaga-de-professor-de-administracao&ct=ga&cd=CAIyHzUxN2JiOTE5YWI4NDk1Y2I6Y29tLmJyOnB0OkJSOlI&usg=AOvVaw1ocLqLTnog6PqhRdfnb3ld",
-        "silent": false,
-        "palavra_chave": "TECNÓLOGO",
-        "data_publicacao": "2026-06-03T16:04:38Z",
-        "data_captura": "03/06/2026 11:49"
     }
 ]

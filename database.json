@@ -1,5 +1,19 @@
 [
     {
+        "id": "https://propp.ufms.br/_26943db10cfff4ba4c140c8c401b71a8",
+        "titulo": "Pós-Graduação: PROPP Editais",
+        "fonte": "UFMS Pós",
+        "detalhes": "Atualização contendo: TI, Pós-graduação",
+        "link": "https://propp.ufms.br/diretorias/edital-no-53-2026-propp-ufms-auxilio-para-publicacao-e-revisao-de-artigos-cientificos-em-2026/",
+        "silent": false,
+        "data": "23/09/2026 12:03",
+        "data_captura": "23/09/2026 12:03",
+        "data_publicacao": null,
+        "data_tipo": "Capturado",
+        "palavra_chave": "TI",
+        "local": "Mato Grosso do Sul"
+    },
+    {
         "id": "https://propp.ufms.br/_e31f806182e40cbcc74e04114c0b802b",
         "titulo": "Pós-Graduação: PROPP Editais",
         "fonte": "UFMS Pós",
@@ -2758,19 +2772,5 @@
         "data_tipo": "Publicado",
         "palavra_chave": "TECNÓLOGO",
         "local": "Mato Grosso do Sul"
-    },
-    {
-        "id": "https://diogrande.campogrande.ms.gov.br/download_edicao/eyJjb2RpZ29kaWEiOiIxMDM5MCJ9.pdf",
-        "titulo": "Diário Oficial (29/Maio) - EXTRA (Sem TI)",
-        "fonte": "Diogrande",
-        "detalhes": "Sem vagas detectadas.",
-        "link": "https://diogrande.campogrande.ms.gov.br/download_edicao/eyJjb2RpZ29kaWEiOiIxMDM5MCJ9.pdf",
-        "silent": true,
-        "data": "03/06/2026 16:24",
-        "data_captura": "03/06/2026 16:24",
-        "data_publicacao": null,
-        "data_tipo": "Capturado",
-        "palavra_chave": null,
-        "local": "Campo Grande - MS"
     }
 ]

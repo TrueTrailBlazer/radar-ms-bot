@@ -1,5 +1,19 @@
 [
     {
+        "id": "https://propp.ufms.br/_ca3403c22001bd160112b0b06293f083",
+        "titulo": "Pós-Graduação: PROPP Editais",
+        "fonte": "UFMS Pós",
+        "detalhes": "Atualização contendo: TI, Pós-graduação",
+        "link": "https://propp.ufms.br/diretorias/edital-no-53-2026-propp-ufms-auxilio-para-publicacao-e-revisao-de-artigos-cientificos-em-2026/",
+        "silent": false,
+        "data": "25/09/2026 12:29",
+        "data_captura": "25/09/2026 12:29",
+        "data_publicacao": null,
+        "data_tipo": "Capturado",
+        "palavra_chave": "TI",
+        "local": "Mato Grosso do Sul"
+    },
+    {
         "id": "https://propp.ufms.br/_26943db10cfff4ba4c140c8c401b71a8",
         "titulo": "Pós-Graduação: PROPP Editais",
         "fonte": "UFMS Pós",
@@ -2758,19 +2772,5 @@
         "data_publicacao": "2026-06-04T17:15:49Z",
         "data_tipo": "Publicado",
         "palavra_chave": "INFORMÁTICA"
-    },
-    {
-        "id": "https://www.google.com/url?rct=j&sa=t&url=https://midiamax.com.br/cotidiano/emprego-concurso/2026/ifms-tem-3-processos-seletivos-abertos-contratacao-professores-cidades-ms/&ct=ga&cd=CAIyHzUxN2JiOTE5YWI4NDk1Y2I6Y29tLmJyOnB0OkJSOlI&usg=AOvVaw3fLZHSu4RyfzsKmh7bR6CS",
-        "titulo": "IFMS tem 3 processos seletivos abertos para contratação de professores em cidades de MS",
-        "fonte": "Google Alerts",
-        "detalhes": "Últimas Notícias Cotidiano Emprego e Concurso IFMS tem 3 processos seletivos abertos para contratação de professores em cidades de MS ... Tecnólogo...",
-        "link": "https://www.google.com/url?rct=j&sa=t&url=https://midiamax.com.br/cotidiano/emprego-concurso/2026/ifms-tem-3-processos-seletivos-abertos-contratacao-professores-cidades-ms/&ct=ga&cd=CAIyHzUxN2JiOTE5YWI4NDk1Y2I6Y29tLmJyOnB0OkJSOlI&usg=AOvVaw3fLZHSu4RyfzsKmh7bR6CS",
-        "silent": false,
-        "data": "2026-06-04T12:37:27Z",
-        "data_captura": "04/06/2026 10:54",
-        "data_publicacao": "2026-06-04T12:37:27Z",
-        "data_tipo": "Publicado",
-        "palavra_chave": "TECNÓLOGO",
-        "local": "Mato Grosso do Sul"
     }
 ]

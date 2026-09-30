@@ -1,5 +1,19 @@
 [
     {
+        "id": "https://propp.ufms.br/_b9663be1d18f43ef5475e1c7ad9a9e44",
+        "titulo": "Pós-Graduação: PROPP Editais",
+        "fonte": "UFMS Pós",
+        "detalhes": "Atualização contendo: TI, Pós-graduação",
+        "link": "https://propp.ufms.br/diretorias/edital-no-53-2026-propp-ufms-auxilio-para-publicacao-e-revisao-de-artigos-cientificos-em-2026/",
+        "silent": false,
+        "data": "30/09/2026 05:17",
+        "data_captura": "30/09/2026 05:17",
+        "data_publicacao": null,
+        "data_tipo": "Capturado",
+        "palavra_chave": "TI",
+        "local": "Mato Grosso do Sul"
+    },
+    {
         "id": "https://propp.ufms.br/_e057c69e3994414d9e4f4f40fe040ca9",
         "titulo": "Pós-Graduação: PROPP Editais",
         "fonte": "UFMS Pós",
@@ -2760,18 +2774,5 @@
         "data_tipo": "Publicado",
         "palavra_chave": "INFORMÁTICA",
         "local": "Campo Grande"
-    },
-    {
-        "id": "https://www.google.com/url?rct=j&sa=t&url=https://www.diariodigital.com.br/geral/trt-ms-abre-processo-seletivo-para-cadastro-de-reserva-de-estagiarios&ct=ga&cd=CAIyHzUxN2JiOTE5YWI4NDk1Y2I6Y29tLmJyOnB0OkJSOlI&usg=AOvVaw1aTttzBCGsxOopRn0CPawL",
-        "titulo": "TRT/MS abre processo seletivo para cadastro de reserva de estagiários - Diário Digital",
-        "fonte": "Google Alerts",
-        "detalhes": "TRT/MS abre processo seletivo para cadastro de reserva de estagiários ... Informática. As oportunidades são destinadas às unidades do TRT/MS ...",
-        "link": "https://www.google.com/url?rct=j&sa=t&url=https://www.diariodigital.com.br/geral/trt-ms-abre-processo-seletivo-para-cadastro-de-reserva-de-estagiarios&ct=ga&cd=CAIyHzUxN2JiOTE5YWI4NDk1Y2I6Y29tLmJyOnB0OkJSOlI&usg=AOvVaw1aTttzBCGsxOopRn0CPawL",
-        "silent": false,
-        "data": "2026-06-06T17:05:59Z",
-        "data_captura": "06/06/2026 15:18",
-        "data_publicacao": "2026-06-06T17:05:59Z",
-        "data_tipo": "Publicado",
-        "palavra_chave": "INFORMÁTICA"
     }
 ]

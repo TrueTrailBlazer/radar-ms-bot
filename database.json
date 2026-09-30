@@ -1,5 +1,19 @@
 [
     {
+        "id": "https://propp.ufms.br/_e057c69e3994414d9e4f4f40fe040ca9",
+        "titulo": "Pós-Graduação: PROPP Editais",
+        "fonte": "UFMS Pós",
+        "detalhes": "Atualização contendo: TI, Pós-graduação",
+        "link": "https://propp.ufms.br/diretorias/edital-no-53-2026-propp-ufms-auxilio-para-publicacao-e-revisao-de-artigos-cientificos-em-2026/",
+        "silent": false,
+        "data": "29/09/2026 20:03",
+        "data_captura": "29/09/2026 20:03",
+        "data_publicacao": null,
+        "data_tipo": "Capturado",
+        "palavra_chave": "TI",
+        "local": "Mato Grosso do Sul"
+    },
+    {
         "id": "https://www.google.com/url?rct=j&sa=t&url=https://www.reporterpb.com.br/noticia-extra/2026/09/28/conheca-os-candidatos-ao-governo-de-mato-grosso-e-mato-grosso-do-sul/131811.html&ct=ga&cd=CAIyHzUxN2JiOTE5YWI4NDk1Y2I6Y29tLmJyOnB0OkJSOlI&usg=AOvVaw3iSK2qGVGFrxfPuVP3mDF6",
         "titulo": "Conheça os candidatos ao governo de Mato Grosso e Mato Grosso do Sul - Repórter PB",
         "fonte": "Google Alerts",
@@ -2759,19 +2773,5 @@
         "data_publicacao": "2026-06-06T17:05:59Z",
         "data_tipo": "Publicado",
         "palavra_chave": "INFORMÁTICA"
-    },
-    {
-        "id": "https://www.google.com/url?rct=j&sa=t&url=https://www.campograndenews.com.br/educacao-e-tecnologia/ufms-abre-140-vagas-para-licenciatura-em-computacao-em-4-cidades&ct=ga&cd=CAIyHzUxN2JiOTE5YWI4NDk1Y2I6Y29tLmJyOnB0OkJSOlI&usg=AOvVaw0bruuAGzPOWWO9n1nD9VEx",
-        "titulo": "UFMS abre 140 vagas para licenciatura em computação em 4 cidades - Campo Grande News",
-        "fonte": "Google Alerts",
-        "detalhes": "A UFMS (Universidade Federal de Mato Grosso do Sul) abriu processo seletivo com 140 vagas para o curso de Licenciatura em Computação. ... CAMPO GRA...",
-        "link": "https://www.google.com/url?rct=j&sa=t&url=https://www.campograndenews.com.br/educacao-e-tecnologia/ufms-abre-140-vagas-para-licenciatura-em-computacao-em-4-cidades&ct=ga&cd=CAIyHzUxN2JiOTE5YWI4NDk1Y2I6Y29tLmJyOnB0OkJSOlI&usg=AOvVaw0bruuAGzPOWWO9n1nD9VEx",
-        "silent": false,
-        "data": "2026-06-05T20:33:49Z",
-        "data_captura": "05/06/2026 18:13",
-        "data_publicacao": "2026-06-05T20:33:49Z",
-        "data_tipo": "Publicado",
-        "palavra_chave": "COMPUTAÇÃO",
-        "local": "Campo Grande"
     }
 ]

@@ -1,5 +1,19 @@
 [
     {
+        "id": "https://posgraduacao.ufms.br/portal/cursos/verificar-inscricao/351",
+        "titulo": "Especialização em MBA em Marketing",
+        "fonte": "UFMS Pós",
+        "detalhes": "Inscrições abertas. Palavras: TI, especialização",
+        "link": "https://posgraduacao.ufms.br/portal/cursos/verificar-inscricao/351",
+        "silent": false,
+        "data": "01/10/2026 00:02",
+        "data_captura": "01/10/2026 00:02",
+        "data_publicacao": null,
+        "data_tipo": "Capturado",
+        "palavra_chave": "TI",
+        "local": "Campo Grande"
+    },
+    {
         "id": "https://propp.ufms.br/_b9663be1d18f43ef5475e1c7ad9a9e44",
         "titulo": "Pós-Graduação: PROPP Editais",
         "fonte": "UFMS Pós",
@@ -2757,20 +2771,6 @@
         "data": "2026-06-07T15:33:03Z",
         "data_captura": "07/06/2026 18:01",
         "data_publicacao": "2026-06-07T15:33:03Z",
-        "data_tipo": "Publicado",
-        "palavra_chave": "INFORMÁTICA",
-        "local": "Campo Grande"
-    },
-    {
-        "id": "https://www.google.com/url?rct=j&sa=t&url=https://acritica.net/cidades/cursos-gratuitos-da-sejuv-comecam-nesta-semana-em-campo-grande/&ct=ga&cd=CAIyHzUxN2JiOTE5YWI4NDk1Y2I6Y29tLmJyOnB0OkJSOlI&usg=AOvVaw3AZ7UiZFEGmcuZFazRWdNk",
-        "titulo": "Cursos gratuitos da Sejuv começam nesta semana em Campo Grande",
-        "fonte": "Google Alerts",
-        "detalhes": "Aulas de design de sobrancelhas e informática básica têm início nesta segunda-feira na Capital. ... Avenida Júlio de Castilho, 1747 Campo Grande/MS...",
-        "link": "https://www.google.com/url?rct=j&sa=t&url=https://acritica.net/cidades/cursos-gratuitos-da-sejuv-comecam-nesta-semana-em-campo-grande/&ct=ga&cd=CAIyHzUxN2JiOTE5YWI4NDk1Y2I6Y29tLmJyOnB0OkJSOlI&usg=AOvVaw3AZ7UiZFEGmcuZFazRWdNk",
-        "silent": false,
-        "data": "2026-06-07T15:29:29Z",
-        "data_captura": "07/06/2026 12:12",
-        "data_publicacao": "2026-06-07T15:29:29Z",
         "data_tipo": "Publicado",
         "palavra_chave": "INFORMÁTICA",
         "local": "Campo Grande"

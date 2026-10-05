@@ -1,5 +1,19 @@
 [
     {
+        "id": "https://propp.ufms.br/_b92634071d32b1668e31ebc9d2354b4f",
+        "titulo": "Pós-Graduação: PROPP Editais",
+        "fonte": "UFMS Pós",
+        "detalhes": "Atualização contendo: TI, Pós-graduação",
+        "link": "https://propp.ufms.br/diretorias/edital-no-53-2026-propp-ufms-auxilio-para-publicacao-e-revisao-de-artigos-cientificos-em-2026/",
+        "silent": false,
+        "data": "05/10/2026 17:48",
+        "data_captura": "05/10/2026 17:48",
+        "data_publicacao": null,
+        "data_tipo": "Capturado",
+        "palavra_chave": "TI",
+        "local": "Mato Grosso do Sul"
+    },
+    {
         "id": "https://propp.ufms.br/_b3288c404571abd1b209a1d42eff0ff7",
         "titulo": "Pós-Graduação: PROPP Editais",
         "fonte": "UFMS Pós",
@@ -2760,19 +2774,5 @@
         "data_tipo": "Capturado",
         "palavra_chave": "TI",
         "local": "Mato Grosso do Sul"
-    },
-    {
-        "id": "https://www.google.com/url?rct=j&sa=t&url=https://midiamax.com.br/cotidiano/emprego-concurso/2026/campo-grande-tem-35-vagas-cursos-tecnicos-voltados-trabalhadores-comercio/&ct=ga&cd=CAIyHzUxN2JiOTE5YWI4NDk1Y2I6Y29tLmJyOnB0OkJSOlI&usg=AOvVaw3M4GkUwW7RmNRfnDSywa8B",
-        "titulo": "Campo Grande tem 35 vagas para cursos técnicos voltados aos trabalhadores do comércio",
-        "fonte": "Google Alerts",
-        "detalhes": "... Informática para Internet e Humanização em Serviços de Saúde. As ... Comando-Geral disponibilizou vagas para formação de sargentos Emprego e Co...",
-        "link": "https://www.google.com/url?rct=j&sa=t&url=https://midiamax.com.br/cotidiano/emprego-concurso/2026/campo-grande-tem-35-vagas-cursos-tecnicos-voltados-trabalhadores-comercio/&ct=ga&cd=CAIyHzUxN2JiOTE5YWI4NDk1Y2I6Y29tLmJyOnB0OkJSOlI&usg=AOvVaw3M4GkUwW7RmNRfnDSywa8B",
-        "silent": false,
-        "data": "2026-06-09T20:20:49Z",
-        "data_captura": "09/06/2026 18:22",
-        "data_publicacao": "2026-06-09T20:20:49Z",
-        "data_tipo": "Publicado",
-        "palavra_chave": "INFORMÁTICA",
-        "local": "Campo Grande"
     }
 ]

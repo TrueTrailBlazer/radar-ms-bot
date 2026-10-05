@@ -1,5 +1,19 @@
 [
     {
+        "id": "https://propp.ufms.br/_b3288c404571abd1b209a1d42eff0ff7",
+        "titulo": "Pós-Graduação: PROPP Editais",
+        "fonte": "UFMS Pós",
+        "detalhes": "Atualização contendo: TI, Pós-graduação",
+        "link": "https://propp.ufms.br/diretorias/edital-no-53-2026-propp-ufms-auxilio-para-publicacao-e-revisao-de-artigos-cientificos-em-2026/",
+        "silent": false,
+        "data": "05/10/2026 09:32",
+        "data_captura": "05/10/2026 09:32",
+        "data_publicacao": null,
+        "data_tipo": "Capturado",
+        "palavra_chave": "TI",
+        "local": "Mato Grosso do Sul"
+    },
+    {
         "id": "https://posgraduacao.ufms.br/portal/cursos/verificar-inscricao/351",
         "titulo": "Especialização em MBA em Marketing",
         "fonte": "UFMS Pós",
@@ -2757,20 +2771,6 @@
         "data": "2026-06-09T20:20:49Z",
         "data_captura": "09/06/2026 18:22",
         "data_publicacao": "2026-06-09T20:20:49Z",
-        "data_tipo": "Publicado",
-        "palavra_chave": "INFORMÁTICA",
-        "local": "Campo Grande"
-    },
-    {
-        "id": "https://www.google.com/url?rct=j&sa=t&url=https://www.enfoquems.com.br/sejuv-da-inicio-a-novas-turmas-de-capacitacao-para-jovens-esta-semana/&ct=ga&cd=CAIyHzUxN2JiOTE5YWI4NDk1Y2I6Y29tLmJyOnB0OkJSOlI&usg=AOvVaw0EvHB85kKKyDZkJfdvvj3q",
-        "titulo": "Sejuv dá início a novas turmas de capacitação para jovens esta semana - Enfoque MS",
-        "fonte": "Google Alerts",
-        "detalhes": "... Campo Grande. As capacitações tiveram todas as vagas preenchidas e ... Informática Básica acontecerão na nova sede da Sejuv, localizada na ...",
-        "link": "https://www.google.com/url?rct=j&sa=t&url=https://www.enfoquems.com.br/sejuv-da-inicio-a-novas-turmas-de-capacitacao-para-jovens-esta-semana/&ct=ga&cd=CAIyHzUxN2JiOTE5YWI4NDk1Y2I6Y29tLmJyOnB0OkJSOlI&usg=AOvVaw0EvHB85kKKyDZkJfdvvj3q",
-        "silent": false,
-        "data": "2026-06-07T15:33:03Z",
-        "data_captura": "07/06/2026 18:01",
-        "data_publicacao": "2026-06-07T15:33:03Z",
         "data_tipo": "Publicado",
         "palavra_chave": "INFORMÁTICA",
         "local": "Campo Grande"

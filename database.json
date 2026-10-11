@@ -1,5 +1,18 @@
 [
     {
+        "id": "https://www.google.com/url?rct=j&sa=t&url=https://www.capitaldopantanal.com.br/geral/2026/10/10/detran-ms-suspende-sistemas-digitais-neste-final-de-semana-para-manutencao.html&ct=ga&cd=CAIyHzUxN2JiOTE5YWI4NDk1Y2I6Y29tLmJyOnB0OkJSOlI&usg=AOvVaw1o114YMNMfhKnDi8NjLy6j",
+        "titulo": "Detran-MS suspende sistemas digitais neste final de semana para manutenção",
+        "fonte": "Google Alerts",
+        "detalhes": "O Detran-MS (Departamento Estadual de Trânsito de Mato Grosso do Sul) ... Coordenada de forma direta pela Diretoria de Tecnologia da Informação do ...",
+        "link": "https://www.google.com/url?rct=j&sa=t&url=https://www.capitaldopantanal.com.br/geral/2026/10/10/detran-ms-suspende-sistemas-digitais-neste-final-de-semana-para-manutencao.html&ct=ga&cd=CAIyHzUxN2JiOTE5YWI4NDk1Y2I6Y29tLmJyOnB0OkJSOlI&usg=AOvVaw1o114YMNMfhKnDi8NjLy6j",
+        "silent": false,
+        "data": "2026-10-10T15:35:51Z",
+        "data_captura": "10/10/2026 23:53",
+        "data_publicacao": "2026-10-10T15:35:51Z",
+        "data_tipo": "Publicado",
+        "palavra_chave": "SISTEMAS"
+    },
+    {
         "id": "https://propp.ufms.br/_503284278b3ac130686a99480a4d04ef",
         "titulo": "Pós-Graduação: PROPP Editais",
         "fonte": "UFMS Pós",
@@ -2759,18 +2772,5 @@
         "data_publicacao": "2026-06-15T20:14:46Z",
         "data_tipo": "Publicado",
         "palavra_chave": "COMPUTAÇÃO"
-    },
-    {
-        "id": "https://www.google.com/url?rct=j&sa=t&url=https://www.tecconcursos.com.br/guias/crq-xx-ms-2026/assistente-administrativo-crq-xx-ms/-/-&ct=ga&cd=CAIyHzUxN2JiOTE5YWI4NDk1Y2I6Y29tLmJyOnB0OkJSOlI&usg=AOvVaw1kULs7Ts-sTFIUvjCdpSPD",
-        "titulo": "Guia CRQ XX (MS) / 2026 para concurso Assistente Administrativo (CRQ XX",
-        "fonte": "Google Alerts",
-        "detalhes": "Acesse o Guia CRQ XX (MS) / 2026 para concurso Assistente ... Ainda não disponível. AVISE-ME. Noções de Informática - CRQ XX (MS) - 2026.",
-        "link": "https://www.google.com/url?rct=j&sa=t&url=https://www.tecconcursos.com.br/guias/crq-xx-ms-2026/assistente-administrativo-crq-xx-ms/-/-&ct=ga&cd=CAIyHzUxN2JiOTE5YWI4NDk1Y2I6Y29tLmJyOnB0OkJSOlI&usg=AOvVaw1kULs7Ts-sTFIUvjCdpSPD",
-        "silent": false,
-        "data": "2026-06-14T08:01:27Z",
-        "data_captura": "14/06/2026 23:59",
-        "data_publicacao": "2026-06-14T08:01:27Z",
-        "data_tipo": "Publicado",
-        "palavra_chave": "INFORMÁTICA"
     }
 ]

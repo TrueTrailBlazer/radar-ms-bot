@@ -40,10 +40,15 @@ def criar_padrao_insensivel(palavras):
         'o': '[oóòõôö]', 'u': '[uúùûü]', 'c': '[cç]'
     }
     padroes = []
-    for p in palavras:
+    palavras_ordenadas = sorted(palavras, key=len, reverse=True)
+    for p in palavras_ordenadas:
         p_clean = ''.join(c for c in unicodedata.normalize('NFD', p.lower()) if unicodedata.category(c) != 'Mn')
-        s = ''.join(mapa.get(ch, re.escape(ch)) for ch in p_clean)
-        padroes.append(s)
+        palavras_token = [w for w in re.split(r'[-\s]+', p_clean) if w]
+        partes = []
+        for word in palavras_token:
+            s = ''.join(mapa.get(ch, re.escape(ch)) for ch in word)
+            partes.append(s)
+        padroes.append(r'[-\s]+'.join(partes))
     return re.compile(r'(?i)\b(' + '|'.join(padroes) + r')\b')
 
 def normalizar_texto_pdf(txt):
@@ -84,8 +89,31 @@ def edital_muito_antigo(prazo_str):
 
 PADRAO_TI = criar_padrao_insensivel(KEYWORDS_CONFIG)
 PADRAO_TI_UFMS = re.compile(r'(?i)\b(ti|computacao|computa[cç][aã]o|ci[êe]ncia da computa[cç][aã]o|sistemas? de informa[cç][aã]o|engenharia de software|an[áa]lise e desenvolvimento de sistemas|tecnologia da informa[cç][aã]o|programador|desenvolvedor|redes de computadores|banco de dados|facom)\b')
-PADRAO_LOCAL = re.compile(r'\b(ms|mato grosso do sul|campo grande|dourados|tr[êe]s lagoas|corumb[áa]|ponta por[ãa]|sidrol[âa]ndia|navira[íi]|nova andradina|aquidauana|parana[íi]ba|coxim|ufms|uems|ifms|sad|agesul)\b', re.IGNORECASE)
+PADRAO_LOCAL = re.compile(r'\b(ms|mato grosso do sul|campo grande|dourados|tr[êe]s lagoas|corumb[áa]|ponta por[ãa]|sidrol[âa]ndia|navira[íi]|nova andradina|aquidauana|parana[íi]ba|coxim|ufms|uems|ifms|sad|agesul|fapec|quadrix|semadi|pmcg)\b', re.IGNORECASE)
 PADRAO_VAGA = re.compile(r'\b(processo seletivo|concurso|edital|contrata[çc][ãa]o|sele[çc][ãa]o|vaga|especialização|lato sensu)\b', re.IGNORECASE)
+
+PADRAO_TI_RIGIDO = re.compile(
+    r'(?i)\b('
+    r'ti|ads|desenvolvedor(?:es)?|programador(?:es)?|'
+    r'engenheir[oa](?:s)?\s+de\s+software|engenharia\s+de\s+software|'
+    r'analista\s+de\s+ti|analista\s+de\s+sistemas?|analista\s+de\s+suporte|'
+    r'tecnologia\s+da\s+informa[cç][aã]o|'
+    r'an[aá]lise\s+e\s+desenvolvimento\s+de\s+sistemas?|'
+    r'ci[eê]ncia\s+da\s+computa[cç][aã]o|sistemas?\s+de\s+informa[cç][aã]o|'
+    r'computa[cç][aã]o|inform[aá]tica|redes\s+de\s+computadores|'
+    r'banco\s+de\s+dados|engenharia\s+de\s+computa[cç][aã]o|'
+    r'seguran[cç]a\s+da\s+informa[cç][aã]o|intelig[eê]ncia\s+artificial'
+    r')\b'
+)
+
+PADRAO_OPORTUNIDADE = re.compile(
+    r'(?i)\b('
+    r'concurso(?:s)?|edita(?:l|is)|processo(?:s)?\s+seletivo(?:s)?|'
+    r'inscri[cç][oõ]es|vaga(?:s)?|sal[aá]rio(?:s)?|'
+    r'contrata[cç][aã]o|contrata[cç][oõ]es|seletivo(?:s)?|'
+    r'processo\s+de\s+sele[cç][aã]o'
+    r')\b'
+)
 
 HEADERS_NAVEGADOR = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
@@ -335,24 +363,35 @@ def monitorar_rss_google(db):
             link = entry.link
             if ja_existe(db, link): continue
             resumo = BeautifulSoup(entry.summary, "html.parser").get_text()
-            if not PADRAO_LOCAL.search(titulo): continue
+            
+            # 1. Filtro Localidade (MS)
+            if not (PADRAO_LOCAL.search(titulo) or PADRAO_LOCAL.search(resumo)):
+                continue
+
             texto = titulo + " " + resumo
-            if not PADRAO_TI.search(texto): continue
+            
+            # 2. Correspondência dupla rigorosa:
+            # Exige termo técnico de computação/TI E contexto explícito de certame/oportunidade
+            m_ti = PADRAO_TI_RIGIDO.search(texto)
+            m_op = PADRAO_OPORTUNIDADE.search(texto)
+            if not (m_ti and m_op):
+                continue
             
             resumo_curto = resumo[:147] + "..." if len(resumo)>150 else resumo
             msg = f"🌐 *RADAR GOOGLE ALERTS*\n\n📌 *Título:* {titulo}\n🔎 *Resumo:* {resumo_curto}\n\n🔗 *Acessar:* {link}"
-            msg, keyword = destacar_termo(msg, texto)
+            msg, keyword = destacar_termo(msg, texto, padrao=PADRAO_TI_RIGIDO)
             
             data_pub = entry.published if hasattr(entry, 'published') else None
             cidades_ms = ["Campo Grande", "Dourados", "Três Lagoas", "Corumbá", "Ponta Porã", "Aquidauana", "Naviraí", "Nova Andradina", "Coxim", "Paranaíba", "Chapadão do Sul", "MS"]
             cidades = [c for c in cidades_ms if c.lower() in texto.lower() and c != "MS"]
             if not cidades and "ms" in texto.lower().split(): cidades.append("Mato Grosso do Sul")
-            local_str = ", ".join(cidades) if cidades else None
+            local_str = ", ".join(cidades) if cidades else "Mato Grosso do Sul"
             
             if disparar_telegram(msg):
                 db = adicionar_vaga(db, link, titulo[:100], "Google Alerts", resumo_curto, link, False, data_pub, local_str, "Publicado", keyword)
                 novos += 1
                 time.sleep(2)
+        registrar_saude("RSS_Google", True, info_adicional="Operando normalmente (filtro duplo ativo).")
     except Exception as e:
         print(f"Erro RSS: {e}")
         registrar_saude("RSS_Google", False, str(e))
@@ -753,6 +792,341 @@ def monitorar_ufms_lato_sensu(db):
     return db, novos
 
 
+def monitorar_fapec(db):
+    headers = HEADERS_NAVEGADOR
+    novos = 0
+    urls_fapec = [
+        "https://portal.concurso.fundacaofapec.org.br/edital/index/abertos",
+        "https://portal.concurso.fundacaofapec.org.br/edital/index/andamento"
+    ]
+    total_verificados = 0
+    urls_processadas = set()
+
+    try:
+        cards_para_processar = []
+        for url_aba in urls_fapec:
+            try:
+                r = requests.get(url_aba, headers=headers, timeout=30, verify=False)
+                if r.status_code != 200:
+                    continue
+                soup = BeautifulSoup(r.text, "html.parser")
+                for link in soup.find_all("a", href=True):
+                    href = link["href"]
+                    if "/edital/ver/" in href:
+                        if not href.startswith("http"):
+                            href = "https://portal.concurso.fundacaofapec.org.br" + href
+                        if href not in urls_processadas:
+                            urls_processadas.add(href)
+                            # Extrair bloco circundante para obter dados prévios
+                            bloco = link
+                            for _ in range(5):
+                                if bloco.parent:
+                                    bloco = bloco.parent
+                                    if any(c in bloco.get("class", []) for c in ["row", "card", "col-md-12", "box"]):
+                                        break
+                            resumo_card = " ".join(bloco.get_text().split()) if bloco else ""
+                            cards_para_processar.append((href, resumo_card))
+            except Exception as e_aba:
+                print(f"[FAPEC] Erro ao carregar aba {url_aba}: {e_aba}")
+
+        if not urls_processadas:
+            registrar_saude("FAPEC", False, "Nenhum edital retornado no portal da FAPEC", silencioso=True)
+            return db, 0
+
+        for edital_url, resumo_card in cards_para_processar:
+            total_verificados += 1
+            if ja_existe(db, edital_url):
+                continue
+
+            try:
+                r_det = requests.get(edital_url, headers=headers, timeout=30, verify=False)
+                if r_det.status_code != 200:
+                    continue
+                soup_det = BeautifulSoup(r_det.text, "html.parser")
+
+                # Título
+                h4 = soup_det.find("h4")
+                titulo = h4.get_text().strip() if h4 else ""
+                if titulo.startswith("VER EDITAL"):
+                    titulo = titulo.replace("VER EDITAL", "").strip()
+                if not titulo:
+                    titulo = soup_det.title.get_text().strip() if soup_det.title else "Edital FAPEC"
+
+                # Inscrições / Prazos
+                txt_completo = " ".join(soup_det.get_text().split())
+                m_data = re.search(r'Inscri[çc][õo]es\s+(?:de\s+)?(\d{2}/\d{2}/\d{4}.*?)(?:Campo Grande|Realizar|Acompanhar|ARQUIVOS|$)', txt_completo)
+                prazo = m_data.group(1).strip() if m_data else "Ver no edital"
+                if len(prazo) > 60:
+                    prazo = prazo[:60]
+
+                if edital_muito_antigo(prazo):
+                    db = adicionar_vaga(db, edital_url, f"FAPEC - {titulo} (Encerrado)", "Fundação FAPEC", "Edital encerrado.", edital_url, is_silent=True, data_publicacao=prazo, local="Mato Grosso do Sul")
+                    continue
+
+                # Vagas listadas no HTML
+                vagas_el = soup_det.find(id="vagas")
+                txt_vagas = " ".join(vagas_el.get_text().split()) if vagas_el else ""
+
+                # Município / Local
+                m_loc = re.search(r'([A-Za-zÀ-ÿ\s]+)\s*-\s*MS', txt_completo)
+                cidade = m_loc.group(1).strip() + " - MS" if m_loc else "Mato Grosso do Sul"
+
+                texto_analise = f"{titulo} {resumo_card} {txt_vagas} {txt_completo}"
+                match_ti = PADRAO_TI.search(texto_analise) or PADRAO_TI_UFMS.search(texto_analise)
+
+                trecho_ti = ""
+                termo_ti = None
+                if not match_ti:
+                    links_pdf = []
+                    for a_pdf in soup_det.find_all("a", href=True):
+                        h_pdf = a_pdf["href"]
+                        t_pdf = a_pdf.get_text().lower()
+                        if "arquivo.php" in h_pdf or h_pdf.endswith(".pdf"):
+                            if any(k in t_pdf or k in h_pdf.lower() for k in ["abertura", "edital 001", "edital nº 001", "consolidado"]):
+                                links_pdf.append(h_pdf)
+                    
+                    for l_pdf in links_pdf[:1]:
+                        try:
+                            r_pdf = requests.get(l_pdf, headers=headers, timeout=30, verify=False)
+                            if r_pdf.status_code == 200:
+                                reader = PyPDF2.PdfReader(io.BytesIO(r_pdf.content))
+                                for p in reader.pages[:15]:
+                                    raw_p = p.extract_text() or ""
+                                    clean_p = normalizar_texto_pdf(raw_p)
+                                    m_pdf = PADRAO_TI.search(clean_p) or PADRAO_TI_UFMS.search(clean_p)
+                                    if m_pdf and ("vaga" in clean_p.lower() or "cargo" in clean_p.lower() or "função" in clean_p.lower()):
+                                        match_ti = m_pdf
+                                        idx = m_pdf.start()
+                                        trecho_ti = " ".join(clean_p[max(0, idx - 80):min(len(clean_p), idx + 80)].split())
+                                        break
+                                if match_ti:
+                                    break
+                        except Exception as e_pdf:
+                            print(f"[FAPEC] Erro lendo PDF {l_pdf}: {e_pdf}")
+
+                if match_ti:
+                    if not trecho_ti:
+                        idx = match_ti.start()
+                        trecho_ti = " ".join(texto_analise[max(0, idx - 80):min(len(texto_analise), idx + 80)].split())
+
+                    detalhes = f"Vagas de TI identificadas no certame ({trecho_ti[:180]})."
+                    msg = f"🚨 *NOVIDADE NA FUNDAÇÃO FAPEC!*\n\n🏢 *Certame:* {titulo}\n📍 *Local:* {cidade}\n📅 *Inscrições:* {prazo}\n📝 *Detalhes:* ...{trecho_ti}...\n\n🔗 *Acessar:* {edital_url}"
+                    msg, termo_ti = destacar_termo(msg, trecho_ti or match_ti.group(0))
+                    if disparar_telegram(msg):
+                        time.sleep(2)
+                    db = adicionar_vaga(db, edital_url, f"FAPEC - {titulo}", "Fundação FAPEC", detalhes, edital_url, False, prazo, cidade, "Inscrições", termo_ti)
+                    novos += 1
+                else:
+                    db = adicionar_vaga(db, edital_url, f"FAPEC - {titulo} (Sem TI)", "Fundação FAPEC", "Certame sem menção a vagas de TI.", edital_url, is_silent=True, data_publicacao=prazo, local=cidade)
+            except Exception as e_det:
+                print(f"[FAPEC] Erro no edital {edital_url}: {e_det}")
+
+        registrar_saude("FAPEC", True, info_adicional=f"Operando normalmente ({total_verificados} editais verificados).")
+    except Exception as e:
+        print(f"[FAPEC] Erro geral: {e}")
+        registrar_saude("FAPEC", False, str(e))
+
+    return db, novos
+
+def monitorar_semadi(db):
+    headers = HEADERS_NAVEGADOR
+    novos = 0
+    url_semadi = "https://www.campogrande.ms.gov.br/semadi/processoseletivo/"
+    total_verificados = 0
+
+    try:
+        r = requests.get(url_semadi, headers=headers, timeout=30, verify=False)
+        if r.status_code != 200:
+            url_fallback = "https://www.campogrande.ms.gov.br/seges/processoseletivo/"
+            r = requests.get(url_fallback, headers=headers, timeout=30, verify=False)
+            if r.status_code != 200:
+                registrar_saude("SEMADI_PMCG", False, f"HTTP {r.status_code}")
+                return db, 0
+
+        soup = BeautifulSoup(r.text, "html.parser")
+        accordions = soup.find_all("div", class_="acordeon")
+        if not accordions:
+            registrar_saude("SEMADI_PMCG", False, "Nenhum acordeon de edital encontrado", silencioso=True)
+            return db, 0
+
+        for ac in accordions:
+            total_verificados += 1
+            h = ac.find(class_="handle-item") or ac.find(["h5", "h4", "h3"])
+            titulo = " ".join(h.get_text().split()) if h else "Processo Seletivo SEMADI"
+            
+            inner = ac.find(class_="inner-blocks") or ac
+            desc = " ".join(inner.get_text().split())
+            
+            links = [a["href"] for a in ac.find_all("a", href=True) if a.get("href") and a["href"] != "#"]
+            link_edital = links[0] if links else url_semadi
+            
+            id_vaga = link_edital if link_edital != url_semadi else f"semadi_{hashlib.md5(titulo.encode()).hexdigest()}"
+            if ja_existe(db, id_vaga):
+                continue
+            
+            texto_completo = f"{titulo} {desc}"
+            
+            if edital_muito_antigo(desc) or ("2024" in titulo and "2026" not in titulo and "2025" not in titulo):
+                db = adicionar_vaga(db, id_vaga, f"SEMADI PMCG - {titulo} (Encerrado)", "SEMADI Campo Grande", desc, link_edital, is_silent=True, local="Campo Grande - MS")
+                continue
+
+            match_ti = PADRAO_TI_RIGIDO.search(texto_completo)
+            trecho_ti = ""
+            
+            titulo_low = titulo.lower()
+            deve_checar_pdf = (
+                not match_ti
+                and link_edital.endswith(".pdf")
+                and ("diogrande.campogrande.ms.gov.br" not in link_edital)
+                and any(k in titulo_low for k in ["vários cargos", "varios cargos", "diversos cargos", "nível superior", "nivel superior"])
+            )
+
+            if deve_checar_pdf:
+                try:
+                    r_pdf = requests.get(link_edital, headers=headers, timeout=12, verify=False)
+                    if r_pdf.status_code == 200 and len(r_pdf.content) < 15 * 1024 * 1024:
+                        reader = PyPDF2.PdfReader(io.BytesIO(r_pdf.content))
+                        for page in reader.pages[:10]:
+                            raw_p = page.extract_text() or ""
+                            clean_p = normalizar_texto_pdf(raw_p)
+                            m_p = PADRAO_TI_RIGIDO.search(clean_p)
+                            if m_p and ("vaga" in clean_p.lower() or "cargo" in clean_p.lower() or "função" in clean_p.lower()):
+                                match_ti = m_p
+                                idx = m_p.start()
+                                trecho_ti = " ".join(clean_p[max(0, idx - 80):min(len(clean_p), idx + 80)].split())
+                                break
+                except Exception as e_pdf:
+                    print(f"[SEMADI] Erro ao ler PDF {link_edital}: {e_pdf}")
+
+            if match_ti:
+                if not trecho_ti:
+                    idx = match_ti.start()
+                    trecho_ti = " ".join(texto_completo[max(0, idx - 80):min(len(texto_completo), idx + 80)].split())
+                
+                detalhes = f"{desc} | TI: {trecho_ti}"
+                msg = f"🚨 *PROCESSO SELETIVO PMCG / SEMADI!*\n\n🏢 *Processo:* {titulo}\n📝 *Detalhes:* ...{trecho_ti}...\n📍 *Local:* Campo Grande - MS\n\n🔗 *Acessar:* {link_edital}"
+                msg, keyword = destacar_termo(msg, trecho_ti or match_ti.group(0))
+                if disparar_telegram(msg):
+                    time.sleep(2)
+                db = adicionar_vaga(db, id_vaga, f"SEMADI PMCG - {titulo}", "SEMADI Campo Grande", detalhes[:250], link_edital, False, None, "Campo Grande - MS", "Capturado", keyword)
+                novos += 1
+            else:
+                db = adicionar_vaga(db, id_vaga, f"SEMADI PMCG - {titulo} (Sem TI)", "SEMADI Campo Grande", "Processo seletivo sem vagas de TI.", link_edital, is_silent=True, local="Campo Grande - MS")
+
+        registrar_saude("SEMADI_PMCG", True, info_adicional=f"Operando normalmente ({total_verificados} processos seletivos verificados).")
+    except Exception as e:
+        print(f"[SEMADI] Erro geral: {e}")
+        registrar_saude("SEMADI_PMCG", False, str(e))
+
+    return db, novos
+
+def monitorar_quadrix(db):
+    headers = HEADERS_NAVEGADOR
+    novos = 0
+    urls_quadrix = [
+        "https://concursos.quadrix.org.br/index/abertos/",
+        "https://concursos.quadrix.org.br/index/1/"
+    ]
+    seen_urls = set()
+    total_ms = 0
+
+    try:
+        links_certames = []
+        for url_aba in urls_quadrix:
+            try:
+                r = requests.get(url_aba, headers=headers, timeout=30, verify=False)
+                if r.status_code != 200:
+                    continue
+                soup = BeautifulSoup(r.text, "html.parser")
+                for a in soup.find_all("a", href=True):
+                    h = a["href"]
+                    if "/informacoes/" in h:
+                        if not h.startswith("http"):
+                            h = "https://concursos.quadrix.org.br" + h
+                        if h not in seen_urls:
+                            seen_urls.add(h)
+                            links_certames.append(h)
+            except Exception as e_aba:
+                print(f"[Quadrix] Erro ao carregar aba {url_aba}: {e_aba}")
+
+        if not seen_urls:
+            registrar_saude("Quadrix", False, "Nenhum concurso encontrado no portal Quadrix", silencioso=True)
+            return db, 0
+
+        for certame_url in links_certames:
+            if ja_existe(db, certame_url):
+                continue
+
+            try:
+                r_det = requests.get(certame_url, headers=headers, timeout=30, verify=False)
+                if r_det.status_code != 200:
+                    continue
+                soup_det = BeautifulSoup(r_det.text, "html.parser")
+
+                # Título do certame
+                h_dados = soup_det.find("div", class_="dados")
+                if h_dados and h_dados.find("h2"):
+                    titulo = h_dados.find("h2").get_text().strip()
+                elif soup_det.find("h2"):
+                    titulo = soup_det.find("h2").get_text().strip()
+                else:
+                    titulo = soup_det.title.get_text().strip() if soup_det.title else "Concurso Quadrix"
+
+                txt_completo = " ".join(soup_det.get_text().split())
+
+                # Filtrar somente certames pertinentes a Mato Grosso do Sul
+                is_ms = bool(PADRAO_LOCAL.search(titulo) or PADRAO_LOCAL.search(txt_completo))
+                if not is_ms:
+                    continue
+
+                total_ms += 1
+
+                # Prazo de Inscrições
+                m_prazo = re.search(r'Inscri[çc][õo]es[:\s]+(\d{2}/\d{2}/\d{4}.*?\d{2}/\d{2}/\d{4})', txt_completo)
+                prazo = m_prazo.group(1).strip() if m_prazo else "Ver no edital"
+                if len(prazo) > 60:
+                    prazo = prazo[:60]
+
+                if edital_muito_antigo(prazo):
+                    db = adicionar_vaga(db, certame_url, f"Quadrix - {titulo} (Encerrado)", "Instituto Quadrix", "Certame encerrado.", certame_url, is_silent=True, data_publicacao=prazo, local="Mato Grosso do Sul")
+                    continue
+
+                # Inspecionar vagas na tabela
+                vagas_ti_encontradas = []
+                for tr in soup_det.find_all("tr"):
+                    tr_txt = " ".join(tr.get_text().split())
+                    if PADRAO_TI.search(tr_txt) or PADRAO_TI_UFMS.search(tr_txt):
+                        vagas_ti_encontradas.append(tr_txt)
+
+                match_ti = bool(vagas_ti_encontradas) or PADRAO_TI.search(txt_completo) or PADRAO_TI_UFMS.search(txt_completo)
+
+                if match_ti:
+                    if vagas_ti_encontradas:
+                        trecho_ti = " | ".join(vagas_ti_encontradas[:3])
+                    else:
+                        m_txt = PADRAO_TI.search(txt_completo) or PADRAO_TI_UFMS.search(txt_completo)
+                        idx = m_txt.start()
+                        trecho_ti = " ".join(txt_completo[max(0, idx - 80):min(len(txt_completo), idx + 80)].split())
+
+                    detalhes = f"Vagas/Cargos de TI detectados: {trecho_ti[:200]}"
+                    msg = f"🚨 *NOVA OPORTUNIDADE INSTITUTO QUADRIX (MS)!*\n\n🏢 *Órgão:* {titulo}\n📅 *Inscrições:* {prazo}\n📝 *Cargos:* ...{trecho_ti}...\n📍 *Local:* Mato Grosso do Sul\n\n🔗 *Acessar:* {certame_url}"
+                    msg, keyword = destacar_termo(msg, trecho_ti)
+                    if disparar_telegram(msg):
+                        time.sleep(2)
+                    db = adicionar_vaga(db, certame_url, f"Quadrix - {titulo}", "Instituto Quadrix", detalhes[:250], certame_url, False, prazo, "Mato Grosso do Sul", "Inscrições", keyword)
+                    novos += 1
+                else:
+                    db = adicionar_vaga(db, certame_url, f"Quadrix - {titulo} (Sem TI)", "Instituto Quadrix", "Certame em MS sem vagas de TI.", certame_url, is_silent=True, data_publicacao=prazo, local="Mato Grosso do Sul")
+            except Exception as e_det:
+                print(f"[Quadrix] Erro no certame {certame_url}: {e_det}")
+
+        registrar_saude("Quadrix", True, info_adicional=f"Operando normalmente ({total_ms} certames de MS verificados).")
+    except Exception as e:
+        print(f"[Quadrix] Erro geral: {e}")
+        registrar_saude("Quadrix", False, str(e))
+
+    return db, novos
+
 def verificar_inatividade_diogrande():
     """Função desativada para eliminar mensagens de spam no Telegram.
     O scraper do Diogrande agora roda no fluxo unificado (nuvem e local)."""
@@ -771,6 +1145,9 @@ def main():
         print("Modo Nuvem: Rodando scrapers unificados...")
         db, n = monitorar_diogrande(db, modo_local=False); total_novos += n
         db, n = monitorar_pci(db); total_novos += n
+        db, n = monitorar_fapec(db); total_novos += n
+        db, n = monitorar_semadi(db); total_novos += n
+        db, n = monitorar_quadrix(db); total_novos += n
         db, n = monitorar_rss_google(db); total_novos += n
         db, n = monitorar_sad(db); total_novos += n
         db, n = monitorar_universidades(db); total_novos += n
